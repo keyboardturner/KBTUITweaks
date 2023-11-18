@@ -5,4 +5,6 @@
 ## Notes: Personal UI adjustments and settings.
 ## SavedVariables: KBTUI_DB
 
+Widgets/Snooper.lua
+Widgets/Mainframe.lua
 core.lua

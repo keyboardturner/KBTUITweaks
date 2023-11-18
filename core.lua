@@ -1,3 +1,12 @@
+local _, KBT = ...
+
+local function Print(text)
+	local textColor = CreateColor(KBTUI_DB.settings.colors.prefix.r, KBTUI_DB.settings.colors.prefix.g, KBTUI_DB.settings.colors.prefix.b):GenerateHexColor()
+	text = "|c" .. textColor .. "KBT UI Tweaks" .. "|r" .. ": " .. text
+	
+	return DEFAULT_CHAT_FRAME:AddMessage(text, 1, 1, 1)
+end
+
 --personal addon for me
 
 --soft target - friend
@@ -20,16 +29,8 @@ defaultsTable = {
 	Interlopers = {},
 };
 
-local function Print(text)
-	local textColor = CreateColor(KBTUI_DB.settings.colors.prefix.r, KBTUI_DB.settings.colors.prefix.g, KBTUI_DB.settings.colors.prefix.b):GenerateHexColor()
-	text = "|c" .. textColor .. "KBT UI Tweaks" .. "|r" .. ": " .. text
-	
-	return DEFAULT_CHAT_FRAME:AddMessage(text, 1, 1, 1)
-end
-
 AddonCompartmentFrame:SetPoint("TOPLEFT", GameTimeFrame, "BOTTOMLEFT", 0, 35);
 
-local KBT = {};
 
 KBT.CVar = CreateFrame("Frame");
 --KBTCvar:RegisterEvent("ADDON_LOADED");
@@ -48,6 +49,7 @@ end
 
 --hooksecurefunc("SetCVar", hookFunc);
 
+
 function KBT.CVar:OnEvent(event,arg1)
 	if event == "PLAYER_ENTERING_WORLD" then
 		--C_CVar.SetCVar("SoftTargetFriend", 0)
@@ -63,55 +65,6 @@ function KBT.CVar:OnEvent(event,arg1)
 	end
 end
 KBT.CVar:SetScript("OnEvent",KBT.CVar.OnEvent);
-
-local NAMEPLATE_TOKEN = "nameplate%d";
-
-KBT.Rodeo = CreateFrame("Frame");
-
-KBT.Rodeo.MaxSteps = 50;
-
-KBT.Session = {};
-
-function KBT.Rodeo:Lasso()
-	C_Timer.After(2, KBT.Rodeo.Lasso);
-
-	for i=1, KBT.Rodeo.MaxSteps, 1 do
-		local unitToken = format(NAMEPLATE_TOKEN, i);
-		if UnitExists(unitToken) and C_PlayerInfo.GUIDIsPlayer(UnitGUID(unitToken)) then
-
-			local targetToken = unitToken .. "target";
-
-			if UnitExists(targetToken) then
-				if UnitName(targetToken) == UnitName("player") then
-
-					local nameP, realmP = UnitFullName("player");
-					local PlayerNameRealm = nameP .. "-" .. realmP;
-
-					if KBTUI_DB.SnooperMsg == true then
-						Print(UnitName(unitToken) .. " is targeting " .. UnitName("player"));
-					end
-					if KBTUI_DB.Interlopers[PlayerNameRealm] == nil then
-						KBTUI_DB.Interlopers[PlayerNameRealm] = {};
-					end
-					if KBTUI_DB.Interlopers[PlayerNameRealm][UnitName(unitToken)] == nil then
-						Print("added " .. UnitName(unitToken) .." into Snooper DB");
-						KBTUI_DB.Interlopers[PlayerNameRealm][UnitName(unitToken)] = { firstSeen = date(), lastSeen = date(), secondsCounted = 2 };
-					end
-					if KBTUI_DB.Interlopers[PlayerNameRealm][UnitName(unitToken)].lastSeen ~= nil then
-						KBTUI_DB.Interlopers[PlayerNameRealm][UnitName(unitToken)].lastSeen = date();
-					end
-					if KBTUI_DB.Interlopers[PlayerNameRealm][UnitName(unitToken)].secondsCounted ~= nil then
-						KBTUI_DB.Interlopers[PlayerNameRealm][UnitName(unitToken)].secondsCounted = KBTUI_DB.Interlopers[PlayerNameRealm][UnitName(unitToken)].secondsCounted + 2
-					end
-					KBT.Session[UnitName(unitToken)] = "|cffde9a26" .. UnitName(unitToken) .. "|r" .. 
-					": Last Seen: " .. "|cffe6cd5e" .. KBTUI_DB.Interlopers[PlayerNameRealm][UnitName(unitToken)].lastSeen .. "|r" ..
-					" | First Seen: " .. "|cffe6cd5e" .. KBTUI_DB.Interlopers[PlayerNameRealm][UnitName(unitToken)].firstSeen .. "|r" ..
-					" | Time Observed: " .. "|cffe6cd5e" .. SecondsToTime(KBTUI_DB.Interlopers[PlayerNameRealm][UnitName(unitToken)].secondsCounted) .. "|r";
-				end
-			end
-		end
-	end
-end
 
 KBT.commands = {
 	["snoop"] = function()
@@ -142,11 +95,20 @@ KBT.commands = {
 		end
 	end,
 
+	["open"] = function()
+		if KBT.mainFrame:IsShown() then
+			KBT.mainFrame:Hide();
+		else
+			KBT.mainFrame:Show();
+		end
+	end,
+
 	["help"] = function()
 		Print("List of commands:\n"..
 			"snoop - toggle chat messages whenever a nameplate targets you.\n"..
 			"spin - keyboardturning speed set to very fast.\n"..
-			"interlopers - a list of people caught snooping this session.")
+			"interlopers - a list of people caught snooping this session.\n"..
+			"open - a window with a bunch of stuff.")
 	end,
 };
 
@@ -198,6 +160,8 @@ function KBT.Initialize:Go(event, arg1)
 		end
 		Print("Settings for KBT UI Tweaks Loaded")
 		KBT.Rodeo:Lasso();
+		KBT.mainFrame.Populate();
+
 
 		SLASH_KBT1 = "/kbt"
 		SlashCmdList.KBT = KBT.HandleSlashCommands;
