@@ -1,0 +1,8 @@
+## Interface: 100200
+## Author: Keyboardturner
+## Version: 0.0.1
+## Title: KBT UI Tweaks
+## Notes: Personal UI adjustments and settings.
+## SavedVariables: KBTUI_DB
+
+core.lua
