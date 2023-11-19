@@ -8,6 +8,7 @@ local function Print(text)
 end
 
 KBT.mainFrame = CreateFrame("Frame", "KBTUITweaks_Mainframe", UIParent, "PortraitFrameTemplateMinimizable");
+tinsert(UISpecialFrames, KBT.mainFrame:GetName())
 KBT.mainFrame.width = 338*2;
 KBT.mainFrame:SetPortraitTextureRaw("Interface\\Icons\\inv_glyph_primeshaman");
 --KBT.mainFrame.PortraitContainer.portrait:SetTexture("Interface\\AddOns\\Languages\\Languages_Icon_Small");
@@ -220,35 +221,71 @@ function KBT.mainFrame.SessionPopulate()
 
 	local nameP, realmP = UnitFullName("player");
 	local PlayerNameRealm = nameP .. "-" .. realmP;
+	local iconFallback = "inv_inscription_scroll"
 
 
 	for k, v in pairs(KBT.Session) do
+		--TRP3_API.slash.openProfile(k)
+
+		if IsAddOnLoaded("TotalRP3") == true then
+			if AddOn_TotalRP3.Player.static.CreateFromNameAndRealm(k, realmP):GetProfileID() then
+				if not KBT.mainFrame[k.."portraitClick"] then
+					KBT.mainFrame[k.."portraitClick"] = CreateFrame("Frame", nil, KBT.mainFrame.backFrame)
+				end
+				KBT.mainFrame[k.."portraitClick"]:SetSize(15,15)
+				--KBT.mainFrame[k.."portraitClick"]:SetText("TRP3")
+				KBT.mainFrame[k.."portraitClick"]:SetPoint("TOPLEFT", KBT.mainFrame.backFrame, "TOPLEFT", 5, -15*placeValue-12)
+				KBT.mainFrame[k.."portraitClick"]:SetScript("OnMouseDown", function()
+					--TargetFrame.TargetFrameContainer.Portrait:SetTexCoord(-0.02, 1.02, -0.02, 1.02)
+				end)
+				KBT.mainFrame[k.."portraitClick"]:SetScript("OnMouseUp", function()
+					TRP3_API.slash.openProfile(k)
+					--TargetFrame.TargetFrameContainer.Portrait:SetTexCoord(0, 1, 0, 1)
+				end)
+
+				KBT.mainFrame[k.."portraitClick"].IconTex = KBT.mainFrame[k.."portraitClickSV"]:CreateTexture()
+				KBT.mainFrame[k.."portraitClick"].IconTex:SetAllPoints()
+				KBT.mainFrame[k.."portraitClick"].IconTex:SetVertexColor(.7,.7,.7)
+				if AddOn_TotalRP3.Player.static.CreateFromNameAndRealm(k, realmP):GetCustomIcon() then
+					KBT.mainFrame[k.."portraitClick"].IconTex:SetTexture("Interface\\Icons\\"..AddOn_TotalRP3.Player.static.CreateFromNameAndRealm(k, realmP):GetCustomIcon())
+				else
+					KBT.mainFrame[k.."portraitClick"].IconTex:SetTexture("Interface\\Icons\\"..iconFallback)
+				end
+				KBT.mainFrame[k.."portraitClick"]:SetScript("OnEnter", function()
+					KBT.mainFrame[k.."portraitClick"].IconTex:SetVertexColor(1,1,1)
+				end)
+				KBT.mainFrame[k.."portraitClick"]:SetScript("OnLeave", function()
+					KBT.mainFrame[k.."portraitClick"].IconTex:SetVertexColor(.7,.7,.7)
+				end)
+			end
+		end
+
 		if not KBT.mainFrame[k.."popSessName"] then
-			KBT.mainFrame[k.."popSessName"] = content1:CreateFontString();
+			KBT.mainFrame[k.."popSessName"] = KBT.mainFrame.backFrame:CreateFontString();
 		end
 		KBT.mainFrame[k.."popSessName"]:SetFont("Fonts\\FRIZQT__.TTF", 11);
-		KBT.mainFrame[k.."popSessName"]:SetPoint("TOPLEFT", KBT.mainFrame.sessionFrame, "TOPLEFT", 10, -15*placeValue-15);
+		KBT.mainFrame[k.."popSessName"]:SetPoint("TOPLEFT", KBT.mainFrame.sessionFrame, "TOPLEFT", 30, -15*placeValue-15);
 		KBT.mainFrame[k.."popSessName"]:SetText(k);
 		
 		if not KBT.mainFrame[k.."popSessSecondsCounted"] then
-			KBT.mainFrame[k.."popSessSecondsCounted"] = content1:CreateFontString();
+			KBT.mainFrame[k.."popSessSecondsCounted"] = KBT.mainFrame.backFrame:CreateFontString();
 		end
 		KBT.mainFrame[k.."popSessSecondsCounted"]:SetFont("Fonts\\FRIZQT__.TTF", 11);
-		KBT.mainFrame[k.."popSessSecondsCounted"]:SetPoint("TOPLEFT", KBT.mainFrame.sessionFrame, "TOPLEFT", 115, -15*placeValue-15);
+		KBT.mainFrame[k.."popSessSecondsCounted"]:SetPoint("TOPLEFT", KBT.mainFrame.sessionFrame, "TOPLEFT", 135, -15*placeValue-15);
 		KBT.mainFrame[k.."popSessSecondsCounted"]:SetText(SecondsToTime(KBTUI_DB.Interlopers[PlayerNameRealm][k].secondsCounted));
 		
 		if not KBT.mainFrame[k.."popSessLastSeen"] then
-			KBT.mainFrame[k.."popSessLastSeen"] = content1:CreateFontString();
+			KBT.mainFrame[k.."popSessLastSeen"] = KBT.mainFrame.backFrame:CreateFontString();
 		end
 		KBT.mainFrame[k.."popSessLastSeen"]:SetFont("Fonts\\FRIZQT__.TTF", 11);
-		KBT.mainFrame[k.."popSessLastSeen"]:SetPoint("TOPLEFT", KBT.mainFrame.sessionFrame, "TOPLEFT", 115+95, -15*placeValue-15);
+		KBT.mainFrame[k.."popSessLastSeen"]:SetPoint("TOPLEFT", KBT.mainFrame.sessionFrame, "TOPLEFT", 135+95, -15*placeValue-15);
 		KBT.mainFrame[k.."popSessLastSeen"]:SetText(KBTUI_DB.Interlopers[PlayerNameRealm][k].lastSeen);
 
 		if not KBT.mainFrame[k.."popSessFirstSeen"] then
-			KBT.mainFrame[k.."popSessFirstSeen"] = content1:CreateFontString();
+			KBT.mainFrame[k.."popSessFirstSeen"] = KBT.mainFrame.backFrame:CreateFontString();
 		end
 		KBT.mainFrame[k.."popSessFirstSeen"]:SetFont("Fonts\\FRIZQT__.TTF", 11);
-		KBT.mainFrame[k.."popSessFirstSeen"]:SetPoint("TOPLEFT", KBT.mainFrame.sessionFrame, "TOPLEFT", 305+95, -15*placeValue-15);
+		KBT.mainFrame[k.."popSessFirstSeen"]:SetPoint("TOPLEFT", KBT.mainFrame.sessionFrame, "TOPLEFT", 325+95, -15*placeValue-15);
 		KBT.mainFrame[k.."popSessFirstSeen"]:SetText(KBTUI_DB.Interlopers[PlayerNameRealm][k].firstSeen);
 
 		KBT.mainFrame.sessionFrame:SetHeight(15*placeValue+40);
@@ -263,26 +300,62 @@ function KBT.mainFrame.Populate()
 
 	local nameP, realmP = UnitFullName("player");
 	local PlayerNameRealm = nameP .. "-" .. realmP;
+	local iconFallback = "inv_inscription_scroll"
 
 	for k, v in pairs(KBTUI_DB.Interlopers[PlayerNameRealm]) do
-		KBT.mainFrame.popName = content1:CreateFontString();
+		--TRP3_API.slash.openProfile(k)
+		if IsAddOnLoaded("TotalRP3") == true then
+			if AddOn_TotalRP3.Player.static.CreateFromNameAndRealm(k, realmP):GetProfileID() then
+				if not KBT.mainFrame[k.."portraitClickSV"] then
+					KBT.mainFrame[k.."portraitClickSV"] = CreateFrame("Frame", nil, KBT.mainFrame.backFrame)
+				end
+				KBT.mainFrame[k.."portraitClickSV"]:SetSize(15,15)
+				--KBT.mainFrame[k.."portraitClickSV"]:SetText("TRP3")
+				KBT.mainFrame[k.."portraitClickSV"]:SetPoint("TOPLEFT", KBT.mainFrame.backFrame, "TOPLEFT", 5, -15*placeValue-12)
+				KBT.mainFrame[k.."portraitClickSV"]:SetScript("OnMouseDown", function()
+					--TargetFrame.TargetFrameContainer.Portrait:SetTexCoord(-0.02, 1.02, -0.02, 1.02)
+				end)
+				KBT.mainFrame[k.."portraitClickSV"]:SetScript("OnMouseUp", function()
+					TRP3_API.slash.openProfile(k)
+					--TargetFrame.TargetFrameContainer.Portrait:SetTexCoord(0, 1, 0, 1)
+				end)
+
+				KBT.mainFrame[k.."portraitClickSV"].IconTex = KBT.mainFrame[k.."portraitClickSV"]:CreateTexture()
+				KBT.mainFrame[k.."portraitClickSV"].IconTex:SetAllPoints()
+				KBT.mainFrame[k.."portraitClickSV"].IconTex:SetVertexColor(.7,.7,.7)
+				if AddOn_TotalRP3.Player.static.CreateFromNameAndRealm(k, realmP):GetCustomIcon() then
+					KBT.mainFrame[k.."portraitClickSV"].IconTex:SetTexture("Interface\\Icons\\"..AddOn_TotalRP3.Player.static.CreateFromNameAndRealm(k, realmP):GetCustomIcon())
+				else
+					KBT.mainFrame[k.."portraitClickSV"].IconTex:SetTexture("Interface\\Icons\\"..iconFallback)
+				end
+				KBT.mainFrame[k.."portraitClickSV"]:SetScript("OnEnter", function()
+					KBT.mainFrame[k.."portraitClickSV"].IconTex:SetVertexColor(1,1,1)
+				end)
+				KBT.mainFrame[k.."portraitClickSV"]:SetScript("OnLeave", function()
+					KBT.mainFrame[k.."portraitClickSV"].IconTex:SetVertexColor(.7,.7,.7)
+				end)
+			end
+		end
+
+
+		KBT.mainFrame.popName = KBT.mainFrame.backFrame:CreateFontString();
 		KBT.mainFrame.popName:SetFont("Fonts\\FRIZQT__.TTF", 11);
-		KBT.mainFrame.popName:SetPoint("TOPLEFT", KBT.mainFrame.backFrame, "TOPLEFT", 10, -15*placeValue-15);
+		KBT.mainFrame.popName:SetPoint("TOPLEFT", KBT.mainFrame.backFrame, "TOPLEFT", 30, -15*placeValue-15);
 		KBT.mainFrame.popName:SetText(k);
 
-		KBT.mainFrame.popSecondsCounted = content1:CreateFontString();
+		KBT.mainFrame.popSecondsCounted = KBT.mainFrame.backFrame:CreateFontString();
 		KBT.mainFrame.popSecondsCounted:SetFont("Fonts\\FRIZQT__.TTF", 11);
-		KBT.mainFrame.popSecondsCounted:SetPoint("TOPLEFT", KBT.mainFrame.backFrame, "TOPLEFT", 115, -15*placeValue-15);
+		KBT.mainFrame.popSecondsCounted:SetPoint("TOPLEFT", KBT.mainFrame.backFrame, "TOPLEFT", 135, -15*placeValue-15);
 		KBT.mainFrame.popSecondsCounted:SetText(SecondsToTime(v.secondsCounted));
 
-		KBT.mainFrame.popLastSeen = content1:CreateFontString();
+		KBT.mainFrame.popLastSeen = KBT.mainFrame.backFrame:CreateFontString();
 		KBT.mainFrame.popLastSeen:SetFont("Fonts\\FRIZQT__.TTF", 11);
-		KBT.mainFrame.popLastSeen:SetPoint("TOPLEFT", KBT.mainFrame.backFrame, "TOPLEFT", 115+95, -15*placeValue-15);
+		KBT.mainFrame.popLastSeen:SetPoint("TOPLEFT", KBT.mainFrame.backFrame, "TOPLEFT", 135+95, -15*placeValue-15);
 		KBT.mainFrame.popLastSeen:SetText(v.lastSeen);
 
-		KBT.mainFrame.popFirstSeen = content1:CreateFontString();
+		KBT.mainFrame.popFirstSeen = KBT.mainFrame.backFrame:CreateFontString();
 		KBT.mainFrame.popFirstSeen:SetFont("Fonts\\FRIZQT__.TTF", 11);
-		KBT.mainFrame.popFirstSeen:SetPoint("TOPLEFT", KBT.mainFrame.backFrame, "TOPLEFT", 305+95, -15*placeValue-15);
+		KBT.mainFrame.popFirstSeen:SetPoint("TOPLEFT", KBT.mainFrame.backFrame, "TOPLEFT", 325+95, -15*placeValue-15);
 		KBT.mainFrame.popFirstSeen:SetText(v.firstSeen);
 
 		KBT.mainFrame.backFrame:SetHeight(15*placeValue+40);

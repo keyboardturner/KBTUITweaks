@@ -4,6 +4,7 @@
 ## Title: KBT UI Tweaks
 ## Notes: Personal UI adjustments and settings.
 ## SavedVariables: KBTUI_DB
+## OptionalDeps: totalRP3
 
 Widgets/Snooper.lua
 Widgets/Mainframe.lua
