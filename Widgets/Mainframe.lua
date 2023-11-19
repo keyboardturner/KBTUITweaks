@@ -141,77 +141,85 @@ KBT.mainFrame.backdropInfo = {
 	insets = { left = 1, right = 1, top = 1, bottom = 1 },
 };
 
-KBT.mainFrame.sessionFrame = CreateFrame("Frame", nil, content1, "BackdropTemplate");
-KBT.mainFrame.sessionFrame:SetPoint("TOPLEFT", content1, "TOPLEFT", 0, -65);
-KBT.mainFrame.sessionFrame:SetSize(KBT.mainFrame.width-38,65);
-KBT.mainFrame.sessionFrame:SetBackdrop(KBT.mainFrame.backdropInfo);
-KBT.mainFrame.sessionFrame:SetBackdropColor(0,0,0,.5);
+function KBT.DoPopulationStuff()
 
-KBT.mainFrame.sessionTitle = content1:CreateFontString();
-KBT.mainFrame.sessionTitle:SetFont("Fonts\\FRIZQT__.TTF", 11);
-KBT.mainFrame.sessionTitle:SetPoint("TOPLEFT", KBT.mainFrame.sessionFrame, "TOPLEFT", 0, 15);
-KBT.mainFrame.sessionTitle:SetText("Current Session");
+	KBT.mainFrame.sessionFrame = CreateFrame("Frame", nil, content1, "BackdropTemplate");
+	KBT.mainFrame.sessionFrame:SetPoint("TOPLEFT", content1, "TOPLEFT", 0, -65);
+	KBT.mainFrame.sessionFrame:SetSize(KBT.mainFrame.width-38,65);
+	KBT.mainFrame.sessionFrame:SetBackdrop(KBT.mainFrame.backdropInfo);
+	KBT.mainFrame.sessionFrame:SetBackdropColor(0,0,0,.5);
 
-
-KBT.mainFrame.backFrame = CreateFrame("Frame", nil, KBT.mainFrame.sessionFrame, "BackdropTemplate");
-KBT.mainFrame.backFrame:SetPoint("TOPLEFT", KBT.mainFrame.sessionFrame, "BOTTOMLEFT", 0, -25);
-KBT.mainFrame.backFrame:SetSize(KBT.mainFrame.width-38,65);
-KBT.mainFrame.backFrame:SetBackdrop(KBT.mainFrame.backdropInfo);
-KBT.mainFrame.backFrame:SetBackdropColor(0,0,0,.5);
-
-KBT.mainFrame.savedTitle = content1:CreateFontString();
-KBT.mainFrame.savedTitle:SetFont("Fonts\\FRIZQT__.TTF", 11);
-KBT.mainFrame.savedTitle:SetPoint("TOPLEFT", KBT.mainFrame.backFrame, "TOPLEFT", 0, 15);
-KBT.mainFrame.savedTitle:SetText("Saved Data");
+	KBT.mainFrame.sessionTitle = content1:CreateFontString();
+	KBT.mainFrame.sessionTitle:SetFont("Fonts\\FRIZQT__.TTF", 11);
+	KBT.mainFrame.sessionTitle:SetPoint("TOPLEFT", KBT.mainFrame.sessionFrame, "TOPLEFT", 0, 15);
+	KBT.mainFrame.sessionTitle:SetText("Current Session");
 
 
-local nameP, realmP = UnitFullName("player");
-local PlayerNameRealm = nameP .. "-" .. realmP;
+	KBT.mainFrame.backFrame = CreateFrame("Frame", nil, KBT.mainFrame.sessionFrame, "BackdropTemplate");
+	KBT.mainFrame.backFrame:SetPoint("TOPLEFT", KBT.mainFrame.sessionFrame, "BOTTOMLEFT", 0, -25);
+	KBT.mainFrame.backFrame:SetSize(KBT.mainFrame.width-38,65);
+	KBT.mainFrame.backFrame:SetBackdrop(KBT.mainFrame.backdropInfo);
+	KBT.mainFrame.backFrame:SetBackdropColor(0,0,0,.5);
+
+	KBT.mainFrame.savedTitle = content1:CreateFontString();
+	KBT.mainFrame.savedTitle:SetFont("Fonts\\FRIZQT__.TTF", 11);
+	KBT.mainFrame.savedTitle:SetPoint("TOPLEFT", KBT.mainFrame.backFrame, "TOPLEFT", 0, 15);
+	KBT.mainFrame.savedTitle:SetText("Saved Data");
 
 
-KBT.mainFrame.popSessNameTitle = content1:CreateFontString();
-KBT.mainFrame.popSessNameTitle:SetFont("Fonts\\FRIZQT__.TTF", 11);
-KBT.mainFrame.popSessNameTitle:SetPoint("TOPLEFT", KBT.mainFrame.sessionFrame, "TOPLEFT", 10, -15);
-KBT.mainFrame.popSessNameTitle:SetText("Name");
-
-KBT.mainFrame.popSessSecondsCountedTitle = content1:CreateFontString();
-KBT.mainFrame.popSessSecondsCountedTitle:SetFont("Fonts\\FRIZQT__.TTF", 11);
-KBT.mainFrame.popSessSecondsCountedTitle:SetPoint("TOPLEFT", KBT.mainFrame.sessionFrame, "TOPLEFT", 115, -15);
-KBT.mainFrame.popSessSecondsCountedTitle:SetText("Time Observed");
-
-KBT.mainFrame.popSessLastSeenTitle = content1:CreateFontString();
-KBT.mainFrame.popSessLastSeenTitle:SetFont("Fonts\\FRIZQT__.TTF", 11);
-KBT.mainFrame.popSessLastSeenTitle:SetPoint("TOPLEFT", KBT.mainFrame.sessionFrame, "TOPLEFT", 115+95, -15);
-KBT.mainFrame.popSessLastSeenTitle:SetText("Last Seen");
-
-KBT.mainFrame.popSessFirstSeenTitle = content1:CreateFontString();
-KBT.mainFrame.popSessFirstSeenTitle:SetFont("Fonts\\FRIZQT__.TTF", 11);
-KBT.mainFrame.popSessFirstSeenTitle:SetPoint("TOPLEFT", KBT.mainFrame.sessionFrame, "TOPLEFT", 305+95, -15);
-KBT.mainFrame.popSessFirstSeenTitle:SetText("First Seen");
+	local nameP, realmP = UnitFullName("player");
+	local PlayerNameRealm = nameP .. "-" .. realmP;
 
 
-KBT.mainFrame.popNameTitle = content1:CreateFontString();
-KBT.mainFrame.popNameTitle:SetFont("Fonts\\FRIZQT__.TTF", 11);
-KBT.mainFrame.popNameTitle:SetPoint("TOPLEFT", KBT.mainFrame.backFrame, "TOPLEFT", 10, -15);
-KBT.mainFrame.popNameTitle:SetText("Name");
+	KBT.mainFrame.popSessNameTitle = content1:CreateFontString();
+	KBT.mainFrame.popSessNameTitle:SetFont("Fonts\\FRIZQT__.TTF", 11);
+	KBT.mainFrame.popSessNameTitle:SetPoint("TOPLEFT", KBT.mainFrame.sessionFrame, "TOPLEFT", 10, -15);
+	KBT.mainFrame.popSessNameTitle:SetText("Name");
 
-KBT.mainFrame.popSecondsCountedTitle = content1:CreateFontString();
-KBT.mainFrame.popSecondsCountedTitle:SetFont("Fonts\\FRIZQT__.TTF", 11);
-KBT.mainFrame.popSecondsCountedTitle:SetPoint("TOPLEFT", KBT.mainFrame.backFrame, "TOPLEFT", 115, -15);
-KBT.mainFrame.popSecondsCountedTitle:SetText("Time Observed");
+	KBT.mainFrame.popSessSecondsCountedTitle = content1:CreateFontString();
+	KBT.mainFrame.popSessSecondsCountedTitle:SetFont("Fonts\\FRIZQT__.TTF", 11);
+	KBT.mainFrame.popSessSecondsCountedTitle:SetPoint("TOPLEFT", KBT.mainFrame.sessionFrame, "TOPLEFT", 115, -15);
+	KBT.mainFrame.popSessSecondsCountedTitle:SetText("Time Observed");
 
-KBT.mainFrame.popLastSeenTitle = content1:CreateFontString();
-KBT.mainFrame.popLastSeenTitle:SetFont("Fonts\\FRIZQT__.TTF", 11);
-KBT.mainFrame.popLastSeenTitle:SetPoint("TOPLEFT", KBT.mainFrame.backFrame, "TOPLEFT", 115+95, -15);
-KBT.mainFrame.popLastSeenTitle:SetText("Last Seen");
+	KBT.mainFrame.popSessLastSeenTitle = content1:CreateFontString();
+	KBT.mainFrame.popSessLastSeenTitle:SetFont("Fonts\\FRIZQT__.TTF", 11);
+	KBT.mainFrame.popSessLastSeenTitle:SetPoint("TOPLEFT", KBT.mainFrame.sessionFrame, "TOPLEFT", 115+95, -15);
+	KBT.mainFrame.popSessLastSeenTitle:SetText("Last Seen");
 
-KBT.mainFrame.popFirstSeenTitle = content1:CreateFontString();
-KBT.mainFrame.popFirstSeenTitle:SetFont("Fonts\\FRIZQT__.TTF", 11);
-KBT.mainFrame.popFirstSeenTitle:SetPoint("TOPLEFT", KBT.mainFrame.backFrame, "TOPLEFT", 305+95, -15);
-KBT.mainFrame.popFirstSeenTitle:SetText("First Seen");
+	KBT.mainFrame.popSessFirstSeenTitle = content1:CreateFontString();
+	KBT.mainFrame.popSessFirstSeenTitle:SetFont("Fonts\\FRIZQT__.TTF", 11);
+	KBT.mainFrame.popSessFirstSeenTitle:SetPoint("TOPLEFT", KBT.mainFrame.sessionFrame, "TOPLEFT", 305+95, -15);
+	KBT.mainFrame.popSessFirstSeenTitle:SetText("First Seen");
+
+
+	KBT.mainFrame.popNameTitle = content1:CreateFontString();
+	KBT.mainFrame.popNameTitle:SetFont("Fonts\\FRIZQT__.TTF", 11);
+	KBT.mainFrame.popNameTitle:SetPoint("TOPLEFT", KBT.mainFrame.backFrame, "TOPLEFT", 10, -15);
+	KBT.mainFrame.popNameTitle:SetText("Name");
+
+	KBT.mainFrame.popSecondsCountedTitle = content1:CreateFontString();
+	KBT.mainFrame.popSecondsCountedTitle:SetFont("Fonts\\FRIZQT__.TTF", 11);
+	KBT.mainFrame.popSecondsCountedTitle:SetPoint("TOPLEFT", KBT.mainFrame.backFrame, "TOPLEFT", 115, -15);
+	KBT.mainFrame.popSecondsCountedTitle:SetText("Time Observed");
+
+	KBT.mainFrame.popLastSeenTitle = content1:CreateFontString();
+	KBT.mainFrame.popLastSeenTitle:SetFont("Fonts\\FRIZQT__.TTF", 11);
+	KBT.mainFrame.popLastSeenTitle:SetPoint("TOPLEFT", KBT.mainFrame.backFrame, "TOPLEFT", 115+95, -15);
+	KBT.mainFrame.popLastSeenTitle:SetText("Last Seen");
+
+	KBT.mainFrame.popFirstSeenTitle = content1:CreateFontString();
+	KBT.mainFrame.popFirstSeenTitle:SetFont("Fonts\\FRIZQT__.TTF", 11);
+	KBT.mainFrame.popFirstSeenTitle:SetPoint("TOPLEFT", KBT.mainFrame.backFrame, "TOPLEFT", 305+95, -15);
+	KBT.mainFrame.popFirstSeenTitle:SetText("First Seen");
+
+end
 
 function KBT.mainFrame.SessionPopulate()
 	local placeValue = 1;
+
+
+	local nameP, realmP = UnitFullName("player");
+	local PlayerNameRealm = nameP .. "-" .. realmP;
 
 
 	for k, v in pairs(KBT.Session) do
@@ -251,6 +259,10 @@ end
 
 function KBT.mainFrame.Populate()
 	local placeValue = 1;
+
+
+	local nameP, realmP = UnitFullName("player");
+	local PlayerNameRealm = nameP .. "-" .. realmP;
 
 	for k, v in pairs(KBTUI_DB.Interlopers[PlayerNameRealm]) do
 		KBT.mainFrame.popName = content1:CreateFontString();

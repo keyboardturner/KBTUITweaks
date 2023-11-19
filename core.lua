@@ -152,6 +152,7 @@ end
 
 KBT.Initialize = CreateFrame("Frame");
 KBT.Initialize:RegisterEvent("ADDON_LOADED");
+KBT.Initialize:RegisterEvent("PLAYER_LOGIN");
 
 function KBT.Initialize:Go(event, arg1)
 	if event == "ADDON_LOADED" and arg1 == "KBTUITweaks" then
@@ -160,11 +161,15 @@ function KBT.Initialize:Go(event, arg1)
 		end
 		Print("Settings for KBT UI Tweaks Loaded")
 		KBT.Rodeo:Lasso();
-		KBT.mainFrame.Populate();
 
 
 		SLASH_KBT1 = "/kbt"
 		SlashCmdList.KBT = KBT.HandleSlashCommands;
+	end
+
+	if event == "PLAYER_LOGIN" then
+		KBT.DoPopulationStuff();
+		KBT.mainFrame.Populate();
 	end
 end
 
