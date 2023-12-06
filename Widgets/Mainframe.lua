@@ -302,38 +302,40 @@ function KBT.mainFrame.Populate()
 	local PlayerNameRealm = nameP .. "-" .. realmP;
 	local iconFallback = "inv_inscription_scroll"
 
-	for k, v in pairs(KBTUI_DB.Interlopers[PlayerNameRealm]) do
-		--TRP3_API.slash.openProfile(k)
-		if IsAddOnLoaded("TotalRP3") == true then
-			if AddOn_TotalRP3.Player.static.CreateFromNameAndRealm(k, realmP):GetProfileID() then
-				if not KBT.mainFrame[k.."portraitClickSV"] then
-					KBT.mainFrame[k.."portraitClickSV"] = CreateFrame("Frame", nil, KBT.mainFrame.backFrame)
-				end
-				KBT.mainFrame[k.."portraitClickSV"]:SetSize(15,15)
-				--KBT.mainFrame[k.."portraitClickSV"]:SetText("TRP3")
-				KBT.mainFrame[k.."portraitClickSV"]:SetPoint("TOPLEFT", KBT.mainFrame.backFrame, "TOPLEFT", 5, -15*placeValue-12)
-				KBT.mainFrame[k.."portraitClickSV"]:SetScript("OnMouseDown", function()
-					--TargetFrame.TargetFrameContainer.Portrait:SetTexCoord(-0.02, 1.02, -0.02, 1.02)
-				end)
-				KBT.mainFrame[k.."portraitClickSV"]:SetScript("OnMouseUp", function()
-					TRP3_API.slash.openProfile(k)
-					--TargetFrame.TargetFrameContainer.Portrait:SetTexCoord(0, 1, 0, 1)
-				end)
+	if KBTUI_DB.Interlopers[PlayerNameRealm] then
+		for k, v in pairs(KBTUI_DB.Interlopers[PlayerNameRealm]) do
+			--TRP3_API.slash.openProfile(k)
+			if IsAddOnLoaded("TotalRP3") == true then
+				if AddOn_TotalRP3.Player.static.CreateFromNameAndRealm(k, realmP):GetProfileID() then
+					if not KBT.mainFrame[k.."portraitClickSV"] then
+						KBT.mainFrame[k.."portraitClickSV"] = CreateFrame("Frame", nil, KBT.mainFrame.backFrame)
+					end
+					KBT.mainFrame[k.."portraitClickSV"]:SetSize(15,15)
+					--KBT.mainFrame[k.."portraitClickSV"]:SetText("TRP3")
+					KBT.mainFrame[k.."portraitClickSV"]:SetPoint("TOPLEFT", KBT.mainFrame.backFrame, "TOPLEFT", 5, -15*placeValue-12)
+					KBT.mainFrame[k.."portraitClickSV"]:SetScript("OnMouseDown", function()
+						--TargetFrame.TargetFrameContainer.Portrait:SetTexCoord(-0.02, 1.02, -0.02, 1.02)
+					end)
+					KBT.mainFrame[k.."portraitClickSV"]:SetScript("OnMouseUp", function()
+						TRP3_API.slash.openProfile(k)
+						--TargetFrame.TargetFrameContainer.Portrait:SetTexCoord(0, 1, 0, 1)
+					end)
 
-				KBT.mainFrame[k.."portraitClickSV"].IconTex = KBT.mainFrame[k.."portraitClickSV"]:CreateTexture()
-				KBT.mainFrame[k.."portraitClickSV"].IconTex:SetAllPoints()
-				KBT.mainFrame[k.."portraitClickSV"].IconTex:SetVertexColor(.7,.7,.7)
-				if AddOn_TotalRP3.Player.static.CreateFromNameAndRealm(k, realmP):GetCustomIcon() then
-					KBT.mainFrame[k.."portraitClickSV"].IconTex:SetTexture("Interface\\Icons\\"..AddOn_TotalRP3.Player.static.CreateFromNameAndRealm(k, realmP):GetCustomIcon())
-				else
-					KBT.mainFrame[k.."portraitClickSV"].IconTex:SetTexture("Interface\\Icons\\"..iconFallback)
-				end
-				KBT.mainFrame[k.."portraitClickSV"]:SetScript("OnEnter", function()
-					KBT.mainFrame[k.."portraitClickSV"].IconTex:SetVertexColor(1,1,1)
-				end)
-				KBT.mainFrame[k.."portraitClickSV"]:SetScript("OnLeave", function()
+					KBT.mainFrame[k.."portraitClickSV"].IconTex = KBT.mainFrame[k.."portraitClickSV"]:CreateTexture()
+					KBT.mainFrame[k.."portraitClickSV"].IconTex:SetAllPoints()
 					KBT.mainFrame[k.."portraitClickSV"].IconTex:SetVertexColor(.7,.7,.7)
-				end)
+					if AddOn_TotalRP3.Player.static.CreateFromNameAndRealm(k, realmP):GetCustomIcon() then
+						KBT.mainFrame[k.."portraitClickSV"].IconTex:SetTexture("Interface\\Icons\\"..AddOn_TotalRP3.Player.static.CreateFromNameAndRealm(k, realmP):GetCustomIcon())
+					else
+						KBT.mainFrame[k.."portraitClickSV"].IconTex:SetTexture("Interface\\Icons\\"..iconFallback)
+					end
+					KBT.mainFrame[k.."portraitClickSV"]:SetScript("OnEnter", function()
+						KBT.mainFrame[k.."portraitClickSV"].IconTex:SetVertexColor(1,1,1)
+					end)
+					KBT.mainFrame[k.."portraitClickSV"]:SetScript("OnLeave", function()
+						KBT.mainFrame[k.."portraitClickSV"].IconTex:SetVertexColor(.7,.7,.7)
+					end)
+				end
 			end
 		end
 
