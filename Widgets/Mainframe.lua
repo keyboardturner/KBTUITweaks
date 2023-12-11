@@ -337,7 +337,6 @@ function KBT.mainFrame.Populate()
 					end)
 				end
 			end
-		end
 
 
 		KBT.mainFrame.popName = KBT.mainFrame.backFrame:CreateFontString();
@@ -363,5 +362,6 @@ function KBT.mainFrame.Populate()
 		KBT.mainFrame.backFrame:SetHeight(15*placeValue+40);
 
 		placeValue = placeValue + 1;
+		end
 	end
 end
