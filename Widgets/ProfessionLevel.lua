@@ -8,48 +8,61 @@ local function Print(text)
 end
 
 
-KBT.ProfessionText = UIParent:CreateFontString(nil, "OVERLAY", "GameTooltipText")
-KBT.ProfessionText:SetPoint("TOP", 0, -260)
+KBT.ProfessionFrame = CreateFrame("Frame", nil, UIParent)
+KBT.ProfessionFrame:SetPoint("TOP", 0, -260)
+KBT.ProfessionFrame:SetSize(300,100)
+KBT.ProfessionFrame.Tex = KBT.ProfessionFrame:CreateTexture()
+KBT.ProfessionFrame.Tex:SetAllPoints()
+KBT.ProfessionFrame.Tex:SetTexture(130660)
+KBT.ProfessionFrame:Hide()
+
+
+KBT.ProfessionTextTitle = KBT.ProfessionFrame:CreateFontString(nil, "OVERLAY", "GameTooltipText")
+KBT.ProfessionTextTitle:SetPoint("TOP", 0, 0)
+KBT.ProfessionTextTitle:SetText("Title")
+KBT.ProfessionText = KBT.ProfessionFrame:CreateFontString(nil, "OVERLAY", "GameTooltipText")
+KBT.ProfessionText:SetPoint("TOP", 0, -40)
 KBT.ProfessionText:SetText("Hello World")
 --KBT.ProfessionText:SetSize(200,100)
 KBT.ProfessionText:SetFont("Fonts\\FRIZQT__.TTF", 30)
-KBT.ProfessionText:Hide()
-KBT.ProfessionTextTitle = UIParent:CreateFontString(nil, "OVERLAY", "GameTooltipText")
-KBT.ProfessionTextTitle:SetPoint("TOP", 0, -300)
-KBT.ProfessionTextTitle:SetText("Title")
 --KBT.ProfessionText:SetSize(200,100)
 KBT.ProfessionTextTitle:SetFont("Fonts\\FRIZQT__.TTF", 30)
-KBT.ProfessionTextTitle:Hide()
 
-KBT.ProfessionNotifier = CreateFrame("Frame")
 
-KBT.ProfessionNotifier.fadeGroupShow = KBT.ProfessionNotifier:CreateAnimationGroup()
-KBT.ProfessionNotifier.fadeGroupHide = KBT.ProfessionNotifier:CreateAnimationGroup()
 
-KBT.ProfessionNotifier.fadeIn = KBT.ProfessionNotifier.fadeGroupShow:CreateAnimation("Alpha")
-KBT.ProfessionNotifier.fadeIn:SetDuration(.5)
-KBT.ProfessionNotifier.fadeIn:SetFromAlpha(0)
-KBT.ProfessionNotifier.fadeIn:SetToAlpha(1)
+KBT.fadeInProfGroup = KBT.ProfessionFrame:CreateAnimationGroup()
+KBT.fadeOutProfGroup = KBT.ProfessionFrame:CreateAnimationGroup()
 
-KBT.ProfessionNotifier.fadeOut = KBT.ProfessionNotifier.fadeGroupHide:CreateAnimation("Alpha")
-KBT.ProfessionNotifier.fadeOut:SetDuration(4)
-KBT.ProfessionNotifier.fadeOut:SetFromAlpha(1)
-KBT.ProfessionNotifier.fadeOut:SetToAlpha(0)
+-- Create a fade in animation
+KBT.fadeInProf = KBT.fadeInProfGroup:CreateAnimation("Alpha")
+KBT.fadeInProf:SetFromAlpha(0)
+KBT.fadeInProf:SetToAlpha(1)
+KBT.fadeInProf:SetDuration(1) -- Duration of the fade in animation
 
-KBT.ProfessionNotifier.fadeOut:SetScript("OnFinished", function()
-	KBT.ProfessionText:Hide();
-	KBT.ProfessionTextTitle:Hide();
-	print("thing commence")
+-- Create a fade out animation
+KBT.fadeOutProf = KBT.fadeOutProfGroup:CreateAnimation("Alpha")
+KBT.fadeOutProf:SetFromAlpha(1)
+KBT.fadeOutProf:SetToAlpha(0)
+KBT.fadeOutProf:SetDuration(3) -- Duration of the fade out animation
+
+-- Set scripts for when animations start and finish
+KBT.fadeOutProfGroup:SetScript("OnFinished", function()
+	KBT.ProfessionFrame:Hide() -- Hide the frame when the fade out animation is finished
+end)
+KBT.fadeInProfGroup:SetScript("OnPlay", function()
+	KBT.ProfessionFrame:Show() -- Show the frame when the fade in animation starts
 end)
 
-function KBT.ProfessionNotifier.ShowFadingFrame()
-	KBT.ProfessionText:Show();
-	KBT.ProfessionTextTitle:Show();
-	KBT.ProfessionNotifier.fadeGroupShow:Play();
+-- Function to show the frame with a fade in animation
+function KBT.ShowWithFadeProf()
+	KBT.fadeInProfGroup:Stop() -- Stop any ongoing animations
+	KBT.fadeInProfGroup:Play() -- Play the fade in animation
 end
 
-function KBT.ProfessionNotifier.HideFadingFrame()
-	KBT.ProfessionNotifier.fadeGroupHide:Play();
+-- Function to hide the frame with a fade out animation
+function KBT.HideWithFadeProf()
+	KBT.fadeOutProfGroup:Stop() -- Stop any ongoing animations
+	KBT.fadeOutProfGroup:Play() -- Play the fade out animation
 end
 
 function KBT:ProfessionNotifierFunc(_, eventMessage)
@@ -59,16 +72,16 @@ function KBT:ProfessionNotifierFunc(_, eventMessage)
 	if skill and skillLevel then
 		KBT.ProfessionText:SetText(skill);
 		KBT.ProfessionTextTitle:SetText(skillLevel);
-		KBT.ProfessionNotifier.ShowFadingFrame();
+		KBT.ShowWithFadeProf();
 		PlaySound(44292);
 		PlaySound(44295);
 		C_Timer.After(5, function()
-			KBT.ProfessionNotifier.HideFadingFrame();
+			KBT.HideWithFadeProf();
 		end)
 
 		--Print("Skill:", skill);
 		--Print("Skill Level:", tonumber(skillLevel));
 	end
 end
-KBT.ProfessionNotifier:RegisterEvent("CHAT_MSG_SKILL")
-KBT.ProfessionNotifier:SetScript("OnEvent", KBT.ProfessionNotifierFunc)
+KBT.ProfessionFrame:RegisterEvent("CHAT_MSG_SKILL")
+KBT.ProfessionFrame:SetScript("OnEvent", KBT.ProfessionNotifierFunc)

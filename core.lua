@@ -103,6 +103,14 @@ KBT.commands = {
 		end
 	end,
 
+	["show"] = function()
+		KBT.ShowWithFadeProf()
+	end,
+
+	["hide"] = function()
+		KBT.HideWithFadeProf()
+	end,
+
 	["help"] = function()
 		Print("List of commands:\n"..
 			"snoop - toggle chat messages whenever a nameplate targets you.\n"..
