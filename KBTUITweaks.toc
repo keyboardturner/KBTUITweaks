@@ -7,5 +7,7 @@
 ## OptionalDeps: totalRP3
 
 Widgets/Snooper.lua
+Widgets/HugCounter.lua
+Widgets/ProfessionLevel.lua
 Widgets/Mainframe.lua
 core.lua
