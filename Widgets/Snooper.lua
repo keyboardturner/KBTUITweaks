@@ -15,80 +15,48 @@ KBT.Rodeo.MaxSteps = 50;
 
 KBT.Session = {};
 
+local function processUnit(unitToken)
+	if UnitExists(unitToken) and C_PlayerInfo.GUIDIsPlayer(UnitGUID(unitToken)) then
+		local targetToken = unitToken .. "target";
+		if UnitExists(targetToken) and UnitName(targetToken) == UnitName("player") then
+			local nameP, realmP = UnitFullName("player");
+			local PlayerNameRealm = nameP .. "-" .. realmP;
+
+			if KBTUI_DB.SnooperMsg == true then
+				Print(UnitName(unitToken) .. " is targeting " .. UnitName("player"));
+			end
+
+			if KBTUI_DB.Interlopers[PlayerNameRealm] == nil then
+				KBTUI_DB.Interlopers[PlayerNameRealm] = {};
+			end
+
+			if KBTUI_DB.Interlopers[PlayerNameRealm][UnitName(unitToken)] == nil then
+				Print("added " .. UnitName(unitToken) .. " into Snooper DB");
+				KBTUI_DB.Interlopers[PlayerNameRealm][UnitName(unitToken)] = { firstSeen = date(), lastSeen = date(), secondsCounted = 2 };
+			end
+
+			local interloperData = KBTUI_DB.Interlopers[PlayerNameRealm][UnitName(unitToken)];
+			interloperData.lastSeen = date();
+			interloperData.secondsCounted = interloperData.secondsCounted + 2;
+
+			KBT.Session[UnitName(unitToken)] = "|cffde9a26" .. UnitName(unitToken) .. "|r" ..
+					": Last Seen: " .. "|cffe6cd5e" .. interloperData.lastSeen .. "|r" ..
+					" | First Seen: " .. "|cffe6cd5e" .. interloperData.firstSeen .. "|r" ..
+					" | Time Observed: " .. "|cffe6cd5e" .. SecondsToTime(interloperData.secondsCounted) .. "|r";
+
+			KBT.mainFrame.SessionPopulate();
+		end
+	end
+end
+
 function KBT.Rodeo:Lasso()
 	C_Timer.After(2, KBT.Rodeo.Lasso);
 
-	for i=1, KBT.Rodeo.MaxSteps, 1 do
-		local unitToken = format(NAMEPLATE_TOKEN, i);
-		if UnitExists(unitToken) and C_PlayerInfo.GUIDIsPlayer(UnitGUID(unitToken)) then
-
-			local targetToken = unitToken .. "target";
-
-			if UnitExists(targetToken) then
-				if UnitName(targetToken) == UnitName("player") then
-
-					local nameP, realmP = UnitFullName("player");
-					local PlayerNameRealm = nameP .. "-" .. realmP;
-
-					if KBTUI_DB.SnooperMsg == true then
-						Print(UnitName(unitToken) .. " is targeting " .. UnitName("player"));
-					end
-					if KBTUI_DB.Interlopers[PlayerNameRealm] == nil then
-						KBTUI_DB.Interlopers[PlayerNameRealm] = {};
-					end
-					if KBTUI_DB.Interlopers[PlayerNameRealm][UnitName(unitToken)] == nil then
-						Print("added " .. UnitName(unitToken) .." into Snooper DB");
-						KBTUI_DB.Interlopers[PlayerNameRealm][UnitName(unitToken)] = { firstSeen = date(), lastSeen = date(), secondsCounted = 2 };
-					end
-					if KBTUI_DB.Interlopers[PlayerNameRealm][UnitName(unitToken)].lastSeen ~= nil then
-						KBTUI_DB.Interlopers[PlayerNameRealm][UnitName(unitToken)].lastSeen = date();
-					end
-					if KBTUI_DB.Interlopers[PlayerNameRealm][UnitName(unitToken)].secondsCounted ~= nil then
-						KBTUI_DB.Interlopers[PlayerNameRealm][UnitName(unitToken)].secondsCounted = KBTUI_DB.Interlopers[PlayerNameRealm][UnitName(unitToken)].secondsCounted + 2
-					end
-					KBT.Session[UnitName(unitToken)] = "|cffde9a26" .. UnitName(unitToken) .. "|r" .. 
-					": Last Seen: " .. "|cffe6cd5e" .. KBTUI_DB.Interlopers[PlayerNameRealm][UnitName(unitToken)].lastSeen .. "|r" ..
-					" | First Seen: " .. "|cffe6cd5e" .. KBTUI_DB.Interlopers[PlayerNameRealm][UnitName(unitToken)].firstSeen .. "|r" ..
-					" | Time Observed: " .. "|cffe6cd5e" .. SecondsToTime(KBTUI_DB.Interlopers[PlayerNameRealm][UnitName(unitToken)].secondsCounted) .. "|r";
-					KBT.mainFrame.SessionPopulate()
-				end
-			end
-		end
+	for i = 1, KBT.Rodeo.MaxSteps, 1 do
+		processUnit(format(NAMEPLATE_TOKEN, i));
 	end
 
-	local MOToken = "mouseover"
+	local MOToken = "mouseover";
 
-	if UnitExists(MOToken) and C_PlayerInfo.GUIDIsPlayer(UnitGUID(MOToken)) and UnitName(MOToken) ~= UnitName("player") then
-		local targetToken = MOToken .. "target";
-
-		if UnitExists(targetToken) then
-			if UnitName(targetToken) == UnitName("player") then
-
-				local nameP, realmP = UnitFullName("player");
-				local PlayerNameRealm = nameP .. "-" .. realmP;
-
-				if KBTUI_DB.SnooperMsg == true then
-					Print(UnitName(MOToken) .. " is targeting " .. UnitName("player"));
-				end
-				if KBTUI_DB.Interlopers[PlayerNameRealm] == nil then
-					KBTUI_DB.Interlopers[PlayerNameRealm] = {};
-				end
-				if KBTUI_DB.Interlopers[PlayerNameRealm][UnitName(MOToken)] == nil then
-					Print("added " .. UnitName(MOToken) .." into Snooper DB");
-					KBTUI_DB.Interlopers[PlayerNameRealm][UnitName(MOToken)] = { firstSeen = date(), lastSeen = date(), secondsCounted = 2 };
-				end
-				if KBTUI_DB.Interlopers[PlayerNameRealm][UnitName(MOToken)].lastSeen ~= nil then
-					KBTUI_DB.Interlopers[PlayerNameRealm][UnitName(MOToken)].lastSeen = date();
-				end
-				if KBTUI_DB.Interlopers[PlayerNameRealm][UnitName(MOToken)].secondsCounted ~= nil then
-					KBTUI_DB.Interlopers[PlayerNameRealm][UnitName(MOToken)].secondsCounted = KBTUI_DB.Interlopers[PlayerNameRealm][UnitName(MOToken)].secondsCounted + 2
-				end
-				KBT.Session[UnitName(MOToken)] = "|cffde9a26" .. UnitName(MOToken) .. "|r" .. 
-				": Last Seen: " .. "|cffe6cd5e" .. KBTUI_DB.Interlopers[PlayerNameRealm][UnitName(MOToken)].lastSeen .. "|r" ..
-				" | First Seen: " .. "|cffe6cd5e" .. KBTUI_DB.Interlopers[PlayerNameRealm][UnitName(MOToken)].firstSeen .. "|r" ..
-				" | Time Observed: " .. "|cffe6cd5e" .. SecondsToTime(KBTUI_DB.Interlopers[PlayerNameRealm][UnitName(MOToken)].secondsCounted) .. "|r";
-				KBT.mainFrame.SessionPopulate()
-			end
-		end
-	end
+	processUnit(MOToken);
 end

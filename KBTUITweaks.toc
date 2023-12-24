@@ -10,4 +10,10 @@ Widgets/Snooper.lua
 Widgets/HugCounter.lua
 Widgets/ProfessionLevel.lua
 Widgets/Mainframe.lua
+Widgets/InlineAbsorbBar.lua
+Widgets/HealthValueTruncate.lua
+Widgets/Huah.lua
+Widgets/PartySyncTest.lua
+Widgets/SlashEcho.lua
+Widgets/SoupMode.lua
 core.lua
