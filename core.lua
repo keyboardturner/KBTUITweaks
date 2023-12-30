@@ -111,6 +111,30 @@ KBT.commands = {
 		KBT.HideWithFadeProf()
 	end,
 
+	["milk"] = function()
+		local MILKMODE = CreateFrame("Frame")
+		local function MILKBUY()
+			KBT.MILKMODE = true
+			local a={"Ice Cold Milk",20}
+			for i=1,GetMerchantNumItems() do
+				if GetMerchantItemInfo(i)==a[1] and KBT.MILKMODE == true then
+					BuyMerchantItem(i,a[2])
+				end
+			end
+		end
+		if KBT.MILKMODE == nil then
+			KBT.MILKMODE = false
+		end
+		if KBT.MILKMODE == true then
+			KBT.MILKMODE = false
+			MILKMODE:SetScript("OnUpdate", nil)
+			return
+		else
+			Print("MILK MODE ACTIVATED. PLEASE BE ADVISED, YOU WILL NOW BUY AS MUCH ICE COLD MILK AS POSSIBLE FOREVER (until you reload or log out)")
+			MILKMODE:SetScript("OnUpdate", MILKBUY)
+		end
+	end,
+
 	["help"] = function()
 		Print("List of commands:\n"..
 			"snoop - toggle chat messages whenever a nameplate targets you.\n"..

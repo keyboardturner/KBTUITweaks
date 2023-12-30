@@ -16,4 +16,5 @@ Widgets/Huah.lua
 Widgets/PartySyncTest.lua
 Widgets/SlashEcho.lua
 Widgets/SoupMode.lua
+Widgets/SilenceKrenzen.lua
 core.lua

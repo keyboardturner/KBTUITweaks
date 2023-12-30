@@ -32,12 +32,12 @@ local function processUnit(unitToken)
 
 			if KBTUI_DB.Interlopers[PlayerNameRealm][UnitName(unitToken)] == nil then
 				Print("added " .. UnitName(unitToken) .. " into Snooper DB");
-				KBTUI_DB.Interlopers[PlayerNameRealm][UnitName(unitToken)] = { firstSeen = date(), lastSeen = date(), secondsCounted = 2 };
+				KBTUI_DB.Interlopers[PlayerNameRealm][UnitName(unitToken)] = { firstSeen = date(), lastSeen = date(), secondsCounted = 1 };
 			end
 
 			local interloperData = KBTUI_DB.Interlopers[PlayerNameRealm][UnitName(unitToken)];
 			interloperData.lastSeen = date();
-			interloperData.secondsCounted = interloperData.secondsCounted + 2;
+			interloperData.secondsCounted = interloperData.secondsCounted + 1;
 
 			KBT.Session[UnitName(unitToken)] = "|cffde9a26" .. UnitName(unitToken) .. "|r" ..
 					": Last Seen: " .. "|cffe6cd5e" .. interloperData.lastSeen .. "|r" ..
@@ -50,7 +50,7 @@ local function processUnit(unitToken)
 end
 
 function KBT.Rodeo:Lasso()
-	C_Timer.After(2, KBT.Rodeo.Lasso);
+	C_Timer.After(1, KBT.Rodeo.Lasso);
 
 	for i = 1, KBT.Rodeo.MaxSteps, 1 do
 		processUnit(format(NAMEPLATE_TOKEN, i));
