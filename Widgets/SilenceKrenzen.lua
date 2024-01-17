@@ -1,6 +1,3 @@
--- Create a frame to handle events
-local frame = CreateFrame("Frame")
-
 -- Set the coordinates for the restricted area
 local restrictedArea = {
 	minX = 852.40+7, -- Replace with your desired minimum X coordinate
@@ -8,10 +5,6 @@ local restrictedArea = {
 	maxX = 852.40-7, -- Replace with your desired maximum X coordinate
 	maxY = -8958.90+7, -- Replace with your desired maximum Y coordinate
 }
-
--- Register events to listen for
-frame:RegisterEvent("CHAT_MSG_MONSTER_SAY")
-frame:RegisterEvent("CHAT_MSG_MONSTER_EMOTE")
 
 local function chatfilter(self, event, message, sender, ...)
 	-- Check if the player is outside the restricted area

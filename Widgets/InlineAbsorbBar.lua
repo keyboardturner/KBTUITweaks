@@ -79,11 +79,3 @@ function AH:OnEvent()
 end
 
 AH:SetScript("OnEvent", AH.OnEvent)
-
-bingus.TotalAbsorbBar:SetVertexColor(0, 0, 0, 0)
-bingus.TotalAbsorbBarOverlay:SetVertexColor(0, 0, 0, 0)
-bingus.OverAbsorbGlow:SetVertexColor(0, 0, 0, 0)
-
-targetStuff.TotalAbsorbBar:SetVertexColor(0, 0, 0, 0)
-targetStuff.TotalAbsorbBarOverlay:SetVertexColor(0, 0, 0, 0)
-targetStuff.OverAbsorbGlow:SetVertexColor(0, 0, 0, 0)
