@@ -1,4 +1,4 @@
-## Interface: 100200
+## Interface: 100206
 ## Author: Keyboardturner
 ## Version: 0.0.1
 ## Title: KBT UI Tweaks
