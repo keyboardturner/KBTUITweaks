@@ -1,10 +1,12 @@
-## Interface: 100206
+## Interface: 100207
 ## Author: Keyboardturner
 ## Version: 0.0.1
 ## Title: KBT UI Tweaks
 ## Notes: Personal UI adjustments and settings.
 ## SavedVariables: KBTUI_DB
 ## OptionalDeps: totalRP3
+
+Libs\LibForecast\lib.xml
 
 Widgets/Snooper.lua
 Widgets/HugCounter.lua
@@ -17,4 +19,15 @@ Widgets/PartySyncTest.lua
 Widgets/SlashEcho.lua
 Widgets/SoupMode.lua
 Widgets/SilenceKrenzen.lua
+Widgets/AngleurHider.lua
+Widgets/Weather.lua
+Widgets/IgnoredList.lua
+Widgets/FlipbookExample.lua
+Widgets/DemonRP.lua
+Widgets/MountSpecial.lua
+Widgets/FixVoidStorage.lua
+Widgets/FadeMiscFrames.lua
+Widgets/SoundIdentifier.lua
+Widgets/MovableTargetTargetFrame.lua
+
 core.lua

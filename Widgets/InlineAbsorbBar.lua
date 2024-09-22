@@ -4,9 +4,9 @@ AH:RegisterEvent("UNIT_ABSORB_AMOUNT_CHANGED")
 AH:RegisterEvent("PLAYER_TARGET_CHANGED")
 
 
-local bingus = PlayerFrame.PlayerFrameContent.PlayerFrameContentMain.HealthBarArea.HealthBar
+local playerStuff = PlayerFrame.PlayerFrameContent.PlayerFrameContentMain.HealthBarsContainer.HealthBar
 
-local targetStuff = TargetFrame.TargetFrameContent.TargetFrameContentMain.HealthBar
+local targetStuff = TargetFrame.TargetFrameContent.TargetFrameContentMain.HealthBarsContainer.HealthBar
 
 AH.Absorb = UnitGetTotalAbsorbs("player")
 AH.TarAbsorb = UnitGetTotalAbsorbs("target")
@@ -25,7 +25,7 @@ AH.StatusBar:SetMinMaxValues(0, AH.MaxHP)
 AH.StatusBar:SetFillStyle("STANDARD")
 AH.StatusBar:SetOrientation("HORIZONTAL")
 AH.StatusBar:SetValue(AH.Absorb)
-AH.StatusBar:SetAllPoints(bingus)
+AH.StatusBar:SetAllPoints(playerStuff)
 
 
 AH.StatusBar.bg = AH.StatusBar:CreateTexture(nil, "BACKGROUND")
@@ -64,6 +64,11 @@ AH.StatusBar.value:SetTextColor(0, 1, 0)
 AH.StatusBar.value:SetText("100%")
 ]]
 
+function AH.HideBars()
+	playerStuff.TotalAbsorbBar:SetAlpha(0)
+	targetStuff.TotalAbsorbBar:SetAlpha(0)
+end
+
 function AH:OnEvent()
 	AH.Absorb = UnitGetTotalAbsorbs("player")
 	AH.TarAbsorb = UnitGetTotalAbsorbs("target")
@@ -76,6 +81,7 @@ function AH:OnEvent()
 
 	AH.StatusBarTarget:SetMinMaxValues(0, AH.TarMaxHP)
 	AH.StatusBarTarget:SetValue(AH.TarAbsorb)
+	RunNextFrame(AH.HideBars)
 end
 
 AH:SetScript("OnEvent", AH.OnEvent)

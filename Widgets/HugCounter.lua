@@ -125,7 +125,7 @@ end
 
 --TRP3 integration-------------------------------------
 function KBT.AutoEmote:TRPUpdateCurrently(victim)
-	if not IsAddOnLoaded("TotalRP3") then
+	if not C_AddOns.IsAddOnLoaded("TotalRP3") then
 		return false;
 	end
 

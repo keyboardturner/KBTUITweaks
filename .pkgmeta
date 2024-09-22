@@ -1,0 +1,24 @@
+package-as: KBTUITweaks
+enable-nolib-creation: yes
+
+license-output: LICENSE
+
+externals:
+  Libs/LibForecast: https://github.com/Meorawr/LibForecast
+
+ignore:
+  - Libs/*/*.rockspec
+  - Libs/*/*.toc
+  - Libs/*/changelog.*
+  - Libs/*/CHANGELOG.*
+  - Libs/*/docs
+  - Libs/*/examples
+  - Libs/*/README.*
+  - Libs/*/tests
+  - Libs/*/.pkgmeta
+  - CHANGELOG.md
+  - README.md
+
+manual-changelog:
+  filename: CHANGELOG.md
+  markup-type: markdown

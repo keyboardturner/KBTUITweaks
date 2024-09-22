@@ -23,6 +23,7 @@ end);
 KBT.mainFrame:SetScript("OnMouseUp", function(self, button)
 	KBT.mainFrame:StopMovingOrSizing();
 end);
+KBT.mainFrame:SetFrameStrata("HIGH")
 KBT.mainFrame:Hide()
 KBT.mainFrame:SetScript("OnShow", function()
 	PlaySound(74421);
@@ -227,8 +228,14 @@ function KBT.mainFrame.SessionPopulate()
 	for k, v in pairs(KBT.Session) do
 		--TRP3_API.slash.openProfile(k)
 
-		if IsAddOnLoaded("TotalRP3") == true then
-			if AddOn_TotalRP3.Player.static.CreateFromNameAndRealm(k, realmP):GetProfileID() then
+		if C_AddOns.IsAddOnLoaded("TotalRP3") == true then
+			local realmU
+			if k["realmU"] == nil then
+				realmU = realmP
+			else
+				realmU = k["realmU"]
+			end
+			if AddOn_TotalRP3.Player.static.CreateFromNameAndRealm(k, k[realmU]):GetProfileID() then
 				if not KBT.mainFrame[k.."portraitClick"] then
 					KBT.mainFrame[k.."portraitClick"] = CreateFrame("Frame", nil, KBT.mainFrame.sessionFrame)
 				end
@@ -246,8 +253,8 @@ function KBT.mainFrame.SessionPopulate()
 				KBT.mainFrame[k.."portraitClick"].IconTex = KBT.mainFrame[k.."portraitClick"]:CreateTexture()
 				KBT.mainFrame[k.."portraitClick"].IconTex:SetAllPoints()
 				KBT.mainFrame[k.."portraitClick"].IconTex:SetVertexColor(.7,.7,.7)
-				if AddOn_TotalRP3.Player.static.CreateFromNameAndRealm(k, realmP):GetCustomIcon() then
-					KBT.mainFrame[k.."portraitClick"].IconTex:SetTexture("Interface\\Icons\\"..AddOn_TotalRP3.Player.static.CreateFromNameAndRealm(k, realmP):GetCustomIcon())
+				if AddOn_TotalRP3.Player.static.CreateFromNameAndRealm(k, k[realmU]):GetCustomIcon() then
+					KBT.mainFrame[k.."portraitClick"].IconTex:SetTexture("Interface\\Icons\\"..AddOn_TotalRP3.Player.static.CreateFromNameAndRealm(k, k[realmU]):GetCustomIcon())
 				else
 					KBT.mainFrame[k.."portraitClick"].IconTex:SetTexture("Interface\\Icons\\"..iconFallback)
 				end
@@ -305,8 +312,14 @@ function KBT.mainFrame.Populate()
 	if KBTUI_DB.Interlopers[PlayerNameRealm] then
 		for k, v in pairs(KBTUI_DB.Interlopers[PlayerNameRealm]) do
 			--TRP3_API.slash.openProfile(k)
-			if IsAddOnLoaded("TotalRP3") == true then
-				if AddOn_TotalRP3.Player.static.CreateFromNameAndRealm(k, realmP):GetProfileID() then
+			if C_AddOns.IsAddOnLoaded("TotalRP3") == true then
+				local realmU
+				if k["realmU"] == nil then
+					realmU = realmP
+				else
+					realmU = k["realmU"]
+				end
+				if AddOn_TotalRP3.Player.static.CreateFromNameAndRealm(k, k[realmU]):GetProfileID() then
 					if not KBT.mainFrame[k.."portraitClickSV"] then
 						KBT.mainFrame[k.."portraitClickSV"] = CreateFrame("Frame", nil, KBT.mainFrame.backFrame)
 					end
@@ -324,8 +337,8 @@ function KBT.mainFrame.Populate()
 					KBT.mainFrame[k.."portraitClickSV"].IconTex = KBT.mainFrame[k.."portraitClickSV"]:CreateTexture()
 					KBT.mainFrame[k.."portraitClickSV"].IconTex:SetAllPoints()
 					KBT.mainFrame[k.."portraitClickSV"].IconTex:SetVertexColor(.7,.7,.7)
-					if AddOn_TotalRP3.Player.static.CreateFromNameAndRealm(k, realmP):GetCustomIcon() then
-						KBT.mainFrame[k.."portraitClickSV"].IconTex:SetTexture("Interface\\Icons\\"..AddOn_TotalRP3.Player.static.CreateFromNameAndRealm(k, realmP):GetCustomIcon())
+					if AddOn_TotalRP3.Player.static.CreateFromNameAndRealm(k, k[realmU]):GetCustomIcon() then
+						KBT.mainFrame[k.."portraitClickSV"].IconTex:SetTexture("Interface\\Icons\\"..AddOn_TotalRP3.Player.static.CreateFromNameAndRealm(k, k[realmU]):GetCustomIcon())
 					else
 						KBT.mainFrame[k.."portraitClickSV"].IconTex:SetTexture("Interface\\Icons\\"..iconFallback)
 					end

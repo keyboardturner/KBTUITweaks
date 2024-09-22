@@ -59,8 +59,12 @@ function KBT.CVar:OnEvent(event,arg1)
 		EventToastManagerFrame:Hide();
 		EventToastManagerFrame:EnableMouse(false);
 		if EventToastManagerFrame.currentDisplayingToast then
-			EventToastManagerFrame.currentDisplayingToast.Title:EnableMouse(false);
-			EventToastManagerFrame.currentDisplayingToast.SubTitle:EnableMouse(false);
+			if EventToastManagerFrame.currentDisplayingToast.Title then
+				EventToastManagerFrame.currentDisplayingToast.Title:EnableMouse(false);
+			end
+			if EventToastManagerFrame.currentDisplayingToast.SubTitle then
+				EventToastManagerFrame.currentDisplayingToast.SubTitle:EnableMouse(false);
+			end
 		end
 	end
 end
