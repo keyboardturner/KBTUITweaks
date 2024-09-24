@@ -2,10 +2,13 @@
 local spellTextures = {
 
 	-- Frost Death Knight "Spellblade"
-	[49020] = 135852, -- Obliterate
-	[49143] = 135854, -- Frost Strike
-	[47541] = 5929586, -- Death Coil
-	[43265] = 1041234, -- Death and Decay
+	[49020] = "Interface\\AddOns\\KBTUITweaks\\Assets\\Textures\\Icons\\Obliterate", -- Obliterate
+	[49143] = "Interface\\AddOns\\KBTUITweaks\\Assets\\Textures\\Icons\\FrostStrike", -- Frost Strike
+	[47541] = "Interface\\AddOns\\KBTUITweaks\\Assets\\Textures\\Icons\\DeathCoil", -- Death Coil
+	[49184] = "Interface\\AddOns\\KBTUITweaks\\Assets\\Textures\\Icons\\HowlingBlast", -- Death and Decay
+	[43265] = "Interface\\AddOns\\KBTUITweaks\\Assets\\Textures\\Icons\\DeathandDecay", -- Death and Decay
+	[196770] = "Interface\\AddOns\\KBTUITweaks\\Assets\\Textures\\Icons\\RemorselessWinter", -- Remorseless Winter
+	[48707] = "Interface\\AddOns\\KBTUITweaks\\Assets\\Textures\\Icons\\Anti-Magic Shell2", -- Anti-Magic Shell
 };
 
 local function OnEvent()
