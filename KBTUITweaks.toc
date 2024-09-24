@@ -29,5 +29,8 @@ Widgets/FixVoidStorage.lua
 Widgets/FadeMiscFrames.lua
 Widgets/SoundIdentifier.lua
 Widgets/MovableTargetTargetFrame.lua
+Widgets/ActionButtonReplacer.lua
+Widgets/ActionButtonBuffDurations.lua
+Widgets/DKRuneReplacer.lua
 
 core.lua
