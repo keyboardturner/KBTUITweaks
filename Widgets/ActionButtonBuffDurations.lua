@@ -11,6 +11,13 @@ local spellData = {
 	[48265] = { buffID = 48265 },	-- Death's Advance
 	[49039] = { buffID = 49039 },	-- Lichborne
 
+	-- Mage
+	[11426] = { buffID = 11426 }, -- Ice Barrier
+	[66] = { buffID = 32612 }, -- Invisibility
+	[130] = { buffID = 130 }, -- Slow Fall
+
+	-- Racials
+	[58984] = { buffID = 58984 }, -- Shadowmeld
 };
 
 -- Define the mapping of action bar ranges to their respective button names
@@ -28,6 +35,18 @@ local actionBarMappings = {
 
 local borderTex = "Interface\\AddOns\\KBTUITweaks\\Assets\\Textures\\Button_Border_White"
 
+local function SetCustomSwipeColor(cooldown)
+	local className, classFile, classID = UnitClass("player");
+
+	if classID == 8 then -- Mage
+		cooldown:SetSwipeColor(0.25, 0.78, 0.92, 1);
+	elseif classID == 6 then -- Death Knight
+		cooldown:SetSwipeColor(.41, .85, 1, 1); -- Frost DK (Spellblade?)
+	else
+		cooldown:SetSwipeColor(.41, .85, 1, 1);
+	end
+end
+
 -- Create a radial cooldown texture
 local function CreateCooldownTexture(button)
 	local cooldown = CreateFrame("Cooldown", nil, button, "CooldownFrameTemplate");
@@ -38,7 +57,7 @@ local function CreateCooldownTexture(button)
 	cooldown:SetReverse(false);  -- Clockwise fill; set to true for counterclockwise
 	cooldown:SetHideCountdownNumbers(true); -- Hide default countdown numbers if present
 	cooldown:SetSwipeTexture(borderTex);
-	cooldown:SetSwipeColor(.41, .85, 1, 1);
+	SetCustomSwipeColor(cooldown);
 	return cooldown;
 end
 
