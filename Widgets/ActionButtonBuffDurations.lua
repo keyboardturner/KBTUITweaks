@@ -39,7 +39,7 @@ local function SetCustomSwipeColor(cooldown)
 	local className, classFile, classID = UnitClass("player");
 
 	if classID == 8 then -- Mage
-		cooldown:SetSwipeColor(0.25, 0.78, 0.92, 1);
+		cooldown:SetSwipeColor(.984, .714, .820, 1);
 	elseif classID == 6 then -- Death Knight
 		cooldown:SetSwipeColor(.41, .85, 1, 1); -- Frost DK (Spellblade?)
 	else

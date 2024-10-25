@@ -49,16 +49,17 @@ local spellTextures = {
 		default = "Interface\\AddOns\\KBTUITweaks\\Assets\\Textures\\Icons\\RaiseDead",
 	},
 
-	-- Frost Mage Corrections
+	-- Frost Mage
 	[11426] = { -- Ice Barrier
 		default = "Interface\\ICONS\\Spell_Frost_FrostArmor02",
 		buffed = "Interface\\ICONS\\Spell_Frost_ChillingArmor",
 		buffID = 11426,
 		model = {
 			modelID = 166366,
-			translate = { 2, 0, -1 },
+			translate = { 4, 0, -.1 },
 			camera = { 2.62, 0, 0},
 			animation = 158,
+			heightFactor = 0,
 		},
 	},
 	[130] = { -- Slow Fall
@@ -67,9 +68,45 @@ local spellTextures = {
 			translate = { 2, 0, -1 },
 			camera = { 2.62, 0, 0},
 			animation = 0,
+			heightFactor = .5,
 		},
 		buffID = 130,
 	},
+	[66] = { -- Invisibility
+		model = {
+			modelID = 166429,
+			translate = { 4, 0, -.5 },
+			camera = { 2.62, 0, 0},
+			animation = 0,
+			heightFactor = 0,
+		},
+		buffID = 32612,
+	},
+
+	--Arcane Mage Fixes
+	[5143] = { -- Arcane Missiles (Aether Attunement proc)
+		default = "Interface\\ICONS\\spell_nature_starfall",
+		buffed = "Interface\\ICONS\\ability_socererking_arcanereplication_nightborne",
+		buffID = 453601,
+	},
+
+	--Nightborne Arcane Mage
+	[44425] = { -- Arcane Barrage
+		default = "Interface\\ICONS\\ability_mage_arcanebarrage_nightborne",
+	},
+	[30451] = { -- Arcane Blast
+		default = "Interface\\ICONS\\spell_arcane_blast_nightborne",
+	},
+	[153626] = { -- Arcane Orb
+		default = "Interface\\ICONS\\spell_mage_arcaneorb_nightborne",
+	},
+	[157980] = { -- Supernova
+		default = "Interface\\ICONS\\spell_mage_supernova_nightborne",
+	},
+	[235450] = { -- Prismatic Barrier
+		default = "Interface\\AddOns\\KBTUITweaks\\Assets\\Textures\\Icons\\Prismatic_Barrier2",
+	},
+
 
 	-- Racials
 	[58984] = { -- Shadowmeld
@@ -178,7 +215,7 @@ local function UpdateModelScene(frame, slot)
 				-- If the spell is active, show the ModelScene with the appropriate model
 				if not modelScene:IsShown() then
 					modelScene:ClearAllPoints();
-					modelScene:SetPoint("TOPLEFT", frame, "TOPLEFT", 0, frame:GetHeight() * .5);
+					modelScene:SetPoint("TOPLEFT", frame, "TOPLEFT", 0, frame:GetHeight() * spellData.model.heightFactor);
 					modelScene:SetPoint("BOTTOMRIGHT", frame, "BOTTOMRIGHT", 0, 0);
 					modelScene.model:SetModelByFileID(spellData.model.modelID);
 					modelScene.model:SetPosition(unpack(spellData.model.translate));

@@ -8,6 +8,7 @@ local function Print(text)
 end
 
 local NAMEPLATE_TOKEN = "nameplate%d";
+local NAMEPLATE_NUMBER = "NamePlate%d";
 
 KBT.Rodeo = CreateFrame("Frame");
 
@@ -15,7 +16,77 @@ KBT.Rodeo.MaxSteps = 50;
 
 KBT.Session = {};
 
+KBT.NamePlateTextures = {};
+
+--[[
+
+
+	for _, namePlate in pairs(C_NamePlate.GetNamePlates()) do
+		local unitToken = namePlate.namePlateUnitToken
+		local frameName = namePlate:GetName()
+		
+		if unitToken then
+
+			if KBT.NamePlateTextures[formattedToken] and KBT.NamePlateTextures[formattedToken]:IsShown() then
+			KBT.NamePlateTextures[formattedToken]:Hide();
+			end
+
+			local formattedTokenSub = formatNameplate(unitToken)
+
+			if formattedTokenSub and not KBT.NamePlateTextures[formattedTokenSub] then
+				KBT.NamePlateTextures[formattedTokenSub] = CreateFrame("Frame", nil, UIParent);
+				KBT.NamePlateTextures[formattedTokenSub]:SetPoint("CENTER", _G[formattedTokenSub], "CENTER", 5, 5);
+				KBT.NamePlateTextures[formattedTokenSub]:SetSize(64, 64);
+
+				KBT.NamePlateTextures[formattedTokenSub].tex = KBT.NamePlateTextures[formattedTokenSub]:CreateTexture();
+				KBT.NamePlateTextures[formattedTokenSub].tex:SetAllPoints();
+				KBT.NamePlateTextures[formattedTokenSub].tex:SetTexture("interface\\addons\\KBTUITweaks\\Assets\\Textures\\eye");
+			elseif formattedTokenSub then
+				KBT.NamePlateTextures[formattedTokenSub]:ClearAllPoints()
+				KBT.NamePlateTextures[formattedTokenSub]:SetPoint("CENTER", _G[formattedTokenSub], "CENTER", 5, 5)
+				KBT.NamePlateTextures[formattedTokenSub]:Show()
+			end
+		end
+	end
+
+]]
+
+for i = 1, KBT.Rodeo.MaxSteps, 1 do
+	local nameplate = "NamePlate"..i
+	KBT.NamePlateTextures[nameplate] = CreateFrame("Frame", nil, UIParent);
+	KBT.NamePlateTextures[nameplate]:SetSize(32, 32);
+
+	KBT.NamePlateTextures[nameplate].tex = KBT.NamePlateTextures[nameplate]:CreateTexture();
+	KBT.NamePlateTextures[nameplate].tex:SetAllPoints();
+	KBT.NamePlateTextures[nameplate].tex:SetAtlas("talents-heroclass-ring-minimize-show");
+	--KBT.NamePlateTextures[nameplate].tex:SetVertexColor(.7,.75,1,.85);
+	KBT.NamePlateTextures[nameplate]:Hide();
+end
+
+local function AddOrRemoveNamePlates(self, event, unitToken)
+	local namePlate = C_NamePlate.GetNamePlateForUnit(unitToken)
+	if not namePlate then return end
+	local unitFrame = namePlate:GetName()
+
+	if event == "NAME_PLATE_UNIT_REMOVED" then
+		KBT.NamePlateTextures[unitFrame]:ClearAllPoints();
+		KBT.NamePlateTextures[unitFrame]:Hide();
+	end
+	if event == "NAME_PLATE_UNIT_ADDED" then
+		local targetToken = unitToken .. "target";
+		if UnitExists(targetToken) and UnitName(targetToken) == UnitName("player") then
+			KBT.NamePlateTextures[unitFrame]:ClearAllPoints();
+			KBT.NamePlateTextures[unitFrame]:SetPoint("RIGHT", _G[unitFrame], "LEFT", 0, 0);
+			KBT.NamePlateTextures[unitFrame]:Show();
+		end
+	end
+end
+
 local function processUnit(unitToken)
+	local namePlate = C_NamePlate.GetNamePlateForUnit(unitToken)
+	if not namePlate then return end
+	local unitFrame = namePlate:GetName()
+
 	if UnitExists(unitToken) and C_PlayerInfo.GUIDIsPlayer(UnitGUID(unitToken)) then
 		local targetToken = unitToken .. "target";
 		if UnitExists(targetToken) and UnitName(targetToken) == UnitName("player") then
@@ -23,6 +94,12 @@ local function processUnit(unitToken)
 			local realmU = select(2, UnitFullName(unitToken, true));
 			if realmU == nil then
 				realmU = realmP
+			end
+
+			if KBT.NamePlateTextures[unitFrame] then
+				KBT.NamePlateTextures[unitFrame]:ClearAllPoints();
+				KBT.NamePlateTextures[unitFrame]:SetPoint("RIGHT", _G[unitFrame], "LEFT", 0, 0);
+				KBT.NamePlateTextures[unitFrame]:Show();
 			end
 
 			local PlayerNameRealm = nameP .. "-" .. realmP;
@@ -54,9 +131,17 @@ local function processUnit(unitToken)
 					" | Time Observed: " .. "|cffe6cd5e" .. SecondsToTime(interloperData.secondsCounted) .. "|r";
 
 			KBT.mainFrame.SessionPopulate();
+		else
+			KBT.NamePlateTextures[unitFrame]:Hide();
 		end
 	end
 end
+
+KBT.Rodeo:RegisterEvent("NAME_PLATE_UNIT_ADDED")
+KBT.Rodeo:RegisterEvent("NAME_PLATE_UNIT_REMOVED")
+
+
+KBT.Rodeo:SetScript("OnEvent",AddOrRemoveNamePlates)
 
 local soundPlayingSmall = false
 local soundPlayingMedium = false
