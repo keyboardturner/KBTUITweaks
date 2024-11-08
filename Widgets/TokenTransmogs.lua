@@ -382,6 +382,34 @@ local itemData = {
 	},
 };
 
+local ClassListTbl = LocalizedClassList();
+
+local function MatchClassIcon(className)
+	for k, v in pairs(ClassListTbl) do
+		if v == className then
+			local coords = CLASS_ICON_TCOORDS[k];
+			return coords
+		end
+	end
+end
+
+local function GetItemClassRequirement(itemLink)
+	local data = C_TooltipInfo.GetHyperlink(itemLink)
+	local pattern = ITEM_CLASSES_ALLOWED:gsub("%%s", "(.+)")
+
+	for k, v in pairs(data.lines) do
+		for key, var in pairs(v) do
+			if key == "leftText" and type(var) == "string" then
+				local classNameFromString = string.match(var, pattern);
+				if classNameFromString then
+					return MatchClassIcon(classNameFromString)
+				end
+			end
+		end
+	end
+end
+
+
 local ItemContextNameTranslator = EnumUtil.GenerateNameTranslation(Enum.ItemCreationContext);
 
 local function GetItemContextFromLink(itemLink)
@@ -405,6 +433,12 @@ local function OnTooltipSetItem(tooltip)
 		for _, appearanceID in ipairs(appearances) do
 			local sources = C_TransmogCollection.GetAllAppearanceSources(appearanceID);
 			local displayLink = select(6, C_TransmogCollection.GetAppearanceSourceInfo(sources[1]));
+			local requiredClass = GetItemClassRequirement(displayLink);
+			if not requiredClass then
+				requiredClass = "";
+			else
+				requiredClass = "|TInterface\\GLUES\\CHARACTERCREATE\\UI-CHARACTERCREATE-CLASSES:15:15:0:0:512:512:".. requiredClass[1]*512 ..":".. requiredClass[2]*512 ..":".. requiredClass[3]*512 ..":".. requiredClass[4]*512 .."|t"
+			end
 			local collected = false;
 			for _, sourceID in ipairs(sources) do
 				if C_TransmogCollection.PlayerHasTransmogItemModifiedAppearance(sourceID) then
@@ -417,7 +451,7 @@ local function OnTooltipSetItem(tooltip)
 			local collectedText = collected and COLLECTED or FOLLOWERLIST_LABEL_UNCOLLECTED;
 			collectedText = collectedColor:WrapTextInColorCode(collectedText);
 
-			tooltip:AddDoubleLine(displayLink .. " " .. difficultyName, collectedText);
+			tooltip:AddDoubleLine(requiredClass .. " " .. displayLink, collectedText);
 			tooltip:Show();
 		end
 	end
