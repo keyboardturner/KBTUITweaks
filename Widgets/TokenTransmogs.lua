@@ -4,6 +4,8 @@ local function _OnTooltipSetItem(tooltip)
 	if not itemLink then return end;
 	
 	local itemAppearanceID, itemModifiedAppearanceID = C_TransmogCollection.GetItemInfo(itemLink);
+
+	--if not itemAppearanceID or not itemModifiedAppearanceID then return end;
 	tooltip:AddDoubleLine("AppearanceID", itemAppearanceID);
 	tooltip:AddDoubleLine("ModifiedAppearanceID", itemModifiedAppearanceID);
 end
@@ -13,7 +15,7 @@ TooltipDataProcessor.AddTooltipPostCall(Enum.TooltipDataType.Item, _OnTooltipSet
 
 
 local itemData = {
-	-- Sepulcher
+	-- Sepulcher of the First Ones
 
 	-- Helm
 	-- Death Knight, Warlock, Demon Hunter
@@ -361,6 +363,359 @@ local itemData = {
 			},
 			[Enum.ItemCreationContext.RaidMythic] = {
 				56091, 56396, 56525,
+			},
+		},
+	},
+
+
+	-- Nerub-ar Palace
+
+	-- Helm
+	-- Death Knight, Warlock, Demon Hunter
+	[225622] = {
+		Items = {
+			[Enum.ItemCreationContext.RaidFinder] = {
+				
+			},
+			[Enum.ItemCreationContext.RaidNormal] = {
+				
+			},
+			[Enum.ItemCreationContext.RaidHeroic] = {
+				
+			},
+			[Enum.ItemCreationContext.RaidMythic] = {
+				
+			},
+		},
+	},
+	-- Hunter, Mage, Druid
+	[225623] = {
+		Items = {
+			[Enum.ItemCreationContext.RaidFinder] = {
+				
+			},
+			[Enum.ItemCreationContext.RaidNormal] = {
+				
+			},
+			[Enum.ItemCreationContext.RaidHeroic] = {
+				
+			},
+			[Enum.ItemCreationContext.RaidMythic] = {
+				
+			},
+		},
+	},
+	-- Paladin, Priest, Shaman
+	[225624] = {
+		Items = {
+			[Enum.ItemCreationContext.RaidFinder] = {
+				
+			},
+			[Enum.ItemCreationContext.RaidNormal] = {
+				
+			},
+			[Enum.ItemCreationContext.RaidHeroic] = {
+				
+			},
+			[Enum.ItemCreationContext.RaidMythic] = {
+				
+			},
+		},
+	},
+	-- Warrior, Rogue, Monk, Evoker
+	[225625] = {
+		Items = {
+			[Enum.ItemCreationContext.RaidFinder] = {
+				
+			},
+			[Enum.ItemCreationContext.RaidNormal] = {
+				
+			},
+			[Enum.ItemCreationContext.RaidHeroic] = {
+				
+			},
+			[Enum.ItemCreationContext.RaidMythic] = {
+				
+			},
+		},
+	},
+
+	-- Shoulder
+	-- Death Knight, Warlock, Demon Hunter
+	[225630] = {
+		Items = {
+			[Enum.ItemCreationContext.RaidFinder] = {
+				
+			},
+			[Enum.ItemCreationContext.RaidNormal] = {
+				
+			},
+			[Enum.ItemCreationContext.RaidHeroic] = {
+				
+			},
+			[Enum.ItemCreationContext.RaidMythic] = {
+				
+			},
+		},
+	},
+	-- Hunter, Mage, Druid
+	[225631] = {
+		Items = {
+			[Enum.ItemCreationContext.RaidFinder] = {
+				
+			},
+			[Enum.ItemCreationContext.RaidNormal] = {
+				
+			},
+			[Enum.ItemCreationContext.RaidHeroic] = {
+				
+			},
+			[Enum.ItemCreationContext.RaidMythic] = {
+				
+			},
+		},
+	},
+	-- Paladin, Priest, Shaman
+	[225632] = {
+		Items = {
+			[Enum.ItemCreationContext.RaidFinder] = {
+				
+			},
+			[Enum.ItemCreationContext.RaidNormal] = {
+				
+			},
+			[Enum.ItemCreationContext.RaidHeroic] = {
+				
+			},
+			[Enum.ItemCreationContext.RaidMythic] = {
+				
+			},
+		},
+	},
+	-- Warrior, Rogue, Monk, Evoker
+	[225633] = {
+		Items = {
+			[Enum.ItemCreationContext.RaidFinder] = {
+				
+			},
+			[Enum.ItemCreationContext.RaidNormal] = {
+				
+			},
+			[Enum.ItemCreationContext.RaidHeroic] = {
+				
+			},
+			[Enum.ItemCreationContext.RaidMythic] = {
+				
+			},
+		},
+	},
+
+	-- Chest
+	-- Death Knight, Warlock, Demon Hunter
+	[225614] = {
+		Items = {
+			[Enum.ItemCreationContext.RaidFinder] = {
+				
+			},
+			[Enum.ItemCreationContext.RaidNormal] = {
+				
+			},
+			[Enum.ItemCreationContext.RaidHeroic] = {
+				
+			},
+			[Enum.ItemCreationContext.RaidMythic] = {
+				
+			},
+		},
+	},
+	-- Hunter, Mage, Druid
+	[225615] = {
+		Items = {
+			[Enum.ItemCreationContext.RaidFinder] = {
+				
+			},
+			[Enum.ItemCreationContext.RaidNormal] = {
+				
+			},
+			[Enum.ItemCreationContext.RaidHeroic] = {
+				
+			},
+			[Enum.ItemCreationContext.RaidMythic] = {
+				
+			},
+		},
+	},
+	-- Paladin, Priest, Shaman
+	[225616] = {
+		Items = {
+			[Enum.ItemCreationContext.RaidFinder] = {
+				
+			},
+			[Enum.ItemCreationContext.RaidNormal] = {
+				
+			},
+			[Enum.ItemCreationContext.RaidHeroic] = {
+				
+			},
+			[Enum.ItemCreationContext.RaidMythic] = {
+				
+			},
+		},
+	},
+	-- Warrior, Rogue, Monk, Evoker
+	[225617] = {
+		Items = {
+			[Enum.ItemCreationContext.RaidFinder] = {
+				
+			},
+			[Enum.ItemCreationContext.RaidNormal] = {
+				
+			},
+			[Enum.ItemCreationContext.RaidHeroic] = {
+				
+			},
+			[Enum.ItemCreationContext.RaidMythic] = {
+				
+			},
+		},
+	},
+
+	-- Hands
+	-- Death Knight, Warlock, Demon Hunter
+	[225618] = {
+		Items = {
+			[Enum.ItemCreationContext.RaidFinder] = {
+				
+			},
+			[Enum.ItemCreationContext.RaidNormal] = {
+				
+			},
+			[Enum.ItemCreationContext.RaidHeroic] = {
+				
+			},
+			[Enum.ItemCreationContext.RaidMythic] = {
+				
+			},
+		},
+	},
+	-- Hunter, Mage, Druid
+	[225619] = {
+		Items = {
+			[Enum.ItemCreationContext.RaidFinder] = {
+				
+			},
+			[Enum.ItemCreationContext.RaidNormal] = {
+				
+			},
+			[Enum.ItemCreationContext.RaidHeroic] = {
+				
+			},
+			[Enum.ItemCreationContext.RaidMythic] = {
+				
+			},
+		},
+	},
+	-- Paladin, Priest, Shaman
+	[225620] = {
+		Items = {
+			[Enum.ItemCreationContext.RaidFinder] = {
+				
+			},
+			[Enum.ItemCreationContext.RaidNormal] = {
+				
+			},
+			[Enum.ItemCreationContext.RaidHeroic] = {
+				
+			},
+			[Enum.ItemCreationContext.RaidMythic] = {
+				
+			},
+		},
+	},
+	-- Warrior, Rogue, Monk, Evoker
+	[225621] = {
+		Items = {
+			[Enum.ItemCreationContext.RaidFinder] = {
+				
+			},
+			[Enum.ItemCreationContext.RaidNormal] = {
+				
+			},
+			[Enum.ItemCreationContext.RaidHeroic] = {
+				
+			},
+			[Enum.ItemCreationContext.RaidMythic] = {
+				
+			},
+		},
+	},
+
+	-- Legs
+	-- Death Knight, Warlock, Demon Hunter
+	[225626] = {
+		Items = {
+			[Enum.ItemCreationContext.RaidFinder] = {
+				
+			},
+			[Enum.ItemCreationContext.RaidNormal] = {
+				
+			},
+			[Enum.ItemCreationContext.RaidHeroic] = {
+				
+			},
+			[Enum.ItemCreationContext.RaidMythic] = {
+				
+			},
+		},
+	},
+	-- Hunter, Mage, Druid
+	[225627] = {
+		Items = {
+			[Enum.ItemCreationContext.RaidFinder] = {
+				
+			},
+			[Enum.ItemCreationContext.RaidNormal] = {
+				
+			},
+			[Enum.ItemCreationContext.RaidHeroic] = {
+				
+			},
+			[Enum.ItemCreationContext.RaidMythic] = {
+				
+			},
+		},
+	},
+	-- Paladin, Priest, Shaman
+	[225628] = {
+		Items = {
+			[Enum.ItemCreationContext.RaidFinder] = {
+				
+			},
+			[Enum.ItemCreationContext.RaidNormal] = {
+				
+			},
+			[Enum.ItemCreationContext.RaidHeroic] = {
+				
+			},
+			[Enum.ItemCreationContext.RaidMythic] = {
+				
+			},
+		},
+	},
+	-- Warrior, Rogue, Monk, Evoker
+	[225629] = {
+		Items = {
+			[Enum.ItemCreationContext.RaidFinder] = {
+				
+			},
+			[Enum.ItemCreationContext.RaidNormal] = {
+				
+			},
+			[Enum.ItemCreationContext.RaidHeroic] = {
+				
+			},
+			[Enum.ItemCreationContext.RaidMythic] = {
+				
 			},
 		},
 	},
