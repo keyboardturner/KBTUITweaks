@@ -8,7 +8,6 @@ local function Print(text)
 end
 
 local NAMEPLATE_TOKEN = "nameplate%d";
-local NAMEPLATE_NUMBER = "NamePlate%d";
 
 KBT.Rodeo = CreateFrame("Frame");
 
@@ -17,39 +16,6 @@ KBT.Rodeo.MaxSteps = 50;
 KBT.Session = {};
 
 KBT.NamePlateTextures = {};
-
---[[
-
-
-	for _, namePlate in pairs(C_NamePlate.GetNamePlates()) do
-		local unitToken = namePlate.namePlateUnitToken
-		local frameName = namePlate:GetName()
-		
-		if unitToken then
-
-			if KBT.NamePlateTextures[formattedToken] and KBT.NamePlateTextures[formattedToken]:IsShown() then
-			KBT.NamePlateTextures[formattedToken]:Hide();
-			end
-
-			local formattedTokenSub = formatNameplate(unitToken)
-
-			if formattedTokenSub and not KBT.NamePlateTextures[formattedTokenSub] then
-				KBT.NamePlateTextures[formattedTokenSub] = CreateFrame("Frame", nil, UIParent);
-				KBT.NamePlateTextures[formattedTokenSub]:SetPoint("CENTER", _G[formattedTokenSub], "CENTER", 5, 5);
-				KBT.NamePlateTextures[formattedTokenSub]:SetSize(64, 64);
-
-				KBT.NamePlateTextures[formattedTokenSub].tex = KBT.NamePlateTextures[formattedTokenSub]:CreateTexture();
-				KBT.NamePlateTextures[formattedTokenSub].tex:SetAllPoints();
-				KBT.NamePlateTextures[formattedTokenSub].tex:SetTexture("interface\\addons\\KBTUITweaks\\Assets\\Textures\\eye");
-			elseif formattedTokenSub then
-				KBT.NamePlateTextures[formattedTokenSub]:ClearAllPoints()
-				KBT.NamePlateTextures[formattedTokenSub]:SetPoint("CENTER", _G[formattedTokenSub], "CENTER", 5, 5)
-				KBT.NamePlateTextures[formattedTokenSub]:Show()
-			end
-		end
-	end
-
-]]
 
 for i = 1, KBT.Rodeo.MaxSteps, 1 do
 	local nameplate = "NamePlate"..i

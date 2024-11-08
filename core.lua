@@ -54,7 +54,8 @@ function KBT.CVar:OnEvent(event,arg1)
 	if event == "PLAYER_ENTERING_WORLD" then
 		--C_CVar.SetCVar("SoftTargetFriend", 0)
 		--C_CVar.SetCVar("SoftTargetInteract", 1)
-		C_CVar.SetCVar("WeatherDensity", 3);
+		C_CVar.SetCVar("WeatherDensity", 3); -- something likes to make this 0, so revert it.
+		C_CVar.SetCVar("AutoPushSpellToActionBar", 0); -- stops auto-adding spells when swapping spec, etc.
 		Print("CVar Settings for KBT set");
 		EventToastManagerFrame:Hide();
 		EventToastManagerFrame:EnableMouse(false);

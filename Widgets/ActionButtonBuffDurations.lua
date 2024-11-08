@@ -16,8 +16,33 @@ local spellData = {
 	[66] = { buffID = 32612 }, -- Invisibility
 	[130] = { buffID = 130 }, -- Slow Fall
 
+	-- Rogue
+	[13877] = { buffID = 13877 }, -- Blade Flurry
+	[1966] = { buffID = 1966 }, -- Feint
+	[13750] = { buffID = 13750 }, -- Adrenaline Rush
+	[31224] = { buffID = 31224 }, -- Cloak of Shadows
+	[315496] = { buffID = 315496 }, -- Slice and Dice
+	[5277] = { buffID = 5277 }, -- Evasion
+	[185311] = { buffID = 185311 }, -- Crimson Vial
+	[114018] = { buffID = 114018 }, -- Shroud of Concealment
+	[2983] = { buffID = 2983 }, -- Sprint
+	[1856] = { buffID = 115192 }, -- Vanish (Subterfuge)
+	[195457] = { buffID = 457343 }, -- Grappling Hook (Death's Arrival)
+	[381623] = { buffID = 381623 }, -- Thistle Tea
+	[212283] = { buffID = 212283 }, -- Symbols of Death
+	[121471] = { buffID = 121471 }, -- Shadow Blades
+	[185313] = { buffID = 185422 }, -- Shadow Dance
+
+
 	-- Racials
 	[58984] = { buffID = 58984 }, -- Shadowmeld
+
+	-- Dragonriding
+	[403092] = { buffID = 425663 }, -- Aerial Halt (Wind's Respite)
+	[372608] = { buffID = 388367 }, -- Surge Forward (Ohn'ahra's Gusts)
+	[418592] = { buffID = 418592 }, -- Lightning Rush
+	[374994] = { buffID = 375585 }, -- Bronze Timelock (Bronze Rewind)
+
 };
 
 -- Define the mapping of action bar ranges to their respective button names
@@ -30,6 +55,8 @@ local actionBarMappings = {
 	{ start = 145, stop = 156, prefix = "MultiBar5Button" }, -- Action Bar 6
 	{ start = 157, stop = 168, prefix = "MultiBar6Button" }, -- Action Bar 7
 	{ start = 169, stop = 180, prefix = "MultiBar7Button" }, -- Action Bar 8
+	{ start = 73, stop = 84, prefix = "ActionButton" }, -- Main Action Bar (Stealth)
+	{ start = 121, stop = 132, prefix = "ActionButton" }, -- Main Action Bar (Skyriding)
 };
 
 
@@ -42,6 +69,8 @@ local function SetCustomSwipeColor(cooldown)
 		cooldown:SetSwipeColor(.984, .714, .820, 1);
 	elseif classID == 6 then -- Death Knight
 		cooldown:SetSwipeColor(.41, .85, 1, 1); -- Frost DK (Spellblade?)
+	elseif classID == 4 then -- Rogue
+		cooldown:SetSwipeColor(1,.95,.41, 1);
 	else
 		cooldown:SetSwipeColor(.41, .85, 1, 1);
 	end
@@ -129,30 +158,69 @@ local function HandleSpellCast(event, unitTarget, spellID)
 	end
 end
 
--- Event handler for UNIT_SPELLCAST_SUCCEEDED
+-- Update the cooldown texture for a specific slot if it matches a known action
+local function UpdateActionBarSlot(slot)
+	for _, barInfo in ipairs(actionBarMappings) do
+		if slot >= barInfo.start and slot <= barInfo.stop then
+			local buttonName = barInfo.prefix .. (slot - barInfo.start + 1);
+			local button = _G[buttonName];
+			if button then
+				local actionType, actionID = GetActionInfo(slot);
+
+				if (actionType == "spell" or actionType == "macro") and spellData[actionID] then
+					local spellInfo = spellData[actionID];
+					if spellInfo.buffID then
+						CheckBuffAndUpdate(button, button.cooldownTexture, spellInfo);
+					else
+						button.cooldownTexture:Hide();  -- Hide cooldown if no active buff
+					end
+				else
+					button.cooldownTexture:Hide();  -- Hide cooldown if slot action doesn’t match
+				end
+			end
+			break;
+		end
+	end
+end
+
+-- Add 'ACTIONBAR_SLOT_CHANGED' to event handler
 local function OnEvent(self, event, ...)
 	if event == "UNIT_AURA" or event == "SPELL_UPDATE_COOLDOWN" then
 		UpdateAllActionBars();
 	elseif event == "UNIT_SPELLCAST_SUCCEEDED" then
 		local unitTarget, castGUID, spellID = ...;
 		HandleSpellCast(event, unitTarget, spellID);
+	elseif event == "ACTIONBAR_SLOT_CHANGED" then
+		local slot = ...;
+		UpdateActionBarSlot(slot);
 	end
 end
 
+local eventsList = {
+	"UNIT_AURA",
+	"SPELL_UPDATE_COOLDOWN",
+	"UNIT_SPELLCAST_SUCCEEDED",
+	"ACTIONBAR_SLOT_CHANGED",
+	"ACTION_USABLE_CHANGED",
+	"ACTIONBAR_UPDATE_STATE",
+	"ACTIONBAR_UPDATE_USABLE",
+	"UPDATE_BONUS_ACTIONBAR",
+};
+
 -- Initialize the script for tracking and updating
 local f = CreateFrame("Frame");
-f:RegisterEvent("UNIT_AURA");
-f:RegisterEvent("SPELL_UPDATE_COOLDOWN");
-f:RegisterEvent("UNIT_SPELLCAST_SUCCEEDED");
+for _, e in pairs(eventsList) do
+	f:RegisterEvent(e)
+end
 f:SetScript("OnEvent", OnEvent);
 
 -- Create the cooldown textures for each action button
 for _, barInfo in ipairs(actionBarMappings) do
-    for i = barInfo.start, barInfo.stop do
-        local buttonName = barInfo.prefix .. (i - barInfo.start + 1);
-        local button = _G[buttonName];
-        if button then
-            button.cooldownTexture = CreateCooldownTexture(button);
-        end
-    end
+	for i = barInfo.start, barInfo.stop do
+		local buttonName = barInfo.prefix .. (i - barInfo.start + 1);
+		local button = _G[buttonName];
+		if button then
+			button.cooldownTexture = CreateCooldownTexture(button);
+		end
+	end
 end
