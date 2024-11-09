@@ -5,7 +5,7 @@ local function _OnTooltipSetItem(tooltip)
 	
 	local itemAppearanceID, itemModifiedAppearanceID = C_TransmogCollection.GetItemInfo(itemLink);
 
-	--if not itemAppearanceID or not itemModifiedAppearanceID then return end;
+	if not itemAppearanceID or not itemModifiedAppearanceID then return end;
 	tooltip:AddDoubleLine("AppearanceID", itemAppearanceID);
 	tooltip:AddDoubleLine("ModifiedAppearanceID", itemModifiedAppearanceID);
 end
@@ -375,16 +375,16 @@ local itemData = {
 	[225622] = {
 		Items = {
 			[Enum.ItemCreationContext.RaidFinder] = {
-				
+				91659, 93102, 91882,
 			},
 			[Enum.ItemCreationContext.RaidNormal] = {
-				
+				91650, 93037, 91831,
 			},
 			[Enum.ItemCreationContext.RaidHeroic] = {
-				
+				91686, 93089, 91860,
 			},
 			[Enum.ItemCreationContext.RaidMythic] = {
-				
+				91649, 93073, 91828,
 			},
 		},
 	},
@@ -392,16 +392,16 @@ local itemData = {
 	[225623] = {
 		Items = {
 			[Enum.ItemCreationContext.RaidFinder] = {
-				
+				92495, 93013, 91592,
 			},
 			[Enum.ItemCreationContext.RaidNormal] = {
-				
+				92475, 92977, 91568,
 			},
 			[Enum.ItemCreationContext.RaidHeroic] = {
-				
+				92525, 92989, 91580,
 			},
 			[Enum.ItemCreationContext.RaidMythic] = {
-				
+				92513, 92974, 91565,
 			},
 		},
 	},
@@ -409,16 +409,16 @@ local itemData = {
 	[225624] = {
 		Items = {
 			[Enum.ItemCreationContext.RaidFinder] = {
-				
+				92082, 92314, 92850,
 			},
 			[Enum.ItemCreationContext.RaidNormal] = {
-				
+				92027, 92270, 92802,
 			},
 			[Enum.ItemCreationContext.RaidHeroic] = {
-				
+				92060, 92259, 92838,
 			},
 			[Enum.ItemCreationContext.RaidMythic] = {
-				
+				92047, 92301, 92824,
 			},
 		},
 	},
@@ -426,16 +426,16 @@ local itemData = {
 	[225625] = {
 		Items = {
 			[Enum.ItemCreationContext.RaidFinder] = {
-				
+				92427, 92772, 92191, 92129,
 			},
 			[Enum.ItemCreationContext.RaidNormal] = {
-				
+				92403, 92745, 92181, 92093,
 			},
 			[Enum.ItemCreationContext.RaidHeroic] = {
-				
+				92463, 92754, 92211, 92117,
 			},
 			[Enum.ItemCreationContext.RaidMythic] = {
-				
+				92448, 92781, 92179, 92162,
 			},
 		},
 	},
@@ -445,16 +445,16 @@ local itemData = {
 	[225630] = {
 		Items = {
 			[Enum.ItemCreationContext.RaidFinder] = {
-				
+				91513, 93103, 91883,
 			},
 			[Enum.ItemCreationContext.RaidNormal] = {
-				
+				91503, 93038, 91832,
 			},
 			[Enum.ItemCreationContext.RaidHeroic] = {
-				
+				91543, 93090, 91861,
 			},
 			[Enum.ItemCreationContext.RaidMythic] = {
-				
+				91501, 93074, 91829,
 			},
 		},
 	},
@@ -462,16 +462,16 @@ local itemData = {
 	[225631] = {
 		Items = {
 			[Enum.ItemCreationContext.RaidFinder] = {
-				
+				92496, 93014, 91593,
 			},
 			[Enum.ItemCreationContext.RaidNormal] = {
-				
+				92476, 92978, 91569,
 			},
 			[Enum.ItemCreationContext.RaidHeroic] = {
-				
+				92526, 92990, 91581,
 			},
 			[Enum.ItemCreationContext.RaidMythic] = {
-				
+				92514, 92975, 91566,
 			},
 		},
 	},
@@ -479,16 +479,16 @@ local itemData = {
 	[225632] = {
 		Items = {
 			[Enum.ItemCreationContext.RaidFinder] = {
-				
+				92083, 92554, 92851,
 			},
 			[Enum.ItemCreationContext.RaidNormal] = {
-				
+				92028, 92546, 92803,
 			},
 			[Enum.ItemCreationContext.RaidHeroic] = {
-				
+				92061, 92544, 92839,
 			},
 			[Enum.ItemCreationContext.RaidMythic] = {
-				
+				92048, 92551, 92825,
 			},
 		},
 	},
@@ -496,16 +496,16 @@ local itemData = {
 	[225633] = {
 		Items = {
 			[Enum.ItemCreationContext.RaidFinder] = {
-				
+				92428, 92773, 92192, 92130,
 			},
 			[Enum.ItemCreationContext.RaidNormal] = {
-				
+				92404, 92746, 92182, 92094,
 			},
 			[Enum.ItemCreationContext.RaidHeroic] = {
-				
+				92464, 92755, 92212, 92118,
 			},
 			[Enum.ItemCreationContext.RaidMythic] = {
-				
+				92449, 92789, 92180, 92163,
 			},
 		},
 	},
@@ -515,16 +515,16 @@ local itemData = {
 	[225614] = {
 		Items = {
 			[Enum.ItemCreationContext.RaidFinder] = {
-				
+				91514, 93104, 91884,
 			},
 			[Enum.ItemCreationContext.RaidNormal] = {
-				
+				91504, 93039, 91833,
 			},
 			[Enum.ItemCreationContext.RaidHeroic] = {
-				
+				91544, 93091, 91862,
 			},
 			[Enum.ItemCreationContext.RaidMythic] = {
-				
+				91494, 93065, 91822,
 			},
 		},
 	},
@@ -532,16 +532,16 @@ local itemData = {
 	[225615] = {
 		Items = {
 			[Enum.ItemCreationContext.RaidFinder] = {
-				
+				92497, 93015, 91594,
 			},
 			[Enum.ItemCreationContext.RaidNormal] = {
-				
+				92477, 92979, 91570,
 			},
 			[Enum.ItemCreationContext.RaidHeroic] = {
-				
+				92527, 92991, 91582,
 			},
 			[Enum.ItemCreationContext.RaidMythic] = {
-				
+				92507, 93126, 91558,
 			},
 		},
 	},
@@ -549,16 +549,16 @@ local itemData = {
 	[225616] = {
 		Items = {
 			[Enum.ItemCreationContext.RaidFinder] = {
-				
+				92084, 92315, 92859,
 			},
 			[Enum.ItemCreationContext.RaidNormal] = {
-				
+				92029, 92271, 92811,
 			},
 			[Enum.ItemCreationContext.RaidHeroic] = {
-				
+				92062, 92260, 92847,
 			},
 			[Enum.ItemCreationContext.RaidMythic] = {
-				
+				92040, 92400, 92823,
 			},
 		},
 	},
@@ -566,16 +566,16 @@ local itemData = {
 	[225617] = {
 		Items = {
 			[Enum.ItemCreationContext.RaidFinder] = {
-				
+				92429, 92774, 92193, 92131,
 			},
 			[Enum.ItemCreationContext.RaidNormal] = {
-				
+				92405, 92747, 92183, 92095,
 			},
 			[Enum.ItemCreationContext.RaidHeroic] = {
-				
+				92465, 92756, 92213, 92119,
 			},
 			[Enum.ItemCreationContext.RaidMythic] = {
-				
+				92441, 92783, 92173, 92155,
 			},
 		},
 	},
@@ -585,16 +585,16 @@ local itemData = {
 	[225618] = {
 		Items = {
 			[Enum.ItemCreationContext.RaidFinder] = {
-				
+				91519, 93109, 91889,
 			},
 			[Enum.ItemCreationContext.RaidNormal] = {
-				
+				91509, 93044, 91838,
 			},
 			[Enum.ItemCreationContext.RaidHeroic] = {
-				
+				91549, 93096, 91867,
 			},
 			[Enum.ItemCreationContext.RaidMythic] = {
-				
+				91499, 93070, 91972,
 			},
 		},
 	},
@@ -602,16 +602,16 @@ local itemData = {
 	[225619] = {
 		Items = {
 			[Enum.ItemCreationContext.RaidFinder] = {
-				
+				92502, 93020, 91599,
 			},
 			[Enum.ItemCreationContext.RaidNormal] = {
-				
+				92482, 92984, 91575,
 			},
 			[Enum.ItemCreationContext.RaidHeroic] = {
-				
+				92532, 92996, 91587,
 			},
 			[Enum.ItemCreationContext.RaidMythic] = {
-				
+				92512, 93120, 91563,
 			},
 		},
 	},
@@ -619,16 +619,16 @@ local itemData = {
 	[225620] = {
 		Items = {
 			[Enum.ItemCreationContext.RaidFinder] = {
-				
+				92089, 92320, 92857,
 			},
 			[Enum.ItemCreationContext.RaidNormal] = {
-				
+				92034, 92276, 92809,
 			},
 			[Enum.ItemCreationContext.RaidHeroic] = {
-				
+				92067, 92265, 92845,
 			},
 			[Enum.ItemCreationContext.RaidMythic] = {
-				
+				92045, 92327, 92821,
 			},
 		},
 	},
@@ -636,16 +636,16 @@ local itemData = {
 	[225621] = {
 		Items = {
 			[Enum.ItemCreationContext.RaidFinder] = {
-				
+				92434, 92779, 92198, 92136,
 			},
 			[Enum.ItemCreationContext.RaidNormal] = {
-				
+				92410, 92752, 92188, 92100,
 			},
 			[Enum.ItemCreationContext.RaidHeroic] = {
-				
+				92470, 92761, 92218, 92124,
 			},
 			[Enum.ItemCreationContext.RaidMythic] = {
-				
+				92446, 92788, 92178, 92160,
 			},
 		},
 	},
@@ -655,16 +655,16 @@ local itemData = {
 	[225626] = {
 		Items = {
 			[Enum.ItemCreationContext.RaidFinder] = {
-				
+				91516, 93106, 91886,
 			},
 			[Enum.ItemCreationContext.RaidNormal] = {
-				
+				91506, 93041, 91835,
 			},
 			[Enum.ItemCreationContext.RaidHeroic] = {
-				
+				91546, 93093, 91864,
 			},
 			[Enum.ItemCreationContext.RaidMythic] = {
-				
+				91496, 93067, 91824,
 			},
 		},
 	},
@@ -672,16 +672,16 @@ local itemData = {
 	[225627] = {
 		Items = {
 			[Enum.ItemCreationContext.RaidFinder] = {
-				
+				92499, 93017, 91596,
 			},
 			[Enum.ItemCreationContext.RaidNormal] = {
-				
+				92479, 92981, 91572,
 			},
 			[Enum.ItemCreationContext.RaidHeroic] = {
-				
+				92529, 92993, 91584,
 			},
 			[Enum.ItemCreationContext.RaidMythic] = {
-				
+				92509, 92969, 91560,
 			},
 		},
 	},
@@ -689,16 +689,16 @@ local itemData = {
 	[225628] = {
 		Items = {
 			[Enum.ItemCreationContext.RaidFinder] = {
-				
+				92086, 92317, 94158,
 			},
 			[Enum.ItemCreationContext.RaidNormal] = {
-				
+				92031, 92273, 94162,
 			},
 			[Enum.ItemCreationContext.RaidHeroic] = {
-				
+				92064, 92262, 94159,
 			},
 			[Enum.ItemCreationContext.RaidMythic] = {
-				
+				92042, 92295, 94161,
 			},
 		},
 	},
@@ -706,16 +706,16 @@ local itemData = {
 	[225629] = {
 		Items = {
 			[Enum.ItemCreationContext.RaidFinder] = {
-				
+				92431, 92776, 92195, 92133,
 			},
 			[Enum.ItemCreationContext.RaidNormal] = {
-				
+				92407, 92749, 92185, 92097,
 			},
 			[Enum.ItemCreationContext.RaidHeroic] = {
-				
+				92467, 92758, 92215, 92121,
 			},
 			[Enum.ItemCreationContext.RaidMythic] = {
-				
+				92443, 92785, 92175, 92157,
 			},
 		},
 	},
@@ -787,6 +787,7 @@ local function OnTooltipSetItem(tooltip)
 		if not appearances then return end
 		for _, appearanceID in ipairs(appearances) do
 			local sources = C_TransmogCollection.GetAllAppearanceSources(appearanceID);
+			if not sources then return end
 			local displayLink = select(6, C_TransmogCollection.GetAppearanceSourceInfo(sources[1]));
 			local requiredClass = GetItemClassRequirement(displayLink);
 			if not requiredClass then
