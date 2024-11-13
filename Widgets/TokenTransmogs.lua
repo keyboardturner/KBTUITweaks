@@ -3,8 +3,22 @@ local GetAllAppearanceSources = C_TransmogCollection.GetAllAppearanceSources;
 local GetAppearanceSourceInfo = C_TransmogCollection.GetAppearanceSourceInfo;
 local PlayerHasTransmogItemModifiedAppearance = C_TransmogCollection.PlayerHasTransmogItemModifiedAppearance;
 
-
+--[[
 -- debug, do not add to final version
+local idEditBox = CreateFrame("EditBox", "AppearanceIDEditBox", UIParent, "InputBoxTemplate");
+idEditBox:SetSize(500, 45);
+idEditBox:SetAutoFocus(false);
+idEditBox:Hide();
+idEditBox:SetPoint("CENTER", UIParent, "CENTER");
+idEditBox:SetTextInsets(10, 10, 10, 10);
+idEditBox:SetFontObject("GameFontHighlight");
+idEditBox:SetScript("OnEscapePressed", function(self) self:Hide() end);
+
+local collectedAppearanceIDs = {};
+
+idEditBox:SetScript("OnHide", function(self)
+    collectedAppearanceIDs = {};
+end)
 local function _OnTooltipSetItem(tooltip)
 	local _, itemLink = GameTooltip:GetItem();
 	if not itemLink then return end;
@@ -14,10 +28,24 @@ local function _OnTooltipSetItem(tooltip)
 	if not itemAppearanceID or not itemModifiedAppearanceID then return end;
 	tooltip:AddDoubleLine("AppearanceID", itemAppearanceID);
 	tooltip:AddDoubleLine("ModifiedAppearanceID", itemModifiedAppearanceID);
+
+	local msg = string.format("AppearanceID: %d, ModifiedAppearanceID: %d", itemAppearanceID, itemModifiedAppearanceID);
+	DEFAULT_CHAT_FRAME:AddMessage(msg);
+
+    if not collectedAppearanceIDs[itemAppearanceID] then
+        table.insert(collectedAppearanceIDs, itemAppearanceID);
+        collectedAppearanceIDs[itemAppearanceID] = true;
+    end
+
+    local displayText = table.concat(collectedAppearanceIDs, " ");
+    idEditBox:SetText(displayText);
+    idEditBox:HighlightText();
+    idEditBox:Show();
 end
 
 TooltipDataProcessor.AddTooltipPostCall(Enum.TooltipDataType.Item, _OnTooltipSetItem);
 -- end of debug
+]]
 
 
 local itemData = {};
@@ -185,10 +213,41 @@ local RAID_NORMAL = Enum.ItemCreationContext.RaidNormal;
 local RAID_HEROIC = Enum.ItemCreationContext.RaidHeroic;
 local RAID_MYTHIC = Enum.ItemCreationContext.RaidMythic;
 
+--SLs/Dragonflight+
 local CLASS_GROUP_1 = {6, 9, 12};		--Death Knight, Warlock, Demon Hunter
 local CLASS_GROUP_2 = {3, 8, 11};		--Hunter, Mage, Druid
 local CLASS_GROUP_3 = {2, 5, 7};		--Paladin, Priest, Shaman
 local CLASS_GROUP_4 = {1, 4, 10, 13};	--Warrior, Rogue, Monk, Evoker
+
+--TBC(Mount Hyjal)-MoP
+local CLASS_GROUP_5 = {2, 5, 9};		--Paladin, Priest, Warlock
+local CLASS_GROUP_6 = {1, 3, 7, 10};	--Warrior, Hunter, Shaman, Monk
+local CLASS_GROUP_7 = {4, 6, 8, 11};	--Rogue, Death Knight, Mage, Druid
+
+--TBC(Gruul's Lair)-TBC(The Eye)
+local CLASS_GROUP_8 = {2, 4, 7};		--Paladin, Rogue, Shaman
+local CLASS_GROUP_9 = {1, 5, 11};		--Warrior, Priest, Druid
+local CLASS_GROUP_10 = {3, 8, 9};		--Hunter, Mage, Warlock
+
+--Vanilla(AQ40)
+local CLASS_GROUP_11 = {1, 3, 4, 5};		--Warrior, Hunter, Rogue, Priest 			(Qiraji Bindings of Command)
+local CLASS_GROUP_12 = {2, 7, 8, 9, 11};	--Paladin, Shaman, Mage, Warlock, Druid		(Qiraji Bindings of Dominance)
+local CLASS_GROUP_13 = {1, 3, 4, 7, 11};	--Paladin, Hunter, Rogue, Shaman, Druid		(Vek'lore's Diadem)
+local CLASS_GROUP_14 = {1, 5, 8, 9};		--Warrior, Priest, Mage, Warlock			(Vek'nilash's Circlet)
+local CLASS_GROUP_15 = {1, 4, 5, 8};		--Warrior, Rogue, Priest, Mage				(Ouro's Intact Hide)
+local CLASS_GROUP_16 = {2, 3, 7, 11};		--Paladin, Hunter, Shaman, Warlock, Druid	(Skin of the Great Sandworm)
+local CLASS_GROUP_17 = {1, 2, 3, 4, 7};		--Warrior, Paladin, Hunter, Rogue, Shaman	(Carapace of the Old God)
+local CLASS_GROUP_18 = {5, 8, 9, 11};		--Priest, Mage, Warlock, Druid				(Husk of the Old God)
+
+--Vanilla(AQ10)
+local CLASS_GROUP_19 = {3, 4, 5, 9};		--Hunter, Rogue, Priest, Warlock			(Qiraji Ceremonial Ring)
+local CLASS_GROUP_20 = {1, 2, 7, 8, 11};	--Warrior, Paladin, Shaman, Mage, Druid		(Qiraji Magisterial Ring)
+local CLASS_GROUP_21 = {1, 4, 5, 8};		--Warrior, Rogue, Priest, Mage				(Qiraji Martial Drape)
+local CLASS_GROUP_22 = {2, 3, 7, 9, 11};	--Paladin, Hunter, Shaman, Warlock, Druid	(Qiraji Regal Drape)
+local CLASS_GROUP_23 = {5, 8, 9, 11};		--Priest, Mage, Warlock, Druid				(Qiraji Ornate Hilt)
+local CLASS_GROUP_24 = {1, 2, 3, 4, 7};		--Warrior, Paladin, Hunter, Rogue, Shaman	(Qiraji Spiked Hilt)
+
+
 
 itemData = {
 	-- Sepulcher of the First Ones
@@ -565,7 +624,6 @@ itemData = {
 
 
 	-- Nerub-ar Palace
-
 	-- Helm
 	-- Death Knight, Warlock, Demon Hunter
 	[225622] = {
@@ -935,6 +993,710 @@ itemData = {
 		},
 		Classes = CLASS_GROUP_4,
 	},
+
+	-- Amirdrassil
+	-- Helm
+	-- Death Knight, Warlock, Demon Hunter
+	[207470] = {
+		Items = {
+			[RAID_FINDER] = {
+				82944, 81631, 81139,
+			},
+			[RAID_NORMAL] = {
+				82955, 81619, 81148,
+			},
+			[RAID_HEROIC] = {
+				82922, 81583, 81166,
+			},
+			[RAID_MYTHIC] = {
+				82942, 81605, 81175,
+			},
+		},
+		Classes = CLASS_GROUP_1,
+	},
+	-- Hunter, Mage, Druid
+	[207471] = {
+		Items = {
+			[RAID_FINDER] = {
+				82261, 81227, 82602, -- Hunter, Mage, Druid Head Slot IDs grouped together
+			},
+			[RAID_NORMAL] = {
+				82291, 81260, 82613,
+			},
+			[RAID_HEROIC] = {
+				82271, 81249, 82624,
+			},
+			[RAID_MYTHIC] = {
+				82281, 81224, 82645,
+			},
+		},
+		Classes = CLASS_GROUP_2,
+	},
+	-- Paladin, Priest, Shaman
+	[207472] = {
+		Items = {
+			[RAID_FINDER] = {
+				81088, 82046, 81034, -- Paladin, Priest, Shaman Head Slot IDs grouped together
+			},
+			[RAID_NORMAL] = {
+				81077, 82094, 81045,
+			},
+			[RAID_HEROIC] = {
+				81098, 82070, 81023,
+			},
+			[RAID_MYTHIC] = {
+				81116, 82092, 81018,
+			},
+		},
+		Classes = CLASS_GROUP_3,
+	},
+	-- Warrior, Rogue, Monk, Evoker
+	[207473] = {
+		Items = {
+			[RAID_FINDER] = {
+				82739, 82667, 81352, 82834, -- Warrior, Rogue, Monk, Evoker Head Slot IDs grouped together
+			},
+			[RAID_NORMAL] = {
+				82757, 82703, 81392, 82823,
+			},
+			[RAID_HEROIC] = {
+				82766, 82679, 81362, 82856,
+			},
+			[RAID_MYTHIC] = {
+				82782, 82736, 81382, 82877,
+			},
+		},
+		Classes = CLASS_GROUP_4,
+	},
+
+	-- Shoulder
+	-- Death Knight, Warlock, Demon Hunter
+	[207478] = {
+		Items = {
+			[RAID_FINDER] = {
+				82998, 82668, 81353, 82835, -- Warrior, Rogue, Monk, Evoker Shoulder Slot IDs grouped together
+			},
+			[RAID_NORMAL] = {
+				83002, 82704, 81393, 82824,
+			},
+			[RAID_HEROIC] = {
+				83004, 82680, 81363, 82857,
+			},
+			[RAID_MYTHIC] = {
+				83007, 82737, 81391, 82868,
+			},
+		},
+		Classes = CLASS_GROUP_1,
+	},
+	-- Hunter, Mage, Druid
+	[207479] = {
+		Items = {
+			[RAID_FINDER] = {
+				82262, 81228, 82603, -- Hunter, Mage, Druid Shoulder Slot IDs grouped together
+			},
+			[RAID_NORMAL] = {
+				82292, 81261, 82614,
+			},
+			[RAID_HEROIC] = {
+				82272, 81250, 82625,
+			},
+			[RAID_MYTHIC] = {
+				82290, 81225, 82655,
+			},
+		},
+		Classes = CLASS_GROUP_2,
+	},
+	-- Paladin, Priest, Shaman
+	[207480] = {
+		Items = {
+			[RAID_FINDER] = {
+				81089, 82047, 81036, -- Paladin, Priest, Shaman Shoulder Slot IDs grouped together
+			},
+			[RAID_NORMAL] = {
+				81069, 82095, 81043,
+			},
+			[RAID_HEROIC] = {
+				81099, 82071, 81021,
+			},
+			[RAID_MYTHIC] = {
+				81124, 82093, 81017,
+			},
+		},
+		Classes = CLASS_GROUP_3,
+	},
+	-- Warrior, Rogue, Monk, Evoker
+	[207481] = {
+		Items = {
+			[RAID_FINDER] = {
+				82998, 82668, 81353, 82835, -- Warrior, Rogue, Monk, Evoker Shoulder Slot IDs grouped together
+			},
+			[RAID_NORMAL] = {
+				83002, 82704, 81393, 82824,
+			},
+			[RAID_HEROIC] = {
+				83004, 82680, 81363, 82857,
+			},
+			[RAID_MYTHIC] = {
+				83007, 82737, 81391, 82868,
+			},
+		},
+		Classes = CLASS_GROUP_4,
+	},
+
+	-- Chest
+	-- Death Knight, Warlock, Demon Hunter
+	[207462] = {
+		Items = {
+			[RAID_FINDER] = {
+				82946, 81575, 81141,
+			},
+			[RAID_NORMAL] = {
+				82957, 81621, 81150,
+			},
+			[RAID_HEROIC] = {
+				82924, 81585, 81168,
+			},
+			[RAID_MYTHIC] = {
+				82935, 81597, 81177,
+			},
+		},
+		Classes = CLASS_GROUP_1,
+	},
+	-- Hunter, Mage, Druid
+	[207463] = {
+		Items = {
+			[RAID_FINDER] = {
+				82263, 81229, 82604, -- Hunter, Mage, Druid Chest Slot IDs grouped together
+			},
+			[RAID_NORMAL] = {
+				82293, 81262, 82615,
+			},
+			[RAID_HEROIC] = {
+				82273, 81251, 82626,
+			},
+			[RAID_MYTHIC] = {
+				82283, 81218, 82647,
+			},
+		},
+		Classes = CLASS_GROUP_2,
+	},
+	-- Paladin, Priest, Shaman
+	[207464] = {	
+		Items = {
+			[RAID_FINDER] = {
+				81090, 82055, 81032, -- Paladin, Priest, Shaman Chest Slot IDs grouped together
+			},
+			[RAID_NORMAL] = {
+				81063, 82103, 81047,
+			},
+			[RAID_HEROIC] = {
+				81100, 82079, 81026,
+			},
+			[RAID_MYTHIC] = {
+				81118, 82091, 81016,
+			},
+		},
+		Classes = CLASS_GROUP_3,
+	},
+	-- Warrior, Rogue, Monk, Evoker
+	[207465] = {
+		Items = {
+			[RAID_FINDER] = {
+				82740, 82669, 81354, 82843, -- Warrior, Rogue, Monk, Evoker Chest Slot IDs grouped together
+			},
+			[RAID_NORMAL] = {
+				82758, 82705, 81394, 82832,
+			},
+			[RAID_HEROIC] = {
+				82767, 82681, 81364, 82865,
+			},
+			[RAID_MYTHIC] = {
+				82797, 82729, 81384, 82876,
+			},
+		},
+		Classes = CLASS_GROUP_4,
+	},
+
+	-- Hands
+	-- Death Knight, Warlock, Demon Hunter
+	[207466] = {
+		Items = {
+			[RAID_FINDER] = {
+				82951, 81580, 81146,
+			},
+			[RAID_NORMAL] = {
+				82962, 81626, 81155,
+			},
+			[RAID_HEROIC] = {
+				82929, 81590, 81173,
+			},
+			[RAID_MYTHIC] = {
+				82940, 81602, 81182,
+			},
+		},
+		Classes = CLASS_GROUP_1,
+	},
+	-- Hunter, Mage, Druid
+	[207467] = {
+		Items = {
+			[RAID_FINDER] = {
+				82268, 81234, 82609, -- Hunter, Mage, Druid Hand Slot IDs grouped together
+			},
+			[RAID_NORMAL] = {
+				82298, 81267, 82620,
+			},
+			[RAID_HEROIC] = {
+				82278, 81256, 82631,
+			},
+			[RAID_MYTHIC] = {
+				82288, 81223, 82652,
+			},
+		},
+		Classes = CLASS_GROUP_2,
+	},
+	-- Paladin, Priest, Shaman
+	[207468] = {
+		Items = {
+			[RAID_FINDER] = {
+				81095, 82053, 81031, -- Paladin, Priest, Shaman Hand Slot IDs grouped together
+			},
+			[RAID_NORMAL] = {
+				81064, 82101, 81048,
+			},
+			[RAID_HEROIC] = {
+				81105, 82077, 81027,
+			},
+			[RAID_MYTHIC] = {
+				81123, 82089, 81010,
+			},
+		},
+		Classes = CLASS_GROUP_3,
+	},
+	-- Warrior, Rogue, Monk, Evoker
+	[207469] = {
+		Items = {
+			[RAID_FINDER] = {
+				82745, 82674, 81359, 82841, -- Warrior, Rogue, Monk, Evoker Hand Slot IDs grouped together
+			},
+			[RAID_NORMAL] = {
+				82763, 82710, 81399, 82830,
+			},
+			[RAID_HEROIC] = {
+				82772, 82686, 81369, 82863,
+			},
+			[RAID_MYTHIC] = {
+				82781, 82734, 81389, 82874,
+			},
+		},
+		Classes = CLASS_GROUP_4,
+	},
+
+	-- Legs
+	-- Death Knight, Warlock, Demon Hunter
+	[207474] = {
+		Items = {
+			[RAID_FINDER] = {
+				82948, 81577, 81143,
+			},
+			[RAID_NORMAL] = {
+				82959, 81623, 81152,
+			},
+			[RAID_HEROIC] = {
+				82926, 81587, 81170,
+			},
+			[RAID_MYTHIC] = {
+				82937, 81599, 81179,
+			},
+		},
+		Classes = CLASS_GROUP_1,
+	},
+	-- Hunter, Mage, Druid
+	[207475] = {
+		Items = {
+			[RAID_FINDER] = {
+				82265, 81231, 82606, -- Hunter, Mage, Druid Leg Slot IDs grouped together
+			},
+			[RAID_NORMAL] = {
+				82295, 81264, 82617,
+			},
+			[RAID_HEROIC] = {
+				82275, 81253, 82628,
+			},
+			[RAID_MYTHIC] = {
+				82285, 81220, 82649,
+			},
+		},
+		Classes = CLASS_GROUP_2,
+	},
+	-- Paladin, Priest, Shaman
+	[207476] = {
+		Items = {
+			[RAID_FINDER] = {
+				81092, 82050, 81035, -- Paladin, Priest, Shaman Leg Slot IDs grouped together
+			},
+			[RAID_NORMAL] = {
+				81067, 82098, 81044,
+			},
+			[RAID_HEROIC] = {
+				81102, 82074, 81022,
+			},
+			[RAID_MYTHIC] = {
+				81120, 82086, 81008,
+			},
+		},
+		Classes = CLASS_GROUP_3,
+	},
+	-- Warrior, Rogue, Monk, Evoker
+	[207477] = {
+		Items = {
+			[RAID_FINDER] = {
+				82742, 82671, 81356, 82838, -- Warrior, Rogue, Monk, Evoker Leg Slot IDs grouped together
+			},
+			[RAID_NORMAL] = {
+				82760, 82707, 81396, 82827,
+			},
+			[RAID_HEROIC] = {
+				82769, 82683, 81366, 82860,
+			},
+			[RAID_MYTHIC] = {
+				82778, 82731, 81386, 82871,
+			},
+		},
+		Classes = CLASS_GROUP_4,
+	},
+
+	--Aberrus
+	-- Death Knight, Warlock, Demon Hunter
+	[202627] = {
+		Items = {
+			[RAID_FINDER] = {
+				80411, 79580, 80547, -- Death Knight, Warlock, Demon Hunter Head Slot IDs grouped together
+			},
+			[RAID_NORMAL] = {
+				80400, 79593, 80536,
+			},
+			[RAID_HEROIC] = {
+				80444, 79567, 80580,
+			},
+			[RAID_MYTHIC] = {
+				80442, 79564, 80578,
+			},
+		},
+	},
+	[202621] = {
+		Items = {
+			[RAID_FINDER] = {
+				80412, 79581, 80548, -- Death Knight, Warlock, Demon Hunter Shoulder Slot IDs grouped together
+			},
+			[RAID_NORMAL] = {
+				80401, 79594, 80537,
+			},
+			[RAID_HEROIC] = {
+				80445, 79568, 80581,
+			},
+			[RAID_MYTHIC] = {
+				80443, 79565, 80579,
+			},
+		},
+	},
+	[202631] = {
+		Items = {
+			[RAID_FINDER] = {
+				80413, 79582, 80549, -- Death Knight, Warlock, Demon Hunter Chest Slot IDs grouped together
+			},
+			[RAID_NORMAL] = {
+				80402, 79595, 80538,
+			},
+			[RAID_HEROIC] = {
+				80446, 79569, 80582,
+			},
+			[RAID_MYTHIC] = {
+				80435, 79556, 80571,
+			},
+		},
+	},
+	[202624] = {
+		Items = {
+			[RAID_FINDER] = {
+				80418, 79587, 80554, -- Death Knight, Warlock, Demon Hunter Hand Slot IDs grouped together
+			},
+			[RAID_NORMAL] = {
+				80407, 79600, 80543,
+			},
+			[RAID_HEROIC] = {
+				80451, 79574, 80587,
+			},
+			[RAID_MYTHIC] = {
+				80440, 79561, 80576,
+			},
+		},
+	},
+	[202634] = {
+		Items = {
+			[RAID_FINDER] = {
+				80415, 79584, 80551, -- Death Knight, Warlock, Demon Hunter Leg Slot IDs grouped together
+			},
+			[RAID_NORMAL] = {
+				80404, 79597, 80540,
+			},
+			[RAID_HEROIC] = {
+				80448, 79571, 80584,
+			},
+			[RAID_MYTHIC] = {
+				80437, 79558, 80573,
+			},
+		},
+	},
+
+	-- Hunter, Mage, Druid
+	[202628] = {
+		Items = {
+			[RAID_FINDER] = {
+				79925, 80496, 78936, -- Hunter, Mage, Druid Head Slot IDs grouped together
+			},
+			[RAID_NORMAL] = {
+				79903, 80515, 78876,
+			},
+			[RAID_HEROIC] = {
+				79958, 80466, 78924,
+			},
+			[RAID_MYTHIC] = {
+				79956, 80811, 78921,
+			},
+		},
+	},
+	[202622] = {
+		Items = {
+			[RAID_FINDER] = {
+				79926, 80497, 78937, -- Hunter, Mage, Druid Shoulder Slot IDs grouped together
+			},
+			[RAID_NORMAL] = {
+				79904, 80516, 78877,
+			},
+			[RAID_HEROIC] = {
+				79959, 80467, 78925,
+			},
+			[RAID_MYTHIC] = {
+				79957, 80513, 78922,
+			},
+		},
+	},
+	[202632] = {
+		Items = {
+			[RAID_FINDER] = {
+				79927, 80498, 78938, -- Hunter, Mage, Druid Chest Slot IDs grouped together
+			},
+			[RAID_NORMAL] = {
+				79905, 80517, 78878,
+			},
+			[RAID_HEROIC] = {
+				79960, 80468, 78926,
+			},
+			[RAID_MYTHIC] = {
+				79949, 80507, 78914,
+			},
+		},
+	},
+	[202625] = {
+		Items = {
+			[RAID_FINDER] = {
+				79932, 80503, 78943, -- Hunter, Mage, Druid Hand Slot IDs grouped together
+			},
+			[RAID_NORMAL] = {
+				79910, 80522, 78883,
+			},
+			[RAID_HEROIC] = {
+				79965, 80473, 78931,
+			},
+			[RAID_MYTHIC] = {
+				79954, 80512, 78919,
+			},
+		},
+	},
+	[202635] = {
+		Items = {
+			[RAID_FINDER] = {
+				79929, 80500, 78940, -- Hunter, Mage, Druid Leg Slot IDs grouped together
+			},
+			[RAID_NORMAL] = {
+				79907, 80519, 78880,
+			},
+			[RAID_HEROIC] = {
+				79962, 80470, 78928,
+			},
+			[RAID_MYTHIC] = {
+				79951, 80509, 78916,
+			},
+		},
+	},
+
+	-- Paladin, Priest, Shaman
+	[202729] = {
+		Items = {
+			[RAID_FINDER] = {
+				79067, 79196, 78972, -- Paladin, Priest, Shaman Head Slot IDs grouped together
+			},
+			[RAID_NORMAL] = {
+				79089, 79246, 79008,
+			},
+			[RAID_HEROIC] = {
+				79078, 79216, 78996,
+			},
+			[RAID_MYTHIC] = {
+				79065, 79215, 78993,
+			},
+		},
+	},
+	[202623] = {
+		Items = {
+			[RAID_FINDER] = {
+				79068, 79197, 78973, -- Paladin, Priest, Shaman Shoulder Slot IDs grouped together
+			},
+			[RAID_NORMAL] = {
+				79090, 79247, 79009,
+			},
+			[RAID_HEROIC] = {
+				79079, 79217, 78997,
+			},
+			[RAID_MYTHIC] = {
+				79066, 79207, 78994,
+			},
+		},
+	},
+	[202633] = {
+		Items = {
+			[RAID_FINDER] = {
+				79075, 79198, 78974, -- Paladin, Priest, Shaman Chest Slot IDs grouped together
+			},
+			[RAID_NORMAL] = {
+				79097, 79248, 79010,
+			},
+			[RAID_HEROIC] = {
+				79086, 79218, 78998,
+			},
+			[RAID_MYTHIC] = {
+				79064, 79208, 78986,
+			},
+		},
+	},
+	[202626] = {
+		Items = {
+			[RAID_FINDER] = {
+				79074, 79203, 78979, -- Paladin, Priest, Shaman Hand Slot IDs grouped together
+			},
+			[RAID_NORMAL] = {
+				79096, 79253, 79015,
+			},
+			[RAID_HEROIC] = {
+				79085, 79223, 79003,
+			},
+			[RAID_MYTHIC] = {
+				79063, 79213, 78991,
+			},
+		},
+	},
+	[202636] = {
+		Items = {
+			[RAID_FINDER] = {
+				79071, 79200, 78976, -- Paladin, Priest, Shaman Leg Slot IDs grouped together
+			},
+			[RAID_NORMAL] = {
+				79093, 79250, 79012,
+			},
+			[RAID_HEROIC] = {
+				79082, 79220, 79000,
+			},
+			[RAID_MYTHIC] = {
+				79060, 79210, 78988,
+			},
+		},
+	},
+
+	-- Warrior, Rogue, Monk, Evoker
+	[202630] = {
+		Items = {
+			[RAID_FINDER] = {
+				80709, 78388, 79656, 80615, -- Warrior, Rogue, Monk, Evoker Head Slot IDs grouped together
+			},
+			[RAID_NORMAL] = {
+				80661, 78398, 79606, 80591,
+			},
+			[RAID_HEROIC] = {
+				80673, 78378, 79646, 80649,
+			},
+			[RAID_MYTHIC] = {
+				80730, 78368, 79644, 80647,
+			},
+		},
+	},
+	[202637] = {
+		Items = {
+			[RAID_FINDER] = {
+				80710, 78389, 79657, 80616, -- Warrior, Rogue, Monk, Evoker Shoulder Slot IDs grouped together
+			},
+			[RAID_NORMAL] = {
+				80662, 78399, 79607, 80592,
+			},
+			[RAID_HEROIC] = {
+				80674, 78379, 79647, 80650,
+			},
+			[RAID_MYTHIC] = {
+				80731, 78377, 79645, 80813,
+			},
+		},
+	},
+	[202639] = {
+		Items = {
+			[RAID_FINDER] = {
+				80711, 78390, 79658, 80617, -- Warrior, Rogue, Monk, Evoker Chest Slot IDs grouped together
+			},
+			[RAID_NORMAL] = {
+				80663, 78400, 79608, 80593,
+			},
+			[RAID_HEROIC] = {
+				80675, 78380, 79648, 80651,
+			},
+			[RAID_MYTHIC] = {
+				80723, 78370, 79638, 80640,
+			},
+		},
+	},
+	[2026238] = {
+		Items = {
+			[RAID_FINDER] = {
+				80716, 78395, 79663, 80622, -- Warrior, Rogue, Monk, Evoker Hand Slot IDs grouped together
+			},
+			[RAID_NORMAL] = {
+				80668, 78405, 79613, 80598,
+			},
+			[RAID_HEROIC] = {
+				80680, 78385, 79653, 80656,
+			},
+			[RAID_MYTHIC] = {
+				80728, 78375, 79643, 80645,
+			},
+		},
+	},
+	[202640] = {
+		Items = {
+			[RAID_FINDER] = {
+				80713, 78392, 79660, 80619, -- Warrior, Rogue, Monk, Evoker Leg Slot IDs grouped together
+			},
+			[RAID_NORMAL] = {
+				80665, 78402, 79610, 80595,
+			},
+			[RAID_HEROIC] = {
+				80677, 78382, 79650, 80653,
+			},
+			[RAID_MYTHIC] = {
+				80725, 78372, 79640, 80642,
+			},
+		},
+	},
+
+	-- Vault of the Incarnates
+
+
 
 
 
