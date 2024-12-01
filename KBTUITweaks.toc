@@ -32,6 +32,5 @@ Widgets/MovableTargetTargetFrame.lua
 Widgets/ActionButtonReplacer.lua
 Widgets/ActionButtonBuffDurations.lua
 Widgets/DKRuneReplacer.lua
-Widgets/TokenTransmogs.lua
 
 core.lua
