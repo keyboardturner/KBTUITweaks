@@ -15,6 +15,15 @@ local spellData = {
 	[11426] = { buffID = 11426 },		 -- Ice Barrier
 	[66] = { buffID = 32612 },			 -- Invisibility
 	[130] = { buffID = 130 },			 -- Slow Fall
+	[108839] = { buffID = 108839 },		 -- Ice Floes
+	[342245] = { buffID = 342246 },		 -- Alter Time
+	[342247] = { buffID = 342246 },		 -- Alter Time (on-use)
+	[365350] = { buffID = 365350 },		 -- Arcane Surge
+	[55342] = { buffID = 55342 },		 -- Mirror Image
+	[414658] = { buffID = 414658 },		 -- Ice Cold
+	[80353] = { buffID = 80353 },		 -- Time Warp
+	[110959] = { buffID = 110960 },		 -- Greater Invisibility
+	[235450] = { buffID = 235450 },		 -- Prismatic Barrier
 
 	-- Rogue
 	[13877] = { buffID = 13877 },		 -- Blade Flurry
@@ -52,6 +61,7 @@ local spellData = {
 	[246287] = { buffID = 246287 },		 -- Evangelism
 	[62618] = { duration = 10 },		 -- Power Word: Barrier
 	[271466] = { buffID = 271466 },		 -- Luminous Barrier
+	[200183] = { buffID = 200183 },		 -- Apotheosis
 	[589] = {							 -- Shadow Word: Pain
 		debuffID = 589,
 		refresh = 6.3,
@@ -62,11 +72,15 @@ local spellData = {
 	},
 	[335467] = {						 -- Devouring Plague
 		debuffID = 335467,
-		refresh = 2.5
+		refresh = 2.5,
 	},
 	[204197] = {						 -- Purge the Wicked
 		debuffID = 204213,
 		refresh = 6,
+	},
+	[585] = {							 -- Smite (Sanctuary)
+		debuffID = 208772,
+		refresh = 4.2,
 	},
 	[200174] = {						 -- Mindbender (Shadow)
 		totem = {
@@ -83,10 +97,90 @@ local spellData = {
 			"Sha Beast", "Mindbender", "Shadowfiend", "Lightspawn", "Voidling", -- enUS
 		}
 	},
+
+	-- Shaman
+	[108271] = { buffID = 108271 },		 -- Astral Shift
+	[58875] = { buffID = 58875 },		 -- Spirit Walk
+	[73920] = { buffID = 73920 },		 -- Healing Rain
+	[108281] = { buffID = 108281 },		 -- Ancestral Guidance
+	[79206] = { buffID = 79206 },		 -- Spiritwalker's Grace
+	[187874] = { buffID = 187874 },		 -- Crash Lightning
+	[191634] = { buffID = 191634 },		 -- Stormkeeper
+	[2484] = { totem = {
+			"Earthbind Totem", -- enUS
+		}
+	},
+	[5394] = { totem = {
+			"Healing Stream Totem", -- enUS
+		}
+	},
+	[98008] = { totem = {
+			"Spirit Link Totem", -- enUS
+		}
+
+	},
+	[108280] = { totem = {
+			"Healing Tide Totem", -- enUS
+		}
+	},
+	[192077] = { totem = {
+			"Wind Rush Totem", -- enUS
+		}
+	},
+	[198103] = { totem = {
+			"Earth Elemental", "Greater Earth Elemental", -- enUS
+		}
+	},
+	[192249] = { totem = {
+			"Storm Elemental", "Greater Storm Elemental", -- enUs
+		}
+
+	},
+	[192058] = { totem = {
+			"Capacitor Totem", -- enUS
+		}
+	},
+	[470411] = {						 -- Flame Shock
+		debuffID = 188389,
+		refresh = 6,
+	},
 	
+
+	-- Hunter
+	[781] = { buffID = 118922 },		 -- Disengage (Posthaste)
+	[199483] = { buffID = 199483 },		 -- Camouflage
+	--[19577] = { buffID = 19577 },		 -- Intimidation
+	[109248] = { duration = 10 },		 -- Binding Shot
+	[1543] = { duration = 20 },			 -- Flare
+	[186257] = { buffID = 186257 },		 -- Aspect of the Cheetah
+	[288613] = { buffID = 288613 },		 -- Trueshot
+	[264735] = { buffID = 264735 },		 -- Survival of the Fittesh
+	[186265] = { buffID = 186265 },		 -- Aspect of the Turtle
+	[392956] = { buffID = 392956 },		 -- Fortitude of the Bear
+	[5384] = { buffID = 5384 },			 -- Feign Death
+	[260243] = { buffID = 260243 },		 -- Volley
+	[257620] = { buffID = 257622 },		 -- Multi-Shot (Trick Shots)
+	[34477] = { buffID = 35079 },		 -- Misdirection
+	[186289] = { buffID = 186289 },		 -- Aspect of the Eagle
+	[360952] = { buffID = 360952 },		 -- Coordinated Assault
+	[272678] = { buffID = 272678 },		 -- Primal Rage
+	[320976] = { buffID = 378770 },		 -- Kill Shot (Deathblow)
+	[19574] = { buffID = 19574 },		 -- Bestial Wrath
+	[120679] = { buffID = 281036 },		 -- Dire Beast
+	[217200] = { buffID = 246152 },		 -- Barbed Shot
+	[359844] = { buffID = 359844 },		 -- Call of the Wild
+	[2643] = { buffID = 268877 },		 -- Multi-Shot (Beast Cleave)
+	[56641] = { buffID = 193534 },		 -- Steady Shot (Steady Focus)
+
+	-- Warrior
+	[260708] = { buffID = 260708 },		 -- Sweeping Strikes
+	[18499] = { buffID = 18499 },		 -- Berserker Rage
+	[2565] = { buffID = 132404 },		 -- Shield Block
+	[190456] = { buffID = 190456 },		 -- Ignore Pain
 
 	-- Racials
 	[58984] = { buffID = 58984 },		 -- Shadowmeld
+	[59547] = { buffID = 59547 },		 -- Gift of the Naaru
 
 	-- Dragonriding
 	[403092] = { buffID = 425663 },		 -- Aerial Halt (Wind's Respite)
@@ -125,6 +219,10 @@ local function SetCustomSwipeColor(cooldown)
 		cooldown:SetSwipeColor(1,.95,.41, 1); -- Yellow
 	elseif classID == 5 and specID == 258 then -- Shadow Priest
 		cooldown:SetSwipeColor(.66, 0, 1, 1); -- Purple
+	elseif classID == 7 then -- Shaman
+		cooldown:SetSwipeColor(0,.50,1); -- Blue
+	elseif classID == 3 then -- Hunter
+		cooldown:SetSwipeColor(.67, .83, .45);
 	else
 		cooldown:SetSwipeColor(1, 1, 1, 1); -- None Found, White Default
 	end
@@ -160,7 +258,7 @@ local function HandleSpellCast(event, unitTarget, spellID)
 				local buttonID = button.action
 				if button and button.cooldownTexture then
 					local actionType, actionID, subType = GetActionInfo(buttonID);
-					if (actionType == "spell" or actionType == "macro") and spellData[actionID] then
+					if (actionType == "spell" or actionType == "macro") and spellData[actionID] and actionID == spellID then
 						local spellInfo = spellData[spellID];
 						local currentTime = GetTime();
 						local expirationTime = currentTime + spellInfo.duration;
