@@ -54,7 +54,9 @@ local function FallingChecker()
 	local currentMoving = IsPlayerMoving();
 	local isFalling = IsFalling();
 	local isMounted = IsMounted();
-	if not isFalling and not currentMoving and not isMounted then
+	local isSwimming = IsSwimming();
+	local isSubmerged = IsSubmerged();
+	if not isFalling and not currentMoving and not isMounted and not isSwimming and not isSubmerged then
 		SoundSelector();
 	end
 end
@@ -83,10 +85,12 @@ local function CheckPlayerMovement()
 	local currentMoving = IsPlayerMoving();
 	local isFalling = IsFalling();
 	local isMounted = IsMounted();
+	local isSwimming = IsSwimming();
+	local isSubmerged = IsSubmerged();
 	if isFalling then
 		C_Timer.After(.35, FallingChecker);
 	end
-	if currentMoving and not isFalling and not isMounted then
+	if currentMoving and not isFalling and not isMounted and not isSwimming and not isSubmerged then
 		SoundSelector();
 	end
 	C_Timer.After(basicMult*speedMult, CheckPlayerMovement);

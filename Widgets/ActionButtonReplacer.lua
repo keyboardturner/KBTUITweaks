@@ -107,6 +107,13 @@ local spellTextures = {
 		default = "Interface\\AddOns\\KBTUITweaks\\Assets\\Textures\\Icons\\Prismatic_Barrier2",
 	},
 
+	-- Monk Fixes
+	[116670] = { -- Vivify (Vivacious Vivification)
+		default = "Interface\\ICONS\\ability_monk_vivify",
+		buffed = "Interface\\ICONS\\Ability_monk_souldance",
+		buffID = 392883,
+	},
+
 
 	-- Racials
 	[58984] = { -- Shadowmeld
