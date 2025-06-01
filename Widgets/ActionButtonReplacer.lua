@@ -107,6 +107,77 @@ local spellTextures = {
 		default = "Interface\\AddOns\\KBTUITweaks\\Assets\\Textures\\Icons\\Prismatic_Barrier2",
 	},
 
+	-- Monk
+	[100780] = { -- Tiger Palm
+		glyph  = {
+			[454885] = "Interface\\ICONS\\ability_monk_boughstrike", -- Jab
+		},
+		default = "Interface\\ICONS\\ability_monk_boughstrike",
+	},
+	[107428] = { -- Rising Sun Kick
+		glyph = {
+			[125151] = "Interface\\AddOns\\KBTUITweaks\\Assets\\Textures\\Icons\\RisingSunKick_Glyph", -- Rising Tiger Kick
+		},
+	},
+	[117952] = { -- Crackling Jade Lightning
+		default = "Interface\\AddOns\\KBTUITweaks\\Assets\\Textures\\Icons\\JadeLightning_Red", -- test
+		glyph = {
+			[125931] = "Interface\\AddOns\\KBTUITweaks\\Assets\\Textures\\Icons\\CracklingJadeLightning_Glyph", -- Crackling Tiger Lightning
+			[219513] = "Interface\\AddOns\\KBTUITweaks\\Assets\\Textures\\Icons\\JadeLightning_Red", -- Crackling Crane Lightning
+			[219510] = "Interface\\AddOns\\KBTUITweaks\\Assets\\Textures\\Icons\\JadeLightning_Yellow", -- Crackling Ox Lightning
+		},
+	},
+	[107428] = { -- Rising Sun Kick
+		glyph = {
+			[125151] = "Interface\\AddOns\\KBTUITweaks\\Assets\\Textures\\Icons\\RisingSunKick_Glyph", -- Rising Tiger Kick
+		},
+	},
+	[388193] = { -- Jadefire Stomp
+		glyph = {
+			[440170] = "Interface\\ICONS\\ability_ardenweald_monk", -- Faeline Stomp
+		},
+	},
+	[387184] = { -- Weapons of Order
+		glyph = {
+			[440265] = "Interface\\ICONS\\ability_bastion_monk", -- Weapons of Order (Kyrian)
+		},
+	},
+
+	[53385] = { -- Divine Storm (Empyrean Power proc)
+		buffed = "Interface\\AddOns\\KBTUITweaks\\Assets\\Textures\\Icons\\DivineStormProc",
+		buffID = 326733,
+	},
+	[383328] = {
+		default = "Interface\\ICONS\\ability_paladin_finalverdict", -- Final Verdict (Templar's Verdict Replacement)
+	},
+	[24275] = { -- Final Verdict (Hammer of Wrath proc)
+		buffed = "Interface\\ICONS\\ability_paladin_protectoroftheinnocent",
+		buffID = 383329,
+	},
+
+	--[[ -- FFXIV silliness
+	[100780] = { -- Tiger Palm
+		default = "Interface\\AddOns\\KBTUITweaks\\Assets\\Textures\\Icons\\TigerPalm",
+	},
+	[107428] = { -- Rising Sun Kick
+		default = "Interface\\AddOns\\KBTUITweaks\\Assets\\Textures\\Icons\\RisingSunKick_Blue",
+	},
+	[100784] = { -- Blackout Kick
+		default = "Interface\\AddOns\\KBTUITweaks\\Assets\\Textures\\Icons\\BlackoutKick",
+	},
+	[101546] = { -- Spinning Crane Kick
+		default = "Interface\\AddOns\\KBTUITweaks\\Assets\\Textures\\Icons\\SpinningCraneKick",
+	},
+	[113656] = { -- Fists of Fury
+		default = "Interface\\AddOns\\KBTUITweaks\\Assets\\Textures\\Icons\\FistsofFury",
+	},
+	[119381] = { -- Leg Sweep
+		default = "Interface\\AddOns\\KBTUITweaks\\Assets\\Textures\\Icons\\LegSweep",
+	},
+	]]
+
+
+
 	-- Monk Fixes
 	[116670] = { -- Vivify (Vivacious Vivification)
 		default = "Interface\\ICONS\\ability_monk_vivify",
@@ -257,6 +328,17 @@ local function UpdateActionBarTextures()
 					local spellData = spellTextures[TypeID];
 					if spellData then
 						local texture = spellData.default or (C_Spell.GetSpellInfo(TypeID) and C_Spell.GetSpellInfo(TypeID).iconID);
+
+						-- Check for active glyph
+						if spellData.glyph then
+							if HasAttachedGlyph(TypeID) and GetCurrentGlyphNameForSpell(TypeID) then
+								local LocalName, GlyphSpellID = GetCurrentGlyphNameForSpell(TypeID);
+								texture = spellData.glyph[GlyphSpellID];
+							end
+						end
+
+						-- Check for buff override
+
 						if spellData.buffID and spellData.buffed then
 							local buffActive = C_UnitAuras.GetPlayerAuraBySpellID(spellData.buffID, "player");
 							if buffActive then

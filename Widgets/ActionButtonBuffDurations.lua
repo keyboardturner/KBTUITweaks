@@ -18,12 +18,15 @@ local spellData = {
 	[108839] = { buffID = 108839 },		 -- Ice Floes
 	[342245] = { buffID = 342246 },		 -- Alter Time
 	[342247] = { buffID = 342246 },		 -- Alter Time (on-use)
-	[365350] = { buffID = 365350 },		 -- Arcane Surge
+	[365350] = { buffID = 365362 },		 -- Arcane Surge
 	[55342] = { buffID = 55342 },		 -- Mirror Image
 	[414658] = { buffID = 414658 },		 -- Ice Cold
 	[80353] = { buffID = 80353 },		 -- Time Warp
 	[110959] = { buffID = 110960 },		 -- Greater Invisibility
 	[235450] = { buffID = 235450 },		 -- Prismatic Barrier
+	[12051] = { buffID = 384267 },		 -- Evocation
+	[321507] = { debuffID = 210824 },	 -- Touch of the Magi
+
 
 	-- Rogue
 	[13877] = { buffID = 13877 },		 -- Blade Flurry
@@ -42,6 +45,27 @@ local spellData = {
 	[121471] = { buffID = 121471 },		 -- Shadow Blades
 	[185313] = { buffID = 185422 },		 -- Shadow Dance
 	[57934] = { buffID = 59628 },		 -- Tricks of the Trade
+
+	-- Paladin
+	[190784] = { buffID = 221883 },		 -- Divine Steed
+	[184662] = { buffID = 184662 },		 -- Shield of Vengeance
+	[403876] = { buffID = 403876 },		 -- Divine Protection
+	[1044] = { buffID = 1044 },			 -- Blessing of Freedom
+	[1022] = { buffID = 1022 },			 -- Blessing of Protection
+	[642] = { buffID = 642 },			 -- Divine Shield
+	[198034] = { buffID = 198034 },		 -- Divine Hammer
+	[231895] = { buffID = 231895 },		 -- Crusade (Avenging Wrath)
+	[31884] = { buffID = 31884 },		 -- Avenging Wrath
+	[454353] = {						 -- Radiant Glory (Crusade Proc)
+		buffIDs = { 454373, 454351 },
+	},
+	[462048] = {						 -- Radiant Glory (Avenging Wrath Proc)
+		buffIDs = { 454373, 454351 },
+	},
+	[255937] = {						 -- Wake of Ashes (Avenging Wrath Proc)
+		buffIDs = { 454373, 454351 },
+	},
+	[24275] = { buffID = 383329 },		 -- Hammer of Wrath (Final Verdict Proc)
 
 	-- Priest
 	[19236] = { buffID = 19236 },		 -- Desperate Prayer
@@ -132,7 +156,7 @@ local spellData = {
 		}
 	},
 	[192249] = { totem = {
-			"Storm Elemental", "Greater Storm Elemental", -- enUs
+			"Storm Elemental", "Greater Storm Elemental", -- enUS
 		}
 
 	},
@@ -178,9 +202,48 @@ local spellData = {
 	[2565] = { buffID = 132404 },		 -- Shield Block
 	[190456] = { buffID = 190456 },		 -- Ignore Pain
 
+	--  Warlock
+	[455465] = { totem = {				 -- Gloomhound
+			"Gloomhound", "Charhound", "Vilefiend", -- enUS
+		}
+	},
+	[455476] = { totem = {				 -- Charhound
+			"Gloomhound", "Charhound", "Vilefiend", -- enUS
+		}
+	},
+	[264119] = { totem = {				 -- Vilefiend
+			"Gloomhound", "Charhound", "Vilefiend", -- enUS
+		}
+	},
+	[265187] = { duration = 15 },		 -- Demonic Tyrant
+	[264130] = { buffID = 264173 },		 -- Power Siphon (Demonic Core)
+	[104316] = { totem = {				 -- Call Dreadstalkers
+			"Dreadstalker", -- enUS
+		}
+	},
+	[111898] = { totem = {				 -- Grimoire: Felguard
+			"Erakzinul", 				 -- enUS, name changes with felguard name, change code for later
+		}
+	},
+	[48018] = { buffID = 48018 },		 -- Demonic Circle
+	[48020] = { buffID = 387633 },		 -- Demonic Circle: Teleport
+	[385899] = { buffID = 387626 },		 -- Soulburn
+	[104773] = { buffID = 104773 },		 -- Unending Resolve
+	[108416] = { buffID = 108416 },		 -- Dark Pact
+	[111771] = { buffID = 113942 },		 -- Demonic Gateway (Debuff)
+
+	--Monk
+	[116841] = { buffID = 116841 },		 -- Tiger's Lust
+	[123904] = { totem = {				 -- Invoke Xuen, the White Tiger
+			"Xuen", -- enUS
+		}
+	},
+	[115203] = { buffID = 115203 },		 -- Fortifying Brew
+
 	-- Racials
 	[58984] = { buffID = 58984 },		 -- Shadowmeld
 	[59547] = { buffID = 59547 },		 -- Gift of the Naaru
+	[257040] = { buffID = 256948 },		 -- Spatial Rift (Active Use)
 
 	-- Dragonriding
 	[403092] = { buffID = 425663 },		 -- Aerial Halt (Wind's Respite)
@@ -220,9 +283,13 @@ local function SetCustomSwipeColor(cooldown)
 	elseif classID == 5 and specID == 258 then -- Shadow Priest
 		cooldown:SetSwipeColor(.66, 0, 1, 1); -- Purple
 	elseif classID == 7 then -- Shaman
-		cooldown:SetSwipeColor(0,.50,1); -- Blue
+		cooldown:SetSwipeColor(0, .50, 1); -- Blue
 	elseif classID == 3 then -- Hunter
-		cooldown:SetSwipeColor(.67, .83, .45);
+		cooldown:SetSwipeColor(.67, .83, .45); -- Green
+	elseif classID == 9 then -- Warlock
+		cooldown:SetSwipeColor(.80, .63, 1); -- Purple
+	elseif classID == 2 then -- Paladin
+		cooldown:SetSwipeColor(.9569, .549, .7294); -- Pink
 	else
 		cooldown:SetSwipeColor(1, 1, 1, 1); -- None Found, White Default
 	end
@@ -310,6 +377,23 @@ local function CheckBuffAndUpdate(button, cooldown, spellInfo)
 			UpdateCooldownTexture(button, button.cooldownTexture, duration, expirationTime);
 		else
 			button.cooldownTexture:Hide(); -- hides cooldowns when they're abruptly dispelled or cancelled
+		end
+	elseif spellInfo.buffIDs then -- multiple valid buffIDs
+		local found = false
+		
+		for _, buffID in ipairs(spellInfo.buffIDs) do
+			local spellIDBuff = C_UnitAuras.GetPlayerAuraBySpellID(buffID)
+			if spellIDBuff and spellIDBuff.sourceUnit == "player" then
+				local duration = spellIDBuff.duration
+				local expirationTime = spellIDBuff.expirationTime
+				UpdateCooldownTexture(button, button.cooldownTexture, duration, expirationTime)
+				found = true
+				break -- no need to check further
+			end
+		end
+
+		if not found then
+			button.cooldownTexture:Hide() -- hide only if none of the buffs were found
 		end
 	-- Check for debuffs
 	elseif spellInfo.debuffID then

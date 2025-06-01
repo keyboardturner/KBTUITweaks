@@ -65,6 +65,178 @@ local function WeatherCounter()
 	end
 end
 
+local function GetWeatherStatsForZone(UIMapID, subZone)
+	if not KBTUI_DB or not KBTUI_DB["Weather"] or not UIMapID then return "No data available." end
+
+	local totals = {}
+	local totalCount = 0
+
+	for month, days in pairs(KBTUI_DB["Weather"]) do
+		for day, maps in pairs(days) do
+			local mapData = maps[UIMapID]
+			if mapData then
+				local subZoneData = mapData[subZone]
+				if subZoneData then
+					for weatherName, intensities in pairs(subZoneData) do
+						for intensity, count in pairs(intensities) do
+							totals[weatherName] = (totals[weatherName] or 0) + count
+							totalCount = totalCount + count
+						end
+					end
+				end
+			end
+		end
+	end
+
+	if totalCount == 0 then return "No weather history for this area." end
+
+	local lines = {}
+	for weatherName, count in pairs(totals) do
+		local percent = math.floor((count / totalCount) * 100 + 0.5)
+		table.insert(lines, string.format("%s - %d%%", weatherName, percent))
+	end
+
+	table.sort(lines) -- optional: alphabetize
+	return table.concat(lines, "\n")
+end
+
+local function GetWeatherStatsForMap(UIMapID)
+	if not KBTUI_DB or not KBTUI_DB["Weather"] then return "No data available." end
+
+	local totals = {}
+	local totalCount = 0
+
+	for month, days in pairs(KBTUI_DB["Weather"]) do
+		for day, maps in pairs(days) do
+			local mapData = maps[UIMapID]
+			if mapData then
+				for subZone, weatherData in pairs(mapData) do
+					if subZone ~= "ZoneName" then -- Skip metadata
+						for weatherName, intensities in pairs(weatherData) do
+							for intensity, count in pairs(intensities) do
+								totals[weatherName] = (totals[weatherName] or 0) + count
+								totalCount = totalCount + count
+							end
+						end
+					end
+				end
+			end
+		end
+	end
+
+	if totalCount == 0 then return "No weather history for this zone." end
+
+	local lines = {}
+	for weatherName, count in pairs(totals) do
+		local percent = math.floor((count / totalCount) * 100 + 0.5)
+		table.insert(lines, string.format("%s - %d%%", weatherName, percent))
+	end
+
+	table.sort(lines)
+	return table.concat(lines, "\n")
+end
+
+-- Weather icon texture paths (you can use your own paths or shared media)
+local WeatherIcons = {
+	[1] = { -- Clear
+		textureDefault = "Interface\\AddOns\\KBTUITweaks\\Assets\\Textures\\Weather\\sunny",
+		intensityLow = "Interface\\AddOns\\KBTUITweaks\\Assets\\Textures\\Weather\\sunny",
+		intensityMedium = "Interface\\AddOns\\KBTUITweaks\\Assets\\Textures\\Weather\\partly_cloudy",
+		intensityHigh = "Interface\\AddOns\\KBTUITweaks\\Assets\\Textures\\Weather\\cloudy",
+	},
+	[2] = { -- Rain
+		textureDefault = "Interface\\AddOns\\KBTUITweaks\\Assets\\Textures\\Weather\\rain",
+		intensityLow = "Interface\\AddOns\\KBTUITweaks\\Assets\\Textures\\Weather\\rain_light",
+		intensityMedium = "Interface\\AddOns\\KBTUITweaks\\Assets\\Textures\\Weather\\rain",
+		intensityHigh = "Interface\\AddOns\\KBTUITweaks\\Assets\\Textures\\Weather\\rain_heavy",
+	},
+	[3] = { -- Snow
+		textureDefault = "Interface\\AddOns\\KBTUITweaks\\Assets\\Textures\\Weather\\snow",
+		intensityLow = "Interface\\AddOns\\KBTUITweaks\\Assets\\Textures\\Weather\\snow_light",
+		intensityMedium = "Interface\\AddOns\\KBTUITweaks\\Assets\\Textures\\Weather\\snow",
+		intensityHigh = "Interface\\AddOns\\KBTUITweaks\\Assets\\Textures\\Weather\\snow_heavy",
+	},
+	[4] = { -- Sandstorm
+		textureDefault = "Interface\\AddOns\\KBTUITweaks\\Assets\\Textures\\Weather\\sand",
+		intensityLow = "",
+		intensityMedium = "",
+		intensityHigh = "",
+	},
+	[5] = { -- Miscellaneous
+		textureDefault = "Interface\\AddOns\\KBTUITweaks\\Assets\\Textures\\Weather\\fog",
+		intensityLow = "",
+		intensityMedium = "",
+		intensityHigh = "",
+	},
+	[-1] = { -- Unknown
+		textureDefault = "Interface\\Icons\\INV_Misc_QuestionMark",
+		intensityLow = "",
+		intensityMedium = "",
+		intensityHigh = "",
+	},
+}
+
+-- Create the weather button
+local weatherButton = CreateFrame("Button", "KBTUIWeatherButton", UIParent)
+weatherButton:SetSize(36, 36)
+weatherButton:SetPoint("BOTTOMRIGHT", UIParent, "BOTTOMRIGHT", -200, 200)
+
+weatherButton.texture = weatherButton:CreateTexture(nil, "BACKGROUND", nil, 1)
+weatherButton.texture:SetAllPoints()
+weatherButton.texture:SetTexture(WeatherIcons[-1]["textureDefault"])
+
+-- Tooltip on hover
+weatherButton:SetScript("OnEnter", function(self)
+	GameTooltip:SetOwner(self, "ANCHOR_RIGHT")
+	GameTooltip:AddLine("Current Weather")
+	GameTooltip:AddLine(currentWeatherName or "Unknown", 1, 1, 1)
+	GameTooltip:AddLine("Intensity: " .. (currentWeatherIntensity or "N/A"))
+	GameTooltip:AddLine(" ")
+
+	-- Add historical weather stats:
+	local mapID = C_Map.GetBestMapForUnit("player")
+	local zoneName = GetZoneText()
+	local subZone = GetSubZoneText()
+	if subZone == "" or subZone == nil then
+		subZone = zoneName
+	end
+	local zoneInfo = C_Map.GetMapInfo(mapID)
+	local zoneRegion = ""
+	if zoneInfo then
+		zoneRegion = zoneInfo.name
+	end
+
+	if zoneRegion then
+		GameTooltip:AddLine("Region Weather History: " .. zoneRegion, 0.8, 0.8, 0.8)
+		GameTooltip:AddLine(GetWeatherStatsForMap(mapID), 1, 1, 1, true)
+	end
+	GameTooltip:AddLine(" ")
+	GameTooltip:AddLine("Local Weather History: " .. subZone, 0.7, 0.8, 1)
+	GameTooltip:AddLine(GetWeatherStatsForZone(mapID, subZone), 1, 1, 1, true)
+
+	GameTooltip:Show()
+end)
+weatherButton:SetScript("OnLeave", function()
+	GameTooltip:Hide()
+end)
+
+-- Update the icon and tooltip when weather changes
+local function UpdateWeatherButton()
+	local weatherSet = WeatherIcons[currentWeatherType or -1]
+	local icon = weatherSet.textureDefault
+
+	if currentWeatherIntensity then
+		if currentWeatherIntensity <= 0.001 and weatherSet.intensityLow ~= "" then
+			icon = weatherSet.intensityLow
+		elseif currentWeatherIntensity >= 0.5 and weatherSet.intensityHigh ~= "" then
+			icon = weatherSet.intensityHigh
+		elseif weatherSet.intensityMedium ~= "" then
+			icon = weatherSet.intensityMedium
+		end
+	end
+	weatherButton.texture:SetTexture(icon)
+end
+
 
 local function bingus(_, weatherType, weatherIntensity)
 
@@ -82,7 +254,10 @@ local function bingus(_, weatherType, weatherIntensity)
 		end
 	end
 	print("Weather changed to " .. currentWeatherName .. ", intensity " .. currentWeatherIntensity);
+	UpdateWeatherButton()
 end
+
+
 
 LibForecast.RegisterCallback(weather, "OnWeatherChanged", bingus)
 

@@ -71,6 +71,18 @@ function KBT.CVar:OnEvent(event,arg1)
 end
 KBT.CVar:SetScript("OnEvent",KBT.CVar.OnEvent);
 
+
+EventRegistry:RegisterCallback("Settings.CategoryChanged", function()
+	-- These sound settings keep getting reset upon opening the menu
+	RunNextFrame(function()
+		--C_CVar.SetCVar("Sound_AmbienceVolume", 1.0);
+		C_CVar.SetCVar("Sound_DialogVolume", 1.0); 
+		--C_CVar.SetCVar("Sound_MasterVolume", 1.0);
+		--C_CVar.SetCVar("Sound_MusicVolume", .9);
+		C_CVar.SetCVar("Sound_SFXVolume", .5);
+	end)
+end);
+
 KBT.commands = {
 	["snoop"] = function()
 		if KBTUI_DB.SnooperMsg == true then

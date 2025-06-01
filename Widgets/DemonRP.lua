@@ -52,7 +52,7 @@ DRP.FelguardQuotes = {
 			["channel"] = "MONSTER_SAY",
 		},
 		[7] = {
-			["text"] = "Do you fear the darkness?",
+			["text"] = "Do you fear the darkness? Because I do.",
 			["channel"] = "MONSTER_SAY",
 		},
 		[8] = {
@@ -66,7 +66,7 @@ DRP.FelguardQuotes = {
 	},
 	Idle = {
 		[1] = {
-			["text"] = "What did the Felguard say to the imp? 'Short on brains, tall on annoyance!'",
+			["text"] = "Why did the imp cross the road? I threw him.",
 			["channel"] = "MONSTER_SAY",
 		},
 		[2] = {
@@ -74,15 +74,15 @@ DRP.FelguardQuotes = {
 			["channel"] = "MONSTER_SAY",
 		},
 		[3] = {
-			["text"] = "Why do Felguards never get lost? They always follow the burning path!",
+			["text"] = "Why do Felguards never get lost? Who knows.",
 			["channel"] = "MONSTER_SAY",
 		},
 		[4] = {
-			["text"] = "What’s a Felguard’s favorite music genre? Heavy metal, of course!",
+			["text"] = "What’s a Felguard’s favorite music genre? Who knows.",
 			["channel"] = "MONSTER_SAY",
 		},
 		[5] = {
-			["text"] = "Why don’t Felguards ever get invited to parties? Because they always bring the chaos!",
+			["text"] = "Why don’t Felguards ever get invited to parties? Who knows.",
 			["channel"] = "MONSTER_SAY",
 		},
 		[6] = {
@@ -90,15 +90,45 @@ DRP.FelguardQuotes = {
 			["channel"] = "MONSTER_SAY",
 		},
 		[7] = {
-			["text"] = "What did the Felguard say when he joined the choir? 'I can really bring the house down!",
+			["text"] = "What did the Felguard say when he joined the choir? Who knows.",
 			["channel"] = "MONSTER_SAY",
 		},
 		[8] = {
-			["text"] = "Why did the Felguard start a gardening club? He wanted to see more things grow just to smash them!",
+			["text"] = "Why did the Felguard start a gardening club? Who knows.",
 			["channel"] = "MONSTER_SAY",
 		},
 		[9] = {
-			["text"] = "Why do Felguards make terrible detectives? They always leave too much evidence behind!",
+			["text"] = "Why do Felguards make terrible detectives? Who knows.",
+			["channel"] = "MONSTER_SAY",
+		},
+		[10] = {
+			["text"] = "What if all my jokes were just really bad and underwhelming? That sure would be something, huh.",
+			["channel"] = "MONSTER_SAY",
+		},
+		[11] = {
+			["text"] = "You ever think about how we don't really ever expose our faces? Like every one of us of the felguard kind wear helmets. I mean we're also mo'arg, some of those guys don't wear helmets, and they're usually bald.",
+			["channel"] = "MONSTER_SAY",
+		},
+		[12] = {
+			["text"] = "It would be pretty neat if I got my own giant axe and I could stand idle with it holding it in one place, kind of like what you see the Fel Lords do.",
+			["channel"] = "MONSTER_SAY",
+		},
+		[13] = {
+			["text"] = "You know, 'Erak' is a common name among the mo'arg.",
+			["channel"] = "MONSTER_SAY",
+		},
+	},
+	Summon = {
+		[1] = {
+			["text"] = "You summon, I obey… for now.",
+			["channel"] = "MONSTER_SAY",
+		},
+		[2] = {
+			["text"] = "From the nether I rise, ready to destroy!",
+			["channel"] = "MONSTER_SAY",
+		},
+		[3] = {
+			["text"] = "Another pact, another slaughter.",
 			["channel"] = "MONSTER_SAY",
 		},
 	},

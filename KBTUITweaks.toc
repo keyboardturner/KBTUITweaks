@@ -33,5 +33,7 @@ Widgets/ActionButtonReplacer.lua
 Widgets/ActionButtonBuffDurations.lua
 Widgets/DKRuneReplacer.lua
 Widgets/RunningSounds.lua
+Widgets/ChromieTimeIcon.lua
+Widgets/FishReelIn.lua
 
 core.lua
