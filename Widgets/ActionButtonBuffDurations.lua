@@ -66,6 +66,16 @@ local spellData = {
 		buffIDs = { 454373, 454351 },
 	},
 	[24275] = { buffID = 383329 },		 -- Hammer of Wrath (Final Verdict Proc)
+	[212641] = { buffID = 212641 },		 -- Guardian of Ancient Kings
+	[26573] = {							 -- Consecration
+		totem = {
+			"Consecration", -- enUS
+		}
+	},
+	[31850] = { buffID = 31850 },		 -- Ardent Defender
+	[53600] = { buffID = 132403 },		 -- Shield of the Righteous
+	[85673] = { buffID = 327510 },		 -- Word of Glory (Shining Light Proc)
+	[375576] = { buffID = 386730 },		 -- Divine Toll
 
 	-- Priest
 	[19236] = { buffID = 19236 },		 -- Desperate Prayer
@@ -338,32 +348,32 @@ local function HandleSpellCast(event, unitTarget, spellID)
 end
 
 -- Check target debuffs and update the action bar button
+
+-- CONVERT TO  C_UnitAuras.GetAuraDataBySpellName("target", "SpellNameHere", "PLAYER, HARMFUL")
 local function CheckDebuffAndUpdate(button, cooldown, spellInfo)
 	if not button or not cooldown or not spellInfo.debuffID then return end
-	local unit = "target"; -- Assuming debuffs are on the target
-	local index = 1
-	while true do -- Loop through the target's debuffs
-		local aura = C_UnitAuras.GetAuraDataByIndex(unit, index, "HARMFUL");
-		if not aura then break end
-		if aura and aura.spellId == spellInfo.debuffID and aura.sourceUnit == "player" then
-			local duration = aura.duration;
-			local expirationTime = aura.expirationTime;
-			local remainingTime = expirationTime - GetTime();
 
-			-- Update the cooldown texture
-			UpdateCooldownTexture(button, button.cooldownTexture, duration, expirationTime);
+	local spellName = C_Spell.GetSpellInfo(spellInfo.debuffID).name
+	if not spellName then return end
 
-			-- Change color if the remaining time is below the refresh threshold
-			if spellInfo.refresh and remainingTime <= spellInfo.refresh then
-				cooldown:SetSwipeColor(1, 0, 0, 1); -- Bright red for refresh state
-			else
-				SetCustomSwipeColor(cooldown); -- Reset to default color
-			end
-			return; -- Exit once the matching debuff is processed
+	local aura = C_UnitAuras.GetAuraDataBySpellName("target", spellName, "PLAYER|HARMFUL")
+	if aura then
+		local duration = aura.duration
+		local expirationTime = aura.expirationTime
+		local remainingTime = expirationTime - GetTime()
+
+		-- Update the cooldown texture
+		UpdateCooldownTexture(button, button.cooldownTexture, duration, expirationTime)
+
+		-- Change color if the remaining time is below the refresh threshold
+		if spellInfo.refresh and remainingTime <= spellInfo.refresh then
+			cooldown:SetSwipeColor(1, 0, 0, 1) -- Bright red for refresh state
+		else
+			SetCustomSwipeColor(cooldown) -- Reset to default color
 		end
-		index = index + 1
+	else
+		button.cooldownTexture:Hide() -- Hide if the debuff is not active
 	end
-	button.cooldownTexture:Hide(); -- Hide if the debuff is not active
 end
 
 -- Check if the player has the buff and update the action bar button
@@ -450,7 +460,9 @@ end
 local function OnEvent(self, event, ...)
     if event == "UNIT_SPELLCAST_SUCCEEDED" then
         local unitTarget, _, spellID = ...;
-        HandleSpellCast(event, unitTarget, spellID);
+        if unitTarget == "player" then
+        	HandleSpellCast(event, unitTarget, spellID);
+        end
     end
 	UpdateAllActionBars();
 end

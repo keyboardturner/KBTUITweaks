@@ -360,6 +360,13 @@ end
 
 -- Event handler to update the action bar textures and models
 local function OnEvent(self, event, ...)
+	if event == "UNIT_SPELLCAST_SUCCEEDED" then
+		local unitTarget, _, spellID = ...;
+		if unitTarget == "player" then
+			UpdateActionBarTextures();
+		end
+		return
+	end
 	UpdateActionBarTextures();
 end
 

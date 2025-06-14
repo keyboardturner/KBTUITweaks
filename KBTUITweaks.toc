@@ -35,5 +35,7 @@ Widgets/DKRuneReplacer.lua
 Widgets/RunningSounds.lua
 Widgets/ChromieTimeIcon.lua
 Widgets/FishReelIn.lua
+Widgets/FallingSound.lua
+Widgets/ActionButtonGlow.lua
 
 core.lua
