@@ -191,6 +191,10 @@ local spellTextures = {
 		buffed = "Interface\\ICONS\\spell_nature_wispsplode",
 		buffID = 58984,
 	},
+	[351239] = { -- Visage
+		buffed = "Interface\\AddOns\\KBTUITweaks\\Assets\\Textures\\Icons\\Ability_Racial_Visage_Active",
+		buffID = 372014,
+	},
 };
 
 -- Define the mapping of action bar ranges to their respective button names
