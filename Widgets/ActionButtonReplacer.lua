@@ -155,6 +155,15 @@ local spellTextures = {
 		buffID = 383329,
 	},
 
+	[190784] = { -- Divine Steed
+		glyph = {
+			[254475] = "Interface\\AddOns\\KBTUITweaks\\Assets\\Textures\\Icons\\DivineSteed_Glyph_Blue",
+			[254467] = "Interface\\AddOns\\KBTUITweaks\\Assets\\Textures\\Icons\\DivineSteed_Glyph_Red",
+			[254465] = "Interface\\AddOns\\KBTUITweaks\\Assets\\Textures\\Icons\\DivineSteed_Glyph_Yellow",
+			[254469] = "Interface\\AddOns\\KBTUITweaks\\Assets\\Textures\\Icons\\DivineSteed_Glyph_Purple",
+		},
+	},
+
 	--[[ -- FFXIV silliness
 	[100780] = { -- Tiger Palm
 		default = "Interface\\AddOns\\KBTUITweaks\\Assets\\Textures\\Icons\\TigerPalm",

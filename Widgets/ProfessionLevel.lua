@@ -128,6 +128,7 @@ KBT.ProfessionVariants = {
 		[2437] = "Kul Tiran Blacksmithing",
 		[2751] = "Shadowlands Blacksmithing",
 		[2822] = "Dragon Isles Blacksmithing",
+		[2872] = "Khaz Algar Blacksmithing",
 	},
 	[165] = { -- Leatherworking
 		[2532] = "Classic Leatherworking",
@@ -138,8 +139,9 @@ KBT.ProfessionVariants = {
 		[2527] = "Draenor Leatherworking",
 		[2526] = "Legion Leatherworking",
 		[2525] = "Kul Tiran Leatherworking",
-		[2758] = "Shadowlands  Leatherworking",
+		[2758] = "Shadowlands Leatherworking",
 		[2830] = "Dragon Isles Leatherworking",
+		[2880] = "Khaz Algar Leatherworking",
 	},
 	[171] = { -- Alchemy
 		[2485] = "Classic Alchemy",
@@ -150,8 +152,9 @@ KBT.ProfessionVariants = {
 		[2480] = "Draenor Alchemy",
 		[2479] = "Legion Alchemy",
 		[2478] = "Kul Tiran Alchemy",
-		[2750] = "Shadowlands  Alchemy",
+		[2750] = "Shadowlands Alchemy",
 		[2823] = "Dragon Isles Alchemy",
+		[2871] = "Khaz Algar Alchemy",
 	},
 	[182] = { -- Herbalism
 		[2556] = "Classic Herbalism",
@@ -162,8 +165,9 @@ KBT.ProfessionVariants = {
 		[2551] = "Draenor Herbalism",
 		[2550] = "Legion Herbalism",
 		[2549] = "Kul Tiran Herbalism",
-		[2760] = "Shadowlands  Herbalism",
+		[2760] = "Shadowlands Herbalism",
 		[2832] = "Dragon Isles Herbalism",
+		[2877] = "Khaz Algar Herbalism",
 	},
 	[185] = { -- Cooking
 		[2548] = "Classic Cooking",
@@ -174,8 +178,9 @@ KBT.ProfessionVariants = {
 		[2543] = "Draenor Cooking",
 		[2542] = "Legion Cooking",
 		[2541] = "Kul Tiran Cooking",
-		[2752] = "Shadowlands  Cooking",
+		[2752] = "Shadowlands Cooking",
 		[2824] = "Dragon Isles Cooking",
+		[2873] = "Khaz Algar Cooking"
 	},
 	[186] = { -- Mining
 		[2572] = "Classic Mining",
@@ -186,8 +191,9 @@ KBT.ProfessionVariants = {
 		[2567] = "Draenor Mining",
 		[2566] = "Legion Mining",
 		[2565] = "Kul Tiran Mining",
-		[2761] = "Shadowlands  Mining",
+		[2761] = "Shadowlands Mining",
 		[2833] = "Dragon Isles Mining",
+		[2881] = "Khaz Algar Mining",
 	},
 	[197] = { -- Tailoring
 		[2540] = "Classic Tailoring",
@@ -198,8 +204,9 @@ KBT.ProfessionVariants = {
 		[2535] = "Draenor Tailoring",
 		[2534] = "Legion Tailoring",
 		[2533] = "Kul Tiran Tailoring",
-		[2759] = "Shadowlands  Tailoring",
+		[2759] = "Shadowlands Tailoring",
 		[2831] = "Dragon Isles Tailoring",
+		[2883] = "Khaz Algar Tailoring",
 	},
 	[202] = { -- Engineering
 		[2506] = "Classic Engineering",
@@ -210,8 +217,9 @@ KBT.ProfessionVariants = {
 		[2501] = "Draenor Engineering",
 		[2500] = "Legion Engineering",
 		[2499] = "Kul Tiran Engineering",
-		[2755] = "Shadowlands  Engineering",
+		[2755] = "Shadowlands Engineering",
 		[2827] = "Dragon Isles Engineering",
+		[2875] = "Khaz Algar Engineering",
 	},
 	[333] = { -- Enchanting
 		[2494] = "Classic Enchanting",
@@ -222,8 +230,9 @@ KBT.ProfessionVariants = {
 		[2488] = "Draenor Enchanting",
 		[2487] = "Legion Enchanting",
 		[2486] = "Kul Tiran Enchanting",
-		[2753] = "Shadowlands  Enchanting",
+		[2753] = "Shadowlands Enchanting",
 		[2825] = "Dragon Isles Enchanting",
+		[2874] = "Khaz Algar Enchanting",
 	},
 	[356] = { -- Fishing
 		[2592] = "Classic Fishing",
@@ -234,8 +243,9 @@ KBT.ProfessionVariants = {
 		[2587] = "Draenor Fishing",
 		[2586] = "Legion Fishing",
 		[2585] = "Kul Tiran Fishing",
-		[2754] = "Shadowlands  Fishing",
+		[2754] = "Shadowlands Fishing",
 		[2826] = "Dragon Isles Fishing",
+		[2876] = "Khaz Algar Fishing",
 	},
 	[393] = { -- Skinning
 		[2564] = "Classic Skinning",
@@ -246,8 +256,9 @@ KBT.ProfessionVariants = {
 		[2559] = "Draenor Skinning",
 		[2558] = "Legion Skinning",
 		[2557] = "Kul Tiran Skinning",
-		[2762] = "Shadowlands  Skinning",
+		[2762] = "Shadowlands Skinning",
 		[2834] = "Dragon Isles Skinning",
+		[2882] = "Khaz Algar Skinning",
 	},
 	[755] = { -- Jewelcrafting
 		[2524] = "Classic Jewelcrafting",
@@ -258,8 +269,9 @@ KBT.ProfessionVariants = {
 		[2519] = "Draenor Jewelcrafting",
 		[2518] = "Legion Jewelcrafting",
 		[2517] = "Kul Tiran Jewelcrafting",
-		[2757] = "Shadowlands  Jewelcrafting",
+		[2757] = "Shadowlands Jewelcrafting",
 		[2829] = "Dragon Isles Jewelcrafting",
+		[2879] = "Khaz Algar Jewelcrafting",
 	},
 	[773] = { -- Inscription
 		[2514] = "Classic Inscription",
@@ -270,8 +282,9 @@ KBT.ProfessionVariants = {
 		[2509] = "Draenor Inscription",
 		[2508] = "Legion Inscription",
 		[2507] = "Kul Tiran Inscription",
-		[2756] = "Shadowlands  Inscription",
+		[2756] = "Shadowlands Inscription",
 		[2828] = "Dragon Isles Inscription",
+		[2878] = "Khaz Algar Inscription",
 	},
 	[794] = { -- Archaeology
 
@@ -279,7 +292,8 @@ KBT.ProfessionVariants = {
 };
 
 KBT.FakeSoundKits = {
-	[356] = {2066763, 2066764, 2066765, 2066766, 2066767},
+	[356] = {2066763, 2066764, 2066765, 2066766, 2066767}, -- fishing
+	[197] = {4612169, 4612171, 4612173, 4612175, 4612177, 4612179, 4612181, 4612183, 4612185, 4612187}, -- tialoring
 };
 
 function KBT:SetProfessionTextures(profID)
@@ -293,6 +307,12 @@ function KBT:SetProfessionTextures(profID)
 		--PlaySound(117843); -- infinite loop
 		PlaySoundFile(KBT.FakeSoundKits[356][math.random(1,5)]);
 		PlaySound(203692);
+	elseif profID == 333 then -- enchanting
+		PlaySound(23747)
+		PlaySound(20561)
+	elseif profID == 197 then -- tailoring
+		PlaySoundFile(KBT.FakeSoundKits[197][math.random(1,5)]);
+		PlaySound(215234);
 	else -- everything else
 		KBT.ProfessionFrame.Tex:SetTexture(130660);
 		PlaySound(44292);

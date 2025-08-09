@@ -37,5 +37,8 @@ Widgets/ChromieTimeIcon.lua
 Widgets/FishReelIn.lua
 Widgets/FallingSound.lua
 Widgets/ActionButtonGlow.lua
+Widgets/SpellList.lua
+Widgets/MovableCurrencyTransferFrame.lua
+Widgets/StormwindMusicTest.lua
 
 core.lua

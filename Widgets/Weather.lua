@@ -5,11 +5,11 @@ local WeatherTypesID = CopyTable(LibForecast.WeatherType)
 
 local WeatherTypes = {
 	[-1] = "Unknown",
-	[1] = "Clear",
-	[2] = "Rain",
-	[3] = "Snow",
-	[4] = "Sandstorm",
-	[5] = "Miscellaneous",
+	[0] = "Clear",
+	[1] = "Rain",
+	[2] = "Snow",
+	[3] = "Sandstorm",
+	[4] = "Miscellaneous",
 };
 
 local currentWeatherType
@@ -138,31 +138,31 @@ end
 
 -- Weather icon texture paths (you can use your own paths or shared media)
 local WeatherIcons = {
-	[1] = { -- Clear
+	[0] = { -- Clear
 		textureDefault = "Interface\\AddOns\\KBTUITweaks\\Assets\\Textures\\Weather\\sunny",
 		intensityLow = "Interface\\AddOns\\KBTUITweaks\\Assets\\Textures\\Weather\\sunny",
 		intensityMedium = "Interface\\AddOns\\KBTUITweaks\\Assets\\Textures\\Weather\\partly_cloudy",
 		intensityHigh = "Interface\\AddOns\\KBTUITweaks\\Assets\\Textures\\Weather\\cloudy",
 	},
-	[2] = { -- Rain
+	[1] = { -- Rain
 		textureDefault = "Interface\\AddOns\\KBTUITweaks\\Assets\\Textures\\Weather\\rain",
 		intensityLow = "Interface\\AddOns\\KBTUITweaks\\Assets\\Textures\\Weather\\rain_light",
 		intensityMedium = "Interface\\AddOns\\KBTUITweaks\\Assets\\Textures\\Weather\\rain",
 		intensityHigh = "Interface\\AddOns\\KBTUITweaks\\Assets\\Textures\\Weather\\rain_heavy",
 	},
-	[3] = { -- Snow
+	[2] = { -- Snow
 		textureDefault = "Interface\\AddOns\\KBTUITweaks\\Assets\\Textures\\Weather\\snow",
 		intensityLow = "Interface\\AddOns\\KBTUITweaks\\Assets\\Textures\\Weather\\snow_light",
 		intensityMedium = "Interface\\AddOns\\KBTUITweaks\\Assets\\Textures\\Weather\\snow",
 		intensityHigh = "Interface\\AddOns\\KBTUITweaks\\Assets\\Textures\\Weather\\snow_heavy",
 	},
-	[4] = { -- Sandstorm
+	[3] = { -- Sandstorm
 		textureDefault = "Interface\\AddOns\\KBTUITweaks\\Assets\\Textures\\Weather\\sand",
 		intensityLow = "",
 		intensityMedium = "",
 		intensityHigh = "",
 	},
-	[5] = { -- Miscellaneous
+	[4] = { -- Miscellaneous
 		textureDefault = "Interface\\AddOns\\KBTUITweaks\\Assets\\Textures\\Weather\\fog",
 		intensityLow = "",
 		intensityMedium = "",
@@ -253,7 +253,11 @@ local function bingus(_, weatherType, weatherIntensity)
 			currentWeatherName = v
 		end
 	end
-	print("Weather changed to " .. currentWeatherName .. ", intensity " .. currentWeatherIntensity);
+	if currentWeatherType then
+		print("Weather changed to", currentWeatherName, ", intensity", currentWeatherIntensity);
+	else
+		print("Unknown weather type:",currentWeatherType)
+	end
 	UpdateWeatherButton()
 end
 

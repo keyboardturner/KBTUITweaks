@@ -47,7 +47,9 @@ local spellData = {
 	[57934] = { buffID = 59628 },		 -- Tricks of the Trade
 
 	-- Paladin
-	[190784] = { buffID = 221883 },		 -- Divine Steed
+	[190784] = { 						 -- Divine Steed
+		buffIDs = { 221883, 254474 }
+	},
 	[184662] = { buffID = 184662 },		 -- Shield of Vengeance
 	[403876] = { buffID = 403876 },		 -- Divine Protection
 	[1044] = { buffID = 1044 },			 -- Blessing of Freedom
