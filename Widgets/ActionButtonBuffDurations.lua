@@ -228,7 +228,10 @@ local spellData = {
 		}
 	},
 	[265187] = { duration = 15 },		 -- Demonic Tyrant
-	[264130] = { buffID = 264173 },		 -- Power Siphon (Demonic Core)
+	[264130] = {						 -- Power Siphon (Demonic Core)
+		buffStacks = 264173,
+		buffStacksLimit = 4,
+	},
 	[104316] = { totem = {				 -- Call Dreadstalkers
 			"Dreadstalker", -- enUS
 		}
@@ -243,6 +246,13 @@ local spellData = {
 	[104773] = { buffID = 104773 },		 -- Unending Resolve
 	[108416] = { buffID = 108416 },		 -- Dark Pact
 	[111771] = { buffID = 113942 },		 -- Demonic Gateway (Debuff)
+	[702] = { debuffID = 702 },			 -- Curse of Weakness
+	[334275] = { debuffID = 334275 },	 -- Curse of Exhaustion
+	[1714] = { debuffID = 1714 },		 -- Curse of Tongues
+	[6789] = { debuffID = 6789 },		 -- Mortal Coil
+	[5792] = { debuffID = 118699 },		 -- Fear
+	[30283] = { debuffID = 30283 },		 -- Shadowfury
+	[264178] = { buffID = 264173 },		 -- Power Siphon (Demonic Core)
 
 	--Monk
 	[116841] = { buffID = 116841 },		 -- Tiger's Lust
@@ -251,6 +261,14 @@ local spellData = {
 		}
 	},
 	[115203] = { buffID = 115203 },		 -- Fortifying Brew
+
+	-- Demon Hunter
+	[188501] = { buffID = 188501 },		 -- Spectral Sight
+	[196555] = { buffID = 196555 },		 -- Netherwalk
+	[258920] = { buffID = 258920 },		 -- Immolation Aura
+	--[427785] = { duration = 2 },		 -- Fel Rush (Dash of Chaos) -- needs redesign, query talent
+	[198589] = { buffID = 212800 },		 -- Blur
+	[191427] = { buffID = 162264 },		 -- Metamorphosis
 
 	-- Racials
 	[58984] = { buffID = 58984 },		 -- Shadowmeld
@@ -262,6 +280,10 @@ local spellData = {
 	[372608] = { buffID = 388367 },		 -- Surge Forward (Ohn'ahra's Gusts)
 	[418592] = { buffID = 418592 },		 -- Lightning Rush
 	[374994] = { buffID = 375585 },		 -- Bronze Timelock (Bronze Rewind)
+
+	-- Legion Remix
+	[1237711] = { buffID = 1237711 },	 -- Twisted Crusade
+	[1242973] = { buffID = 1237711 },	 -- Felspike (Twisted Crusade)
 
 };
 
@@ -327,6 +349,31 @@ local function UpdateCooldownTexture(button, cooldown, duration, expirationTime)
 	SetCustomSwipeColor(cooldown);
 end
 
+local function UpdateStackTexture(button, cooldown, stacks, maxStacks)
+	if stacks and stacks > 0 then
+		local pct = 1 - (stacks / maxStacks)  -- invert so full = max stacks
+
+		if type(CooldownFrame_SetDisplayAsPercentage) == "function" then
+			CooldownFrame_SetDisplayAsPercentage(cooldown, pct)
+			cooldown._stackMode = true
+			SetCustomSwipeColor(cooldown)
+			return
+		end
+
+		-- Fallback: fake a cooldown that always renders at pct
+		local D = 1000
+		cooldown._stackMode = true
+		cooldown:SetScript("OnUpdate", function(cd)
+			local now = GetTime()
+			cd:SetCooldown(now - pct * D, D)
+		end)
+		SetCustomSwipeColor(cooldown)
+		cooldown:Show()
+	else
+		cooldown:Hide()
+	end
+end
+
 -- Handle spell cast event for hardcoded durations
 local function HandleSpellCast(event, unitTarget, spellID)
 	if unitTarget == "player" and spellData[spellID] and spellData[spellID].duration then
@@ -381,6 +428,7 @@ end
 -- Check if the player has the buff and update the action bar button
 local function CheckBuffAndUpdate(button, cooldown, spellInfo)
 	if not button or not cooldown then return end
+
 	if spellInfo.buffID then -- need to clean something here, this will often pass as "true" multiple times, and ends up hiding unrelated things
 		local spellIDBuff = C_UnitAuras.GetPlayerAuraBySpellID(spellInfo.buffID);
 		if spellIDBuff and spellIDBuff.sourceUnit == "player" then
@@ -389,6 +437,14 @@ local function CheckBuffAndUpdate(button, cooldown, spellInfo)
 			UpdateCooldownTexture(button, button.cooldownTexture, duration, expirationTime);
 		else
 			button.cooldownTexture:Hide(); -- hides cooldowns when they're abruptly dispelled or cancelled
+		end
+	elseif spellInfo.buffStacks and spellInfo.buffStacksLimit then
+		local aura = C_UnitAuras.GetPlayerAuraBySpellID(spellInfo.buffStacks)
+		if aura and aura.applications then
+			local stacks = aura.applications
+			UpdateStackTexture(button, button.cooldownTexture, stacks, spellInfo.buffStacksLimit)
+		else
+			cooldown:Hide()
 		end
 	elseif spellInfo.buffIDs then -- multiple valid buffIDs
 		local found = false
@@ -460,12 +516,12 @@ end
 
 -- Update event handler to include debuff updates
 local function OnEvent(self, event, ...)
-    if event == "UNIT_SPELLCAST_SUCCEEDED" then
-        local unitTarget, _, spellID = ...;
-        if unitTarget == "player" then
-        	HandleSpellCast(event, unitTarget, spellID);
-        end
-    end
+	if event == "UNIT_SPELLCAST_SUCCEEDED" then
+		local unitTarget, _, spellID = ...;
+		if unitTarget == "player" then
+			HandleSpellCast(event, unitTarget, spellID);
+		end
+	end
 	UpdateAllActionBars();
 end
 

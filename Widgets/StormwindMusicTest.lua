@@ -285,6 +285,45 @@ local zones = {
 		},
 	},
 
+	{
+		name = "Infinite Bazaar - Dalaran",
+		mapID = 619, -- Broken Isles (Outer Dalaran, Legion Remix)
+		minX = 0.451, maxX = 0.461,
+		minY = 0.673, maxY = 0.689,
+		playlist = {
+			{ fileID = 4872432, duration = 141 },
+			{ fileID = 4872434, duration = 143 },
+			{ fileID = 4872442, duration = 168 },
+			{ fileID = 4880323, duration = 112 },
+			{ fileID = 4880325, duration = 100 },
+			{ fileID = 4887909, duration = 130 },
+			{ fileID = 4887913, duration = 106 },
+			{ fileID = 4887915, duration = 92 },
+			{ fileID = 4887927, duration = 112 },
+			{ fileID = 4887929, duration = 103 },
+		},
+	},
+
+	{
+		subzone = "A Hero's Welcome",
+		mapID = 627, -- Dalaran
+		playlist = {
+			{ fileID = 53737, duration = 47 },
+			{ fileID = 53738, duration = 51 },
+			{ fileID = 53739, duration = 79 },
+			{ fileID = 53740, duration = 82 },
+			{ fileID = 53741, duration = 86 },
+			{ fileID = 53742, duration = 92 },
+			{ fileID = 53743, duration = 103 },
+			{ fileID = 53748, duration = 93 },
+			{ fileID = 53749, duration = 79 },
+			{ fileID = 53750, duration = 86 },
+			{ fileID = 53751, duration = 81 },
+			{ fileID = 53752, duration = 70 },
+			{ fileID = 53753, duration = 73 },
+		},
+	},
+
 	--[[ test
 	{
 		name = "Nagrand Zone Flying",

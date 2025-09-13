@@ -1,5 +1,5 @@
-local AccountIgnores = CreateFrame("Frame", nil, IgnoreListFrame)
-AccountIgnores:SetPoint("LEFT",FriendsFrame,"RIGHT",25,0)
+local AccountIgnores = CreateFrame("Frame", nil, FriendsFrame.IgnoreListWindow )
+AccountIgnores:SetPoint("LEFT",FriendsFrame.IgnoreListWindow,"RIGHT",25,0)
 AccountIgnores:SetSize(100,100)
 
 AccountIgnores.tex = AccountIgnores:CreateTexture()
@@ -86,9 +86,12 @@ local function GetSavedIgnoreInfo()
 end
 
 local function GenerateIgnoreList()
-	local sizeX = IgnoreListFrame:GetWidth()
-	local sizeY = IgnoreListFrame:GetHeight()
+	local sizeX = FriendsFrame:GetWidth()
+	local sizeY = FriendsFrame:GetHeight()
+	if not FriendsFrame.IgnoreListWindow then AccountIgnores:Hide() return end
+	AccountIgnores:Show()
 	AccountIgnores:SetSize(sizeX,sizeY)
+	FriendsFrame.IgnoreListWindow:SetSize(sizeX,sizeY)
 	
 	-- Clear previous font strings if any
 	if AccountIgnores.altNameIgnored then
