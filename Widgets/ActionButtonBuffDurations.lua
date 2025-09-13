@@ -253,6 +253,43 @@ local spellData = {
 	[5792] = { debuffID = 118699 },		 -- Fear
 	[30283] = { debuffID = 30283 },		 -- Shadowfury
 	[264178] = { buffID = 264173 },		 -- Power Siphon (Demonic Core)
+	[105174] = {						 -- Demonic Art (Hand of Gul'dan)
+		buffIDs = { 428524, 431944, 432795, 432816, 432794, 432815, 433885 }
+	},
+	[135800] = { buffID = 433885 },		 -- Ruination (Hand of Gul'dan Proc)
+	[841220] = { buffID = 841220 },		 -- Infernal Bolt (Shadow Bolt Proc)
+	[316099] = {						 -- Unstable Affliction
+		debuffID = 316099,
+		refresh = 6,
+	 },
+	[445468] = { debuffID = 445474 },	 -- Wither (Corruption Hero Talent)
+	[980] = {							 -- Agony
+		debuffID = 980,
+		refresh = 5,
+	},
+	[278350] = { debuffID = 386931 },	 -- Vile Taint
+	[48181] = {							 -- Haunt
+		debuffID = 48181,
+		refresh = 5
+	},
+	[386997] = { debuffID = 386997 },	 -- Soul Rot
+	[27243] = { debuffID = 27243 },		 -- Seed of Corruption
+	[686] = { buffID = 264571 },		 -- Nightfall (Shadowbolt Proc)
+	[205180] = { totem = {				 -- Darkglare
+			"Darkglare", -- enUS
+		}
+	},
+	[442726] = { buffID = 442726 },		 -- Malevolence (Hero Talent)
+	[442804] = { debuffID = 442804 },	 -- Curse of the Satyr (Curse of Weakness Hero Talent)
+	[348] = {							 -- Immolate
+		debuffID = 157736,
+		refresh = 6
+	},
+	[17962] = { debuffID = 265931 },	 -- Conflagrate
+	[6353] = { debuffID = 457555 },		 -- Decimation (Soul Fire Proc)
+	[17877] = { debuffID = 17877 },		 -- Shadowburn
+	[80240] = { duration = 15 },		 -- Havoc
+
 
 	--Monk
 	[116841] = { buffID = 116841 },		 -- Tiger's Lust
