@@ -16,14 +16,6 @@ local silentMusicActive = false
 local DAY_START_HOUR = 6   -- 6:00 AM
 local NIGHT_START_HOUR = 18 -- 6:00 PM
 
-local function NotIndoors()
-	if IsIndoors() == false then
-		return true;
-	else
-		return false;
-	end
-end
-
 function IsDay()
 	local hour = GetGameTime()
 	return hour >= DAY_START_HOUR and hour < NIGHT_START_HOUR
@@ -34,10 +26,8 @@ function IsNight()
 end
 
 local function StartSilentMusic()
-	if not silentMusicActive then
-		PlayMusic(silentMusicPath)
-		silentMusicActive = true
-	end
+	PlayMusic(silentMusicPath)
+	silentMusicActive = true
 end
 
 local function StopSilentMusic()
@@ -224,7 +214,7 @@ local zones = {
 		mapID = 84,
 		minX = 0.488, maxX = 0.52,
 		minY = 0.70, maxY = 0.75,
-		conditions = { NotIndoors },
+		conditions = { IsIndoors },
 		playlist = {
 			{ fileID = 4889877, duration = 41 },
 			{ fileID = 4889879, duration = 80 },
@@ -324,6 +314,26 @@ local zones = {
 		},
 	},
 
+	{
+		name = "Garrison (Alliance)",
+		mapID = 582, -- Garrison (Alliance)
+		playlist = {
+			{ fileID = 53737, duration = 47 },
+			{ fileID = 53738, duration = 51 },
+			{ fileID = 53739, duration = 79 },
+			{ fileID = 53740, duration = 82 },
+			{ fileID = 53741, duration = 86 },
+			{ fileID = 53742, duration = 92 },
+			{ fileID = 53743, duration = 103 },
+			{ fileID = 53748, duration = 93 },
+			{ fileID = 53749, duration = 79 },
+			{ fileID = 53750, duration = 86 },
+			{ fileID = 53751, duration = 81 },
+			{ fileID = 53752, duration = 70 },
+			{ fileID = 53753, duration = 73 },
+		},
+	},
+
 	--[[ test
 	{
 		name = "Nagrand Zone Flying",
@@ -358,6 +368,11 @@ local function IsInZone(zone)
 	local mapID = C_Map.GetBestMapForUnit("player")
 	if mapID ~= zone.mapID then return false end
 
+	-- Zone-wide match (no subzone or coordinates)
+	if not zone.subzone and not zone.minX then
+		return true
+	end
+	
 	-- Subzone match (strict): if a subzone is defined, it *must* match
 	if zone.subzone then
 		local currentSubzone = GetSubZoneText()
@@ -424,13 +439,14 @@ local function StopCurrentMusic()
 	timerElapsed = 0;
 	currentTrackIndex = 1;
 	activeZone = nil;
-
-	StopSilentMusic();
+	silentMusicActive = false;
 
 	if soundHandle then
 		StopSound(soundHandle, fadeoutTime);
 		soundHandle = nil;
 	end
+	
+	StopMusic()
 end
 
 local function PlayNextTrack()
@@ -494,6 +510,9 @@ f:SetScript("OnUpdate", function(_, elapsed)
 	if lastCheck >= checkInterval then
 		lastCheck = 0
 		CheckConditions()
+		if musicPlaying then
+			StartSilentMusic()
+		end
 	end
 
 	if musicPlaying then

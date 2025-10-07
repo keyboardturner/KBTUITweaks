@@ -307,6 +307,18 @@ local spellData = {
 	[198589] = { buffID = 212800 },		 -- Blur
 	[191427] = { buffID = 162264 },		 -- Metamorphosis
 
+	-- Evoker
+	[358267] = { buffID = 358267 },		 -- Hover
+	[442204] = { buffID = 442204 },		 -- Breath of Eons
+	[374348] = { buffID = 374348 },		 -- Renewing Blaze
+	[390386] = { buffID = 390386 },		 -- Fury of the Aspects
+	[374227] = { buffID = 374227 },		 -- Zephyr
+	[363916] = { buffID = 363916 },		 -- Obsidian Scales
+	[395152] = { buffID = 395152 },		 -- Ebon Might
+	[406732] = { buffID = 406732 },		 -- Spatial Paradox
+	[370452] = { debuffID = 370452 },	 -- Shattering Star
+	
+
 	-- Racials
 	[58984] = { buffID = 58984 },		 -- Shadowmeld
 	[59547] = { buffID = 59547 },		 -- Gift of the Naaru

@@ -49,9 +49,22 @@ end
 
 --hooksecurefunc("SetCVar", hookFunc);
 
+function KBT.CVar.SoundSettings()
+	-- These sound settings keep getting reset upon opening the menu
+	RunNextFrame(function()
+		--C_CVar.SetCVar("Sound_AmbienceVolume", 1.0);
+		C_CVar.SetCVar("Sound_DialogVolume", 1.0); 
+		--C_CVar.SetCVar("Sound_MasterVolume", 1.0);
+		--C_CVar.SetCVar("Sound_MusicVolume", .9);
+		C_CVar.SetCVar("Sound_SFXVolume", .5);
+	end)
+end
+
 
 function KBT.CVar:OnEvent(event,arg1)
 	if event == "PLAYER_ENTERING_WORLD" then
+		KBT.CVar.SoundSettings()
+		
 		--C_CVar.SetCVar("SoftTargetFriend", 0)
 		--C_CVar.SetCVar("SoftTargetInteract", 1)
 		C_CVar.SetCVar("WeatherDensity", 3); -- something likes to make this 0, so revert it.
@@ -73,14 +86,7 @@ KBT.CVar:SetScript("OnEvent",KBT.CVar.OnEvent);
 
 
 EventRegistry:RegisterCallback("Settings.CategoryChanged", function()
-	-- These sound settings keep getting reset upon opening the menu
-	RunNextFrame(function()
-		--C_CVar.SetCVar("Sound_AmbienceVolume", 1.0);
-		C_CVar.SetCVar("Sound_DialogVolume", 1.0); 
-		--C_CVar.SetCVar("Sound_MasterVolume", 1.0);
-		--C_CVar.SetCVar("Sound_MusicVolume", .9);
-		C_CVar.SetCVar("Sound_SFXVolume", .5);
-	end)
+	KBT.CVar.SoundSettings()
 end);
 
 KBT.commands = {
