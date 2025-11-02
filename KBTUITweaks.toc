@@ -11,7 +11,6 @@ Libs\LibForecast\lib.xml
 Widgets/Snooper.lua
 Widgets/HugCounter.lua
 Widgets/ProfessionLevel.lua
-Widgets/Mainframe.lua
 Widgets/InlineAbsorbBar.lua
 Widgets/HealthValueTruncate.lua
 Widgets/Huah.lua
@@ -41,4 +40,5 @@ Widgets/SpellList.lua
 Widgets/MovableCurrencyTransferFrame.lua
 Widgets/StormwindMusicTest.lua
 
+Mainframe.lua
 core.lua

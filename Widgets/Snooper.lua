@@ -80,7 +80,8 @@ local function processUnit(unitToken)
 
 			if KBTUI_DB.Interlopers[PlayerNameRealm][UnitName(unitToken)] == nil then
 				Print("added " .. UnitName(unitToken) .. " into Snooper DB");
-				KBTUI_DB.Interlopers[PlayerNameRealm][UnitName(unitToken)] = { realmU = realmU, firstSeen = date(), lastSeen = date(), secondsCounted = 1 };
+				-- Store timestamps (time()) instead of formatted date strings (date())
+				KBTUI_DB.Interlopers[PlayerNameRealm][UnitName(unitToken)] = { realmU = realmU, firstSeen = time(), lastSeen = time(), secondsCounted = 1 };
 			end
 			if KBTUI_DB.Interlopers[PlayerNameRealm][UnitName(unitToken)]["realmU"] == nil then
 				Print("added realm name " .. realmU .. " to " .. UnitName(unitToken))
@@ -88,12 +89,14 @@ local function processUnit(unitToken)
 			end
 
 			local interloperData = KBTUI_DB.Interlopers[PlayerNameRealm][UnitName(unitToken)];
-			interloperData.lastSeen = date();
+			-- Update lastSeen with a new timestamp
+			interloperData.lastSeen = time();
 			interloperData.secondsCounted = interloperData.secondsCounted + 1;
 
+			-- Format the timestamps into dates for the session string
 			KBT.Session[UnitName(unitToken)] = "|cffde9a26" .. UnitName(unitToken) .. "|r" ..
-					": Last Seen: " .. "|cffe6cd5e" .. interloperData.lastSeen .. "|r" ..
-					" | First Seen: " .. "|cffe6cd5e" .. interloperData.firstSeen .. "|r" ..
+					": Last Seen: " .. "|cffe6cd5e" .. date("%m/%d/%y %H:%M", interloperData.lastSeen) .. "|r" ..
+					" | First Seen: " .. "|cffe6cd5e" .. date("%m/%d/%y %H:%M", interloperData.firstSeen) .. "|r" ..
 					" | Time Observed: " .. "|cffe6cd5e" .. SecondsToTime(interloperData.secondsCounted) .. "|r";
 
 			KBT.mainFrame.SessionPopulate();

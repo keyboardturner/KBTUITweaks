@@ -70,16 +70,6 @@ function KBT.CVar:OnEvent(event,arg1)
 		C_CVar.SetCVar("WeatherDensity", 3); -- something likes to make this 0, so revert it.
 		C_CVar.SetCVar("AutoPushSpellToActionBar", 0); -- stops auto-adding spells when swapping spec, etc.
 		Print("CVar Settings for KBT set");
-		EventToastManagerFrame:Hide();
-		EventToastManagerFrame:EnableMouse(false);
-		if EventToastManagerFrame.currentDisplayingToast then
-			if EventToastManagerFrame.currentDisplayingToast.Title then
-				EventToastManagerFrame.currentDisplayingToast.Title:EnableMouse(false);
-			end
-			if EventToastManagerFrame.currentDisplayingToast.SubTitle then
-				EventToastManagerFrame.currentDisplayingToast.SubTitle:EnableMouse(false);
-			end
-		end
 	end
 end
 KBT.CVar:SetScript("OnEvent",KBT.CVar.OnEvent);

@@ -10,6 +10,9 @@ local spellData = {
 	[48792] = { buffID = 48792 }, 		 -- Icebound Fortitude
 	[48265] = { buffID = 48265 },		 -- Death's Advance
 	[49039] = { buffID = 49039 },		 -- Lichborne
+	[77575] = { debuffID = 191587 },	 -- Outbreak (Virulent Plague)
+	[85948] = { debuffID = 194310 },	 -- Festering Strike (Festering Wound)
+	[275699] = { duration = 20 },		 -- Apocalypse
 
 	-- Mage
 	[11426] = { buffID = 11426 },		 -- Ice Barrier

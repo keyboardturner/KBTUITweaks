@@ -315,6 +315,26 @@ local zones = {
 	},
 
 	{
+		subzone = "The Beer Garden",
+		mapID = 627, -- Dalaran
+		playlist = {
+			{ fileID = 53737, duration = 47 },
+			{ fileID = 53738, duration = 51 },
+			{ fileID = 53739, duration = 79 },
+			{ fileID = 53740, duration = 82 },
+			{ fileID = 53741, duration = 86 },
+			{ fileID = 53742, duration = 92 },
+			{ fileID = 53743, duration = 103 },
+			{ fileID = 53748, duration = 93 },
+			{ fileID = 53749, duration = 79 },
+			{ fileID = 53750, duration = 86 },
+			{ fileID = 53751, duration = 81 },
+			{ fileID = 53752, duration = 70 },
+			{ fileID = 53753, duration = 73 },
+		},
+	},
+
+	{
 		name = "Garrison (Alliance)",
 		mapID = 582, -- Garrison (Alliance)
 		playlist = {
