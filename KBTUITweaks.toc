@@ -1,4 +1,4 @@
-## Interface: 110105
+## Interface: 120000
 ## Author: Keyboardturner
 ## Version: 0.0.1
 ## Title: KBT UI Tweaks
@@ -39,6 +39,9 @@ Widgets/ActionButtonGlow.lua
 Widgets/SpellList.lua
 Widgets/MovableCurrencyTransferFrame.lua
 Widgets/StormwindMusicTest.lua
+Widgets/HideMacroText.lua
+Widgets/OutfitIcon.lua
+Widgets/OutfitBar.lua
 
 Mainframe.lua
 core.lua

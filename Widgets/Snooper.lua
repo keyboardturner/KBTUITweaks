@@ -52,6 +52,10 @@ local function processUnit(unitToken)
 	local namePlate = C_NamePlate.GetNamePlateForUnit(unitToken)
 	if not namePlate then return end
 	local unitFrame = namePlate:GetName()
+	if issecretvalue(unitToken) then return end
+	if issecretvalue(UnitExists(unitToken)) then return end
+	if issecretvalue(UnitGUID(unitToken)) then return end
+	if issecretvalue(C_PlayerInfo.GUIDIsPlayer(UnitGUID(unitToken))) then return end
 
 	if UnitExists(unitToken) and C_PlayerInfo.GUIDIsPlayer(UnitGUID(unitToken)) then
 		local targetToken = unitToken .. "target";

@@ -1,3 +1,5 @@
+--[[ -- broken in midnight atm
+
 local valueTruncate = CreateFrame("Frame");
 
 -- Player Frame References
@@ -114,3 +116,5 @@ end
 valueTruncate:SetScript("OnUpdate", function()
     UpdateValues();
 end);
+
+]]

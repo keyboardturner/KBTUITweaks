@@ -1,3 +1,5 @@
+--[[ -- broken in midnight
+
 local AH = CreateFrame("Frame")
 AH:RegisterEvent("UNIT_HEALTH")
 AH:RegisterEvent("UNIT_ABSORB_AMOUNT_CHANGED")
@@ -54,6 +56,9 @@ AH.StatusBarTarget.bg:SetTexture("Interface\\TARGETINGFRAME\\UI-StatusBar")
 AH.StatusBarTarget.bg:SetAllPoints(true)
 AH.StatusBarTarget.bg:SetVertexColor(0, 0, 0, 0)
 
+
+]]
+
 --[[
 AH.StatusBar.value = AH.StatusBar:CreateFontString(nil, "OVERLAY")
 AH.StatusBar.value:SetPoint("LEFT", AH.StatusBar, "LEFT", 4, 0)
@@ -63,6 +68,8 @@ AH.StatusBar.value:SetShadowOffset(1, -1)
 AH.StatusBar.value:SetTextColor(0, 1, 0)
 AH.StatusBar.value:SetText("100%")
 ]]
+
+--[[ -- broken in midnight
 
 function AH.HideBars()
 	playerStuff.TotalAbsorbBar:SetAlpha(0)
@@ -85,3 +92,5 @@ function AH:OnEvent()
 end
 
 AH:SetScript("OnEvent", AH.OnEvent)
+
+]]
